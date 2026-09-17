@@ -1,0 +1,625 @@
+
+/* =========================================
+   GENERAL SETTINGS
+   ========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+    margin: 0;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    color: #202044;
+
+    background: #f7f8fc;
+}
+
+
+a {
+    text-decoration: none;
+}
+
+
+button,
+input {
+    font: inherit;
+}
+
+
+
+/* =========================================
+   WELCOME PAGE
+   ========================================= */
+
+.welcome-page {
+
+    min-height: 100vh;
+
+    background: #f0effb;
+}
+
+
+
+/* =========================================
+   NAVIGATION
+   ========================================= */
+
+.welcome-nav {
+
+    padding: 42px 48px;
+
+}
+
+
+
+/* =========================================
+   BRAND
+   ========================================= */
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 20px;
+
+    color: #25234e;
+
+}
+
+
+.brand-icon {
+
+    width: 30px;
+
+    height: 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background: #5e50df;
+
+    color: white;
+
+    font-weight: bold;
+
+}
+
+
+
+/* =========================================
+   MAIN HERO GRID
+   ========================================= */
+
+.welcome-grid {
+
+    display: grid;
+
+    grid-template-columns: 1.35fr 0.9fr;
+
+    gap: 70px;
+
+    align-items: center;
+
+    max-width: 1200px;
+
+    margin: 70px auto;
+
+    padding: 0 48px;
+
+}
+
+
+
+/* =========================================
+   LEFT SIDE CONTENT
+   ========================================= */
+
+.hero-copy h1 {
+
+    font-size: 42px;
+
+    line-height: 1.08;
+
+    font-weight: 500;
+
+    margin: 20px 0;
+
+    color: #1f1c4e;
+
+}
+
+
+.hero-copy p {
+
+    max-width: 600px;
+
+    color: #625f7b;
+
+    font-size: 16px;
+
+    line-height: 1.6;
+
+}
+
+
+
+/* =========================================
+   SMALL LABEL
+   ========================================= */
+
+.eyebrow {
+
+    display: inline-block;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.3px;
+
+    color: #5547c9;
+
+    background: #dcd8fa;
+
+    padding: 5px 10px;
+
+    border-radius: 15px;
+
+}
+
+
+
+/* =========================================
+   BUTTONS
+   ========================================= */
+
+.hero-actions {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 22px;
+
+}
+
+
+.btn {
+
+    display: inline-block;
+
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 11px 18px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+    text-align: center;
+
+}
+
+
+.btn:hover {
+
+    transform: translateY(-1px);
+
+}
+
+
+.primary {
+
+    background: #6254e8;
+
+    color: white;
+
+}
+
+
+.secondary {
+
+    background: white;
+
+    color: #5548d7;
+
+    border: 1px solid #d8d4fa;
+
+}
+
+
+.full {
+
+    width: 100%;
+
+}
+
+
+
+/* =========================================
+   SOCIAL PROOF
+   ========================================= */
+
+.social-proof {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    margin-top: 150px;
+
+    color: #77758d;
+
+    font-size: 12px;
+
+}
+
+
+
+/* =========================================
+   AVATARS
+   ========================================= */
+
+.avatars {
+
+    display: flex;
+
+}
+
+
+.avatars span {
+
+    width: 29px;
+
+    height: 29px;
+
+    border-radius: 50%;
+
+    display: grid;
+
+    place-items: center;
+
+    background: #b9b4f2;
+
+    border: 2px solid #f0effb;
+
+    font-size: 8px;
+
+    color: #222;
+
+}
+
+
+.avatars span:nth-child(2) {
+
+    background: #75d2bd;
+
+}
+
+
+.avatars span:nth-child(3) {
+
+    background: #ed7a4c;
+
+}
+
+
+.avatars span:nth-child(4) {
+
+    background: #f3ad2c;
+
+}
+
+
+
+/* =========================================
+   LOGIN CARD
+   ========================================= */
+
+.login-card {
+
+    background: white;
+
+    border-radius: 15px;
+
+    padding: 28px;
+
+    box-shadow: 0 12px 35px #322c7b18;
+
+}
+
+
+.login-card h2 {
+
+    font-size: 23px;
+
+    margin: 0 0 4px;
+
+}
+
+
+.login-card > p {
+
+    font-size: 13px;
+
+    color: #85819b;
+
+    margin: 0 0 22px;
+
+}
+
+
+
+/* =========================================
+   FORM LABELS
+   ========================================= */
+
+.login-card label {
+
+    display: block;
+
+    font-size: 12px;
+
+    color: #4c48a4;
+
+    margin: 13px 0 6px;
+
+}
+
+
+
+/* =========================================
+   INPUT BOX
+   ========================================= */
+
+.input-wrap {
+
+    height: 38px;
+
+    border: 1px solid #deddea;
+
+    border-radius: 6px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 0 10px;
+
+    color: #8a879b;
+
+}
+
+
+.input-wrap input {
+
+    border: 0;
+
+    outline: 0;
+
+    width: 100%;
+
+}
+
+
+
+/* =========================================
+   FORGOT PASSWORD
+   ========================================= */
+
+.forgot {
+
+    display: block;
+
+    margin: 12px 0 16px auto;
+
+    color: #6559c9;
+
+    font-size: 11px;
+
+    text-align: right;
+
+}
+
+
+
+/* =========================================
+   LOGIN BUTTON
+   ========================================= */
+
+.login-button {
+
+    display: block;
+
+    margin-top: 5px;
+
+}
+
+
+
+/* =========================================
+   OR SECTION
+   ========================================= */
+
+.or {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: #aaa;
+
+    margin: 18px 0;
+
+    font-size: 11px;
+
+}
+
+
+.or::before {
+
+    content: "";
+
+    height: 1px;
+
+    background: #e5e4ec;
+
+    flex: 1;
+
+}
+
+
+.or::after {
+
+    content: "";
+
+    height: 1px;
+
+    background: #e5e4ec;
+
+    flex: 1;
+
+}
+
+
+
+/* =========================================
+   GOOGLE BUTTON
+   ========================================= */
+
+.google-btn {
+
+    display: block;
+
+    width: 100%;
+
+    padding: 10px;
+
+    border: 1px solid #ddd9ee;
+
+    background: white;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    text-align: center;
+
+    color: #333;
+
+    font-size: 14px;
+
+}
+
+
+
+/* =========================================
+   SIGN UP
+   ========================================= */
+
+.signup {
+
+    text-align: center;
+
+    font-size: 11px;
+
+    color: #88849b;
+
+    margin-top: 18px;
+
+}
+
+
+.signup a {
+
+    color: #5b50cc;
+
+    margin-left: 4px;
+
+}
+
+
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+
+@media (max-width: 900px) {
+
+    .welcome-grid {
+
+        grid-template-columns: 1fr;
+
+        margin: 20px auto;
+
+    }
+
+
+    .social-proof {
+
+        margin-top: 50px;
+
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .welcome-nav {
+
+        padding: 25px;
+
+    }
+
+
+    .welcome-grid {
+
+        padding: 0 25px;
+
+    }
+
+
+    .hero-copy h1 {
+
+        font-size: 32px;
+
+    }
+
+
+    .hero-actions {
+
+        flex-direction: column;
+
+    }
+
+
+    .hero-actions a {
+
+        width: 100%;
+
+    }
+
+}
+
