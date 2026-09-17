@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillMate - Discover</title>
+
+    <!-- Same CSS file used by all pages -->
+    <link rel="stylesheet" href="Style.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+    <header class="topbar">
+
+        <a href="Dashboard.html" class="brand">
+            <span class="brand-mark">S</span>
+            <span>SkillMate</span>
+        </a>
+
+        <nav class="main-nav">
+            <a href="Dashboard.html">Dashboard</a>
+            <a href="Discover.html" class="active">Discover</a>
+            <a href="Projects.html">Projects</a>
+            <a href="SkillSwap.html">Skill Swap</a>
+        </nav>
+
+        <div class="user-area">
+            <div class="small-avatar">AR</div>
+            <div>
+                <strong>Anushka Rana</strong>
+                <span>Student</span>
+            </div>
+        </div>
+
+    </header>
+
+
+    <!-- ================= DISCOVER PAGE ================= -->
+    <main class="discover-page">
+
+        <!-- Heading -->
+        <section class="discover-header">
+
+            <div>
+                <p class="eyebrow">SMART MATCHING</p>
+
+                <h1>Discover Your Skill Matches</h1>
+
+                <p>
+                    Find students whose skills complement yours
+                    and build something amazing together.
+                </p>
+            </div>
+
+            <a href="Dashboard.html" class="outline-btn">
+                ← Dashboard
+            </a>
+
+        </section>
+
+
+        <!-- ================= SEARCH + FILTER ================= -->
+        <section class="discover-tools">
+
+            <div class="search-box">
+                <span>⌕</span>
+                <input
+                    type="text"
+                    placeholder="Search students, skills..."
+                >
+            </div>
+
+            <div class="filter-buttons">
+                <a href="#all" class="filter-btn active-filter">All</a>
+                <a href="#design" class="filter-btn">Design</a>
+                <a href="#coding" class="filter-btn">Coding</a>
+                <a href="#ai" class="filter-btn">AI / ML</a>
+                <a href="#business" class="filter-btn">Business</a>
+            </div>
+
+        </section>
+
+
+        <!-- ================= MATCH INFO ================= -->
+        <section class="match-info">
+
+            <div>
+                <h2>Top Matches</h2>
+                <p>Students with skills that complement your profile.</p>
+            </div>
+
+            <span class="match-count">12 matches found</span>
+
+        </section>
+
+
+        <!-- ================= STUDENT CARDS ================= -->
+        <section class="people-grid">
+
+            <!-- CARD 1 -->
+            <article class="person-card">
+
+                <div class="person-top">
+                    <div class="large-avatar avatar-purple">NM</div>
+
+                    <span class="match-badge">96% Match</span>
+                </div>
+
+                <h3>Neha Mehta</h3>
+
+                <p class="role">UI/UX Designer</p>
+
+                <div class="skill-label">Skills</div>
+
+                <div class="tags">
+                    <span class="tag">Figma</span>
+                    <span class="tag">UI/UX</span>
+                    <span class="tag">Prototyping</span>
+                </div>
+
+                <div class="complement">
+                    <strong>Complements your:</strong>
+                    Python · HTML/CSS
+                </div>
+
+                <a href="#neha" class="connect-btn">View Profile</a>
+
+            </article>
+
+
+            <!-- CARD 2 -->
+            <article class="person-card">
+
+                <div class="person-top">
+                    <div class="large-avatar avatar-blue">RJ</div>
+
+                    <span class="match-badge">92% Match</span>
+                </div>
+
+                <h3>Rohan Jain</h3>
+
+                <p class="role">Backend Developer</p>
+
+                <div class="skill-label">Skills</div>
+
+                <div class="tags">
+                    <span class="tag">Node.js</span>
+                    <span class="tag">MongoDB</span>
+                    <span class="tag">APIs</span>
+                </div>
+
+                <div class="complement">
+                    <strong>Complements your:</strong>
+                    Python · UI/UX
+                </div>
+
+                <a href="#rohan" class="connect-btn">View Profile</a>
+
+            </article>
+
+
+            <!-- CARD 3 -->
+            <article class="person-card">
+
+                <div class="person-top">
+                    <div class="large-avatar avatar-pink">SK</div>
+
+                    <span class="match-badge">89% Match</span>
+                </div>
+
+                <h3>Sana Khan</h3>
+
+                <p class="role">AI / ML Enthusiast</p>
+
+                <div class="skill-label">Skills</div>
+
+                <div class="tags">
+                    <span class="tag">Machine Learning</span>
+                    <span class="tag">Python</span>
+                    <span class="tag">Data Science</span>
+                </div>
+
+                <div class="complement">
+                    <strong>Complements your:</strong>
+                    Figma · HTML/CSS
+                </div>
+
+                <a href="#sana" class="connect-btn">View Profile</a>
+
+            </article>
+
+
+            <!-- CARD 4 -->
+            <article class="person-card">
+
+                <div class="person-top">
+                    <div class="large-avatar avatar-green">AP</div>
+
+                    <span class="match-badge">87% Match</span>
+                </div>
+
+                <h3>Arjun Patel</h3>
+
+                <p class="role">Full Stack Developer</p>
+
+                <div class="skill-label">Skills</div>
+
+                <div class="tags">
+                    <span class="tag">React</span>
+                    <span class="tag">Node.js</span>
+                    <span class="tag">Git</span>
+                </div>
+
+                <div class="complement">
+                    <strong>Complements your:</strong>
+                    Python · Figma
+                </div>
+
+                <a href="#arjun" class="connect-btn">View Profile</a>
+
+            </article>
+
+
+            <!-- CARD 5 -->
+            <article class="person-card">
+
+                <div class="person-top">
+                    <div class="large-avatar avatar-orange">PI</div>
+
+                    <span class="match-badge">84% Match</span>
+                </div>
+
+                <h3>Priya Iyer</h3>
+
+                <p class="role">Content Strategist</p>
+
+                <div class="skill-label">Skills</div>
+
+                <div class="tags">
+                    <span class="tag">Content</span>
+                    <span class="tag">Marketing</span>
+                    <span class="tag">Research</span>
+                </div>
+
+                <div class="complement">
+                    <strong>Complements your:</strong>
+                    Python · UI/UX
+                </div>
+
+                <a href="#priya" class="connect-btn">View Profile</a>
+
+            </article>
+
+
+            <!-- CARD 6 -->
+            <article class="person-card">
+
+                <div class="person-top">
+                    <div class="large-avatar avatar-indigo">VK</div>
+
+                    <span class="match-badge">81% Match</span>
+                </div>
+
+                <h3>Vivek Kumar</h3>
+
+                <p class="role">Data Science Student</p>
+
+                <div class="skill-label">Skills</div>
+
+                <div class="tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Pandas</span>
+                    <span class="tag">SQL</span>
+                </div>
+
+                <div class="complement">
+                    <strong>Complements your:</strong>
+                    Figma · HTML/CSS
+                </div>
+
+                <a href="#vivek" class="connect-btn">View Profile</a>
+
+            </article>
+
+        </section>
+
+
+        <!-- ================= MATCH RESULT ================= -->
+        <section class="match-result">
+
+            <div class="result-icon">✦</div>
+
+            <div class="result-content">
+                <p class="eyebrow">SKILL COMPATIBILITY</p>
+
+                <h2>Build better teams with SkillMate</h2>
+
+                <p>
+                    Connect with students who have the skills
+                    you need and offer the skills they are looking for.
+                </p>
+            </div>
+
+            <a href="SkillSwap.html" class="primary-btn">
+                Explore Skill Swap →
+            </a>
+
+        </section>
+
+    </main>
+
+</body>
+</html>
