@@ -1,237 +1,257 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SkillMate - Student Login</title>
+    <title>SkillMate | Find Your Team</title>
 
-    <link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="./Login.css">
+    <script src="./Login.js" defer></script>
 </head>
-
 
 <body>
 
-    <!-- ================= MAIN PAGE ================= -->
+    <!-- Navigation -->
+    <header class="navbar">
 
-    <div class="welcome-page">
+        <a href="./Login.html" class="brand">
+            <span class="brand-logo">S</span>
+            <span>Skill<span class="brand-orange">Mate</span></span>
+        </a>
+
+        <button class="menu-toggle" id="menuToggle" type="button"
+            aria-label="Toggle navigation" aria-expanded="false">
+            ☰
+        </button>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="#about">About</a>
+            <a href="#features">Features</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a href="./StudentLogin.html" class="login-button">
+                Student Login
+            </a>
+
+<a href="./ProfileDetails.html" class="signup-button">
+    Get Started <span>↗</span>
+</a>
+        </div>
+
+    </header>
 
 
-        <!-- ================= NAVIGATION ================= -->
+    <!-- Welcome section -->
+    <main>
 
-        <header class="welcome-nav">
+        <section class="hero" id="about">
 
-            <div class="brand">
+            <!-- Left content -->
+            <div class="hero-content">
 
-                <span class="brand-icon">⌘</span>
-
-                <strong>SkillMate</strong>
-
-            </div>
-
-        </header>
-
-
-
-        <!-- ================= HERO SECTION ================= -->
-
-        <main class="welcome-grid">
-
-
-            <!-- ================= LEFT SIDE ================= -->
-
-            <section class="hero-copy">
-
-                <span class="eyebrow">
-                    Built for student teams
-                </span>
-
+                <div class="eyebrow">
+                    LEARN · CONNECT · GROW
+                </div>
 
                 <h1>
                     Find the skills you need.
-                    <br>
-                    Meet the people who
-                    <br>
-                    have them.
+                    <span>Meet the people who have them.</span>
                 </h1>
 
-
-                <p>
-                    Build balanced teams for college projects,
-                    hackathons and competitions—or exchange skills
-                    with peers who want to learn what you know.
+                <p class="hero-description">
+                    SkillMate helps college students find the right teammates
+                    for projects, hackathons and competitions. Create your
+                    profile, share your skills and discover students whose
+                    strengths complement your own.
                 </p>
 
+                <p class="hero-secondary">
+                    Looking for a coding partner, a creative designer or
+                    someone to exchange skills with? Connect with like-minded
+                    students, learn from each other and turn your ideas into
+                    something amazing.
+                </p>
 
+                <div class="hero-buttons">
 
-                <!-- ================= BUTTONS ================= -->
-
-                <div class="hero-actions">
-
-                    <a href="dashboard.html" class="btn primary">
-                        Get Started
-                    </a>
-
-                    <a href="#login" class="btn secondary">
+<a href="./ProfileDetails.html" class="primary-button">
+    Get Started <span>→</span>
+</a>
+                    <a href="./StudentLogin.html" class="secondary-button">
                         Student Login
                     </a>
 
                 </div>
 
+                <div class="hero-note">
+                    <span class="note-star">✦</span>
+                    Your next great team starts here.
+                </div>
+
+            </div>
 
 
-                <!-- ================= SOCIAL PROOF ================= -->
+            <!-- Right visual -->
+            <div class="hero-visual">
 
-                <div class="social-proof">
+                <div class="circle circle-peach"></div>
+                <div class="circle circle-lilac"></div>
+                <div class="circle circle-green"></div>
 
-                    <div class="avatars">
+                <div class="floating-label label-top">
+                    <span>✦</span>
+                    Find your match
+                </div>
 
-                        <span>AN</span>
+                <div class="match-card">
 
-                        <span>KS</span>
+                    <div class="card-decoration">✦</div>
 
-                        <span>SK</span>
+                    <span class="card-eyebrow">
+                        GOOD IDEAS START WITH
+                    </span>
 
-                        <span>DP</span>
+                    <h2>The right people.</h2>
+
+                    <p class="card-description">
+                        Different skills. One amazing team.
+                    </p>
+
+                    <div class="skill-icons">
+
+                        <div class="skill-icon icon-peach" title="Design">
+                            🎨
+                        </div>
+
+                        <div class="skill-icon icon-blue" title="Technology">
+                            💻
+                        </div>
+
+                        <div class="skill-icon icon-pink" title="Creativity">
+                            📊
+                        </div>
+
+                        <div class="skill-icon icon-yellow" title="Ideas">
+                            💡
+                        </div>
 
                     </div>
 
-
-                    <span>
-                        2,400+ students finding their perfect teammate
-                    </span>
+                    <div class="card-bottom-line"></div>
 
                 </div>
 
-            </section>
+                <div class="floating-label label-bottom">
+                    <span>⇄</span>
+                    Share your skills
+                </div>
+
+            </div>
+
+        </section>
 
 
+        <!-- Feature highlights -->
+        <section class="features-section" id="features">
 
-            <!-- ================= LOGIN CARD ================= -->
+            <div class="feature-item">
 
-            <section class="login-card" id="login">
+                <div class="feature-icon feature-peach">⌕</div>
 
+                <div>
+                    <h3>Discover Teammates</h3>
+                    <p>Find students with complementary skills.</p>
+                </div>
 
-                <h2>
-                    Welcome back
-                </h2>
-
-
-                <p>
-                    Sign in with your student account
-                </p>
-
+            </div>
 
 
-                <!-- ================= EMAIL ================= -->
+            <div class="feature-item">
 
-                <form>
+                <div class="feature-icon feature-lilac">▦</div>
+
+                <div>
+                    <h3>Build Projects</h3>
+                    <p>Bring your ideas to life together.</p>
+                </div>
+
+            </div>
 
 
-                    <label for="email">
-                        Student email
-                    </label>
+            <div class="feature-item">
+
+                <div class="feature-icon feature-orange">⇄</div>
+
+                <div>
+                    <h3>Exchange Skills</h3>
+                    <p>Share what you know and learn more.</p>
+                </div>
+
+            </div>
+
+        </section>
 
 
-                    <div class="input-wrap">
+        <!-- Contact section -->
+        <section class="contact-section" id="contact">
 
-                        <span>✉</span>
+            <div class="contact-heading">
+                <span>WE ARE HERE TO HELP</span>
+                <h2>Contact Us</h2>
+                <p>Have a question or suggestion? We'd love to hear from you.</p>
+            </div>
 
-                        <input
-                            type="email"
-                            id="email"
-                            placeholder="anushka@college.edu"
-                        >
+            <div class="contact-details">
 
+                <a href="tel:9310076728" class="contact-item">
+
+                    <div class="contact-icon">☎</div>
+
+                    <div>
+                        <small>Call us</small>
+                        <strong>9310076728</strong>
                     </div>
 
+                </a>
 
 
-                    <!-- ================= PASSWORD ================= -->
+                <a href="mailto:anushka.25cse@bmu.edu.in"
+                    class="contact-item">
 
-                    <label for="password">
-                        Password
-                    </label>
+                    <div class="contact-icon">✉</div>
 
-
-                    <div class="input-wrap">
-
-                        <span>🔒</span>
-
-                        <input
-                            type="password"
-                            id="password"
-                            placeholder="••••••••••"
-                        >
-
+                    <div>
+                        <small>Email us</small>
+                        <strong>anushka.25cse@bmu.edu.in</strong>
                     </div>
 
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
 
 
-                    <!-- ================= FORGOT PASSWORD ================= -->
+    <!-- Footer -->
+    <footer class="footer">
 
-                    <a href="#" class="forgot">
-                        Forgot Password?
-                    </a>
+        <a href="./login.html" class="footer-brand">
+            Skill<span>Mate</span>
+        </a>
 
+        <p>Made for students who build better things together.</p>
 
+        <span>
+            © <span id="currentYear">2026</span> SkillMate. Learn. Connect. Grow.
+        </span>
 
-                    <!-- ================= LOGIN BUTTON ================= -->
-
-                    <a href="dashboard.html" class="btn primary full login-button">
-                        Login
-                    </a>
-
-
-
-                    <!-- ================= OR ================= -->
-
-                    <div class="or">
-
-                        <span>OR</span>
-
-                    </div>
-
-
-
-                    <!-- ================= GOOGLE BUTTON ================= -->
-
-                    <a href="dashboard.html" class="google-btn">
-                        Continue with Google
-                    </a>
-
-
-
-                    <!-- ================= SIGN UP ================= -->
-
-                    <div class="signup">
-
-                        <span>
-                            New to SkillMate?
-                        </span>
-
-                        <a href="#">
-                            Sign Up
-                        </a>
-
-                    </div>
-
-
-                </form>
-
-            </section>
-
-
-        </main>
-
-    </div>
-
+    </footer>
 
 </body>
-
 </html>

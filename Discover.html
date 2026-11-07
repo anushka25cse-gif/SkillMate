@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Teammates | SkillMate</title>
+    <link rel="stylesheet" href="Discover.css">
+    <script src="Discover.js" defer></script>
+</head>
+<body>
+
+    <div class="page-shell">
+
+        <!-- TOP NAVIGATION -->
+        <header class="topbar">
+            <a href="Dashboard.html" class="brand">
+                <span class="brand-icon">S</span>
+                <span>Skill<span class="brand-highlight">Mate</span></span>
+            </a>
+
+            <nav class="top-links">
+                <a href="Dashboard.html" class="back-link">
+                    <span>←</span> Back to Dashboard
+                </a>
+                <span class="top-divider"></span>
+                <span class="page-label">DISCOVER TEAMMATES</span>
+            </nav>
+
+            <a href="Dashboard.html" class="dashboard-button">
+                My Dashboard ↗
+            </a>
+        </header>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+
+            <section class="intro-section">
+                <div>
+                    <span class="eyebrow">FIND YOUR PEOPLE</span>
+                    <h1>Meet your next <span>teammate.</span></h1>
+                    <p>
+                        Great projects start with great people.
+                        Discover students whose skills complement yours
+                        and build something meaningful together.
+                    </p>
+                </div>
+
+                <div class="intro-stat">
+                    <span class="stat-icon">✦</span>
+                    <div>
+                        <strong id="remainingCount">0</strong>
+                        <span>Students to discover</span>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- SEARCH AND FILTERS -->
+            <section class="filter-section">
+                <label class="search-box">
+                    <span>⌕</span>
+                    <input
+                        type="search"
+                        id="searchInput"
+                        placeholder="Search students or skills..."
+                    >
+                </label>
+
+                <select id="skillFilter" aria-label="Filter by skill">
+                    <option value="all">All skills</option>
+                    <option value="Python">Python</option>
+                    <option value="Machine Learning">Machine Learning</option>
+                    <option value="UI/UX Design">UI/UX Design</option>
+                    <option value="Figma">Figma</option>
+                    <option value="Web Development">Web Development</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="Graphic Design">Graphic Design</option>
+                    <option value="Data Analytics">Data Analytics</option>
+                    <option value="Java">Java</option>
+                </select>
+
+                <button class="reset-filter" id="resetFilters">
+                    Reset filters
+                </button>
+            </section>
+
+
+            <!-- DISCOVERY AREA -->
+            <section class="discovery-layout">
+
+                <!-- LEFT INFORMATION -->
+                <aside class="side-info">
+                    <div class="info-card">
+                        <span class="info-icon">✧</span>
+                        <h3>Better teams begin here.</h3>
+                        <p>
+                            Find students who bring different strengths
+                            to the table. Your next collaboration could
+                            start with one connection.
+                        </p>
+                    </div>
+
+                    <div class="how-card">
+                        <span class="eyebrow">HOW IT WORKS</span>
+
+                        <div class="how-step">
+                            <span class="step-number">01</span>
+                            <div>
+                                <strong>Explore</strong>
+                                <p>View student profiles and their skills.</p>
+                            </div>
+                        </div>
+
+                        <div class="how-step">
+                            <span class="step-number">02</span>
+                            <div>
+                                <strong>Choose</strong>
+                                <p>Pass on a profile or connect with a student.</p>
+                            </div>
+                        </div>
+
+                        <div class="how-step">
+                            <span class="step-number">03</span>
+                            <div>
+                                <strong>Collaborate</strong>
+                                <p>Build projects and learn together.</p>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+
+                <!-- CENTRAL PROFILE CARD -->
+                <div class="matching-area">
+
+                    <div class="matching-heading">
+                        <div>
+                            <span class="eyebrow">YOUR POTENTIAL TEAMMATES</span>
+                            <h2>Discover students</h2>
+                        </div>
+
+                        <span class="profile-counter" id="profileCounter">
+                            01 / 06
+                        </span>
+                    </div>
+
+
+                    <div class="card-stage" id="cardStage">
+
+                        <article class="student-card" id="studentCard">
+
+                            <div class="card-cover">
+                                <span class="cover-label">SKILLMATE STUDENT</span>
+                                <span class="cover-decoration">✳</span>
+                            </div>
+
+                            <button
+                                type="button"
+                                class="save-button"
+                                id="saveButton"
+                                aria-label="Save this student"
+                                title="Save student"
+                            >
+                                ♧
+                            </button>
+
+                            <div class="student-content">
+
+                                <div class="student-heading">
+                                    <div class="student-avatar" id="studentAvatar">
+                                        RK
+                                    </div>
+
+                                    <div class="student-identity">
+                                        <h2 id="studentName">Riya Kapoor</h2>
+                                        <p id="studentCourse">CSE · Year 2</p>
+                                        <span id="studentCollege">
+                                            BML Munjal University
+                                        </span>
+                                    </div>
+
+                                    <div class="match-score">
+                                        <strong id="matchPercentage">94%</strong>
+                                        <span>COMPATIBILITY</span>
+                                    </div>
+                                </div>
+
+
+                                <div class="student-bio-section">
+                                    <span class="section-label">ABOUT THE STUDENT</span>
+                                    <p id="studentBio">
+                                        Building thoughtful digital experiences
+                                        through design and code.
+                                    </p>
+                                </div>
+
+
+                                <div class="skills-section">
+                                    <div class="skill-group">
+                                        <span class="section-label">
+                                            SKILLS THEY KNOW
+                                        </span>
+                                        <div class="skill-list" id="knownSkills"></div>
+                                    </div>
+
+                                    <div class="skill-group">
+                                        <span class="section-label">
+                                            SKILLS THEY CAN TEACH
+                                        </span>
+                                        <div class="skill-list" id="teachSkills"></div>
+                                    </div>
+
+                                    <div class="skill-group">
+                                        <span class="section-label">
+                                            INTERESTS
+                                        </span>
+                                        <div class="skill-list" id="interests"></div>
+                                    </div>
+                                </div>
+
+
+                                <div class="match-note">
+                                    <span>✦</span>
+                                    <p id="matchMessage">
+                                        A strong match based on complementary skills.
+                                    </p>
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                        <!-- EMPTY STATE -->
+                        <div class="empty-card hidden" id="emptyCard">
+                            <div class="empty-icon">✓</div>
+                            <h2>You've explored everyone!</h2>
+                            <p>
+                                You've reached the end of your current
+                                recommendations. Reset your choices to
+                                explore the profiles again.
+                            </p>
+                            <button class="primary-button" id="restartButton">
+                                Explore again ↻
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                    <!-- SWIPE INSTRUCTIONS -->
+                    <div class="swipe-hint" id="swipeHint">
+                        <span>← PASS</span>
+                        <span>Swipe or choose an action</span>
+                        <span>CONNECT →</span>
+                    </div>
+
+
+                    <!-- ACTION BUTTONS -->
+                    <div class="action-buttons" id="actionButtons">
+
+                        <button class="action-button pass-button" id="passButton">
+                            <span class="action-symbol">✕</span>
+                            <span>Pass</span>
+                        </button>
+
+                        <button class="action-button connect-button" id="connectButton">
+                            <span class="action-symbol">✓</span>
+                            <span>Connect</span>
+                        </button>
+
+                    </div>
+
+                    <p class="action-caption">
+                        Find people who make your ideas stronger.
+                    </p>
+
+                </div>
+
+
+                <!-- RIGHT INFORMATION -->
+                <aside class="right-info">
+
+                    <div class="saved-info-card">
+                        <div class="saved-info-icon">♧</div>
+                        <h3>Your shortlist</h3>
+                        <p>
+                            Save students you want to revisit.
+                            Your saved profiles will appear in
+                            the Saved People section.
+                        </p>
+                        <a href="Dashboard.html">View saved people →</a>
+                    </div>
+
+                    <div class="tip-card">
+                        <span class="eyebrow">SKILLMATE TIP</span>
+                        <h3>Different skills. Stronger teams.</h3>
+                        <p>
+                            Look beyond shared interests.
+                            Complementary skills can make
+                            your project team stronger.
+                        </p>
+                    </div>
+
+                </aside>
+
+            </section>
+
+
+            <!-- FOOTER -->
+            <footer class="page-footer">
+                <span>© 2026 SkillMate</span>
+                <span>Made for students who build better things together ✓</span>
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- NOTIFICATION MESSAGE -->
+    <div class="toast" id="toast" role="status"></div>
+
+</body>
+</html>

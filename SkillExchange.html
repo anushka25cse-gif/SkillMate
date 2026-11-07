@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Exchange | SkillMate</title>
+
+    <link rel="stylesheet" href="SkillExchange.css">
+    <script src="SkillExchange.js" defer></script>
+</head>
+
+<body>
+
+    <div class="app-shell">
+
+<!-- SkillMate Sidebar -->
+<aside class="sidebar" id="sidebar">
+
+    <a href="Dashboard.html?view=overview" class="brand">
+        <span class="brand-mark">S</span>
+        <span>Skill<span class="brand-highlight">Mate</span></span>
+    </a>
+
+    <div class="sidebar-label">YOUR WORKSPACE</div>
+
+    <nav class="sidebar-nav">
+
+        <a href="Dashboard.html?view=overview" class="nav-item">
+            <span class="nav-symbol">⌂</span>
+            <span>Overview</span>
+        </a>
+
+        <a href="Discover.html" class="nav-item">
+            <span class="nav-symbol">✦</span>
+            <span>Discover Teammates</span>
+            <span class="nav-badge">New</span>
+        </a>
+
+        <a href="Projects.html" class="nav-item">
+            <span class="nav-symbol">▦</span>
+            <span>Projects</span>
+        </a>
+
+        <a href="SkillExchange.html" class="nav-item active">
+            <span class="nav-symbol">◇</span>
+            <span>Skill Exchange</span>
+        </a>
+
+        <a href="Dashboard.html?view=saved" class="nav-item">
+            <span class="nav-symbol">✓</span>
+            <span>Saved People</span>
+        </a>
+
+        <a href="Dashboard.html?view=connections" class="nav-item">
+            <span class="nav-symbol">⇄</span>
+            <span>Connection Requests</span>
+            <span class="nav-badge">5</span>
+        </a>
+
+        <a href="Dashboard.html?view=messages" class="nav-item">
+            <span class="nav-symbol">▤</span>
+            <span>Messages</span>
+            <span class="nav-dot"></span>
+        </a>
+
+    </nav>
+
+    <div class="sidebar-label secondary-label">YOUR ACCOUNT</div>
+
+    <nav class="sidebar-nav">
+
+        <a href="Dashboard.html?view=profile" class="nav-item">
+            <span class="nav-symbol">◎</span>
+            <span>My Profile</span>
+        </a>
+
+        <a href="CompleteProfile.html" class="nav-item">
+            <span class="nav-symbol">⚙</span>
+            <span>Edit Profile</span>
+        </a>
+
+        <a href="Dashboard.html?view=feedback" class="nav-item">
+            <span class="nav-symbol">▤</span>
+            <span>Feedback</span>
+        </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+        <div class="sidebar-help">
+            <div class="help-icon">✦</div>
+            <h3>Grow together</h3>
+            <p>Share what you know and learn something new.</p>
+        </div>
+
+        <a href="Login.html" class="logout-link" id="logoutBtn">
+            <span>↪</span> Log out
+        </a>
+
+    </div>
+
+</aside>
+
+        <!-- Main content -->
+        <main class="main-area">
+
+            <!-- Topbar -->
+            <header class="topbar">
+
+                <div class="topbar-left">
+                    <button class="mobile-menu" id="mobileMenu" type="button">
+                        ☰
+                    </button>
+
+                    <div>
+                        <span class="breadcrumb">Workspace /</span>
+                        <span class="breadcrumb-current">Skill Exchange</span>
+                    </div>
+                </div>
+
+                <div class="topbar-right">
+                    <div class="user-info">
+                        <span class="user-name" id="topUserName">Student</span>
+                        <span class="user-avatar" id="topAvatar">S</span>
+                    </div>
+                </div>
+
+            </header>
+
+            <div class="page-content">
+
+                <!-- Page heading -->
+                <section class="page-heading">
+                    <div>
+                        <span class="eyebrow">LEARN · SHARE · GROW</span>
+                        <h1>Skill Exchange</h1>
+                        <p>
+                            Learn from other students and share the skills
+                            you already know.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Hero section -->
+                <section class="hero-card">
+
+                    <div class="hero-content">
+                        <span class="hero-label">YOUR NEXT LEARNING OPPORTUNITY</span>
+
+                        <h2>Learn something new.<br>Share something valuable.</h2>
+
+                        <p>
+                            Find students who can teach you the skills you want
+                            to learn, while sharing your own knowledge.
+                        </p>
+
+                        <a href="#learningSection" class="primary-button">
+                            Choose skills to learn <span>→</span>
+                        </a>
+                    </div>
+
+                    <div class="hero-decoration">
+                        <div class="decoration-circle circle-one">✦</div>
+                        <div class="decoration-circle circle-two">✳</div>
+                        <div class="decoration-card">
+                            <span class="decoration-icon">↗</span>
+                            <strong>Keep learning</strong>
+                            <small>One skill at a time</small>
+                        </div>
+                    </div>
+
+                </section>
+
+                <!-- Statistics -->
+                <section class="stats-grid">
+
+                    <div class="stat-card">
+                        <span class="stat-icon peach-icon">◎</span>
+                        <div>
+                            <p>Skills I want to learn</p>
+                            <h2 id="learningCount">0</h2>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <span class="stat-icon purple-icon">✦</span>
+                        <div>
+                            <p>Skills I can share</p>
+                            <h2 id="teachingCount">0</h2>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <span class="stat-icon orange-icon">↗</span>
+                        <div>
+                            <p>Available skill partners</p>
+                            <h2 id="matchCount">0</h2>
+                        </div>
+                    </div>
+
+                </section>
+
+                <!-- Skill selection and my skills -->
+                <section class="exchange-layout" id="learningSection">
+
+                    <!-- Learning skills -->
+                    <div class="content-card learning-card">
+
+                        <div class="section-heading">
+                            <div>
+                                <span class="section-label">PERSONAL LEARNING GOALS</span>
+                                <h2>What do you want to learn?</h2>
+                                <p>Select the skills you are interested in learning.</p>
+                            </div>
+
+                            <span class="heading-icon">✦</span>
+                        </div>
+
+                        <div class="selected-area">
+                            <div class="selected-heading">
+                                <strong>Your selected skills</strong>
+                                <span id="selectedCount">0 selected</span>
+                            </div>
+
+                            <div class="selected-skills" id="selectedSkillsList">
+                                <span class="selection-placeholder">
+                                    Select skills below to add them here.
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="skill-category-area" id="skillChoices">
+                            <!-- Skill options are added by JavaScript -->
+                        </div>
+
+                        <div class="custom-skill-area">
+                            <label for="customSkillInput">
+                                Can't find your skill?
+                            </label>
+
+                            <div class="custom-skill-input">
+                                <input
+                                    type="text"
+                                    id="customSkillInput"
+                                    placeholder="Enter another skill..."
+                                >
+
+                                <button type="button" id="addCustomSkill">
+                                    + Add
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="save-area">
+                            <p>
+                                You can change your learning goals whenever
+                                you want.
+                            </p>
+
+                            <button type="button" id="saveLearningSkills"
+                                class="primary-button">
+                                Save my learning goals
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <!-- My skills -->
+                    <div class="content-card my-skills-card">
+
+                        <div class="section-heading">
+                            <div>
+                                <span class="section-label">YOUR CONTRIBUTION</span>
+                                <h2>Skills I can share</h2>
+                                <p>Skills added to your student profile.</p>
+                            </div>
+
+                            <span class="heading-icon share-heading-icon">⇄</span>
+                        </div>
+
+                        <div class="my-skills-list" id="mySkillsList">
+                            <!-- Profile skills are added by JavaScript -->
+                        </div>
+
+                        <div class="profile-note">
+                            <span>i</span>
+                            <p>
+                                Want to add or change the skills you can teach?
+                                Update your profile.
+                            </p>
+                        </div>
+
+                        <a href="CompleteProfile.html" class="outline-button">
+                            Edit my profile <span>→</span>
+                        </a>
+
+                    </div>
+
+                </section>
+
+                <!-- Find learning partners -->
+                <section class="mentors-section">
+
+                    <div class="mentors-heading">
+                        <div>
+                            <span class="section-label">LEARN FROM YOUR PEERS</span>
+                            <h2>Find your skill partners</h2>
+                            <p id="matchSummary">
+                                Select skills you want to learn to find matching students.
+                            </p>
+                        </div>
+
+                        <div class="mentor-search">
+                            <span>⌕</span>
+                            <input
+                                type="search"
+                                id="mentorSearch"
+                                placeholder="Search students or skills..."
+                            >
+                        </div>
+                    </div>
+
+                    <div class="mentor-grid" id="mentorGrid">
+                        <!-- Mentor cards are added by JavaScript -->
+                    </div>
+
+                    <div class="empty-state hidden" id="mentorEmpty">
+                        <div class="empty-icon">⌕</div>
+                        <h3>No matching students found</h3>
+                        <p>
+                            Try selecting different skills or changing
+                            your search.
+                        </p>
+                    </div>
+
+                </section>
+
+                <!-- My requests -->
+                <section class="requests-section">
+
+                    <div class="section-heading request-heading">
+                        <div>
+                            <span class="section-label">YOUR ACTIVITY</span>
+                            <h2>My learning requests</h2>
+                            <p>Keep track of the students you have contacted.</p>
+                        </div>
+
+                        <span class="request-count" id="requestCount">0 requests</span>
+                    </div>
+
+                    <div class="request-list" id="myRequestsList">
+                        <div class="request-empty">
+                            Your learning requests will appear here.
+                        </div>
+                    </div>
+
+                </section>
+
+                <footer class="page-footer">
+                    Made for students who learn better together.
+                    <span>SkillMate</span>
+                </footer>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- Toast message -->
+    <div class="toast" id="toast"></div>
+
+</body>
+</html>
