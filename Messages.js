@@ -2,39 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const $ = selector => document.querySelector(selector);
 
-    const MESSAGES_KEY = "skillmateMessages";
-    const CONNECTIONS_KEY = "skillmateAcceptedConnections";
-
-    // Read and save data in localStorage
-
-    function readJSON(key, fallback) {
-        try {
-            const value = JSON.parse(localStorage.getItem(key));
-            return value ?? fallback;
-        } catch (error) {
-            return fallback;
-        }
-    }
-
-    function saveJSON(key, value) {
-        try {
-            localStorage.setItem(key, JSON.stringify(value));
-            return true;
-        } catch (error) {
-            console.error("Could not save messages:", error);
-            return false;
-        }
-    }
-
-    function readSession(key, fallback) {
-        try {
-            const value = JSON.parse(sessionStorage.getItem(key));
-            return value ?? fallback;
-        } catch (error) {
-            return fallback;
-        }
-    }
-
     function escapeHTML(value) {
         return String(value ?? "").replace(/[&<>"']/g, character => ({
             "&": "&amp;",
@@ -45,12 +12,9 @@ document.addEventListener("DOMContentLoaded", function () {
         })[character]);
     }
 
-    // Get the current student's details
+    // Get the current student's details (cached by api.js after login)
 
-    const currentUser =
-        readSession("skillmateCurrentUser", null) ||
-        readJSON("skillmateCurrentUser", null) ||
-        {};
+    const currentUser = SkillMate.getUser() || {};
 
     const currentName =
         currentUser.fullName ||
@@ -58,92 +22,55 @@ document.addEventListener("DOMContentLoaded", function () {
         currentUser.username ||
         "Student";
 
-    const currentInitials = currentName
-        .trim()
-        .split(/\s+/)
-        .slice(0, 2)
-        .map(part => part[0].toUpperCase())
-        .join("");
+    const currentInitials = SkillMate.initials(currentName);
 
-    // Sample student details.
-    // These IDs match the IDs used in Dashboard.js.
+    // Live data from the SkillMate API.
+    const api = SkillMate.api;
 
-    const people = {
-        p1: {
-            id: "p1",
-            name: "Riya Kapoor",
-            initials: "RK",
-            course: "CSE · Year 2",
-            color: ""
-        },
-        p2: {
-            id: "p2",
-            name: "Aarav Sharma",
-            initials: "AS",
-            course: "CSE · Year 2",
-            color: "avatar-two"
-        },
-        p3: {
-            id: "p3",
-            name: "Mehak Verma",
-            initials: "MV",
-            course: "Design · Year 2",
-            color: "avatar-three"
-        },
-        p4: {
-            id: "p4",
-            name: "Kabir Malhotra",
-            initials: "KM",
-            course: "CSE · Year 1",
-            color: "avatar-four"
-        },
-        p5: {
-            id: "p5",
-            name: "Sana Ali",
-            initials: "SA",
-            course: "CSE · Year 2",
-            color: ""
-        },
-        p6: {
-            id: "p6",
-            name: "Dev Mehta",
-            initials: "DM",
-            course: "CSE · Year 1",
-            color: "avatar-two"
-        }
-    };
+    const avatarColours = ["", "avatar-two", "avatar-three", "avatar-four"];
 
-    let acceptedConnections = readJSON(CONNECTIONS_KEY, []);
-
-    if (!Array.isArray(acceptedConnections)) {
-        acceptedConnections = [];
-    }
-
-    let conversations = readJSON(MESSAGES_KEY, {});
-
-    if (
-        !conversations ||
-        typeof conversations !== "object" ||
-        Array.isArray(conversations)
-    ) {
-        conversations = {};
-    }
-
+    let contacts = [];        // accepted connections from /api/messages/threads
+    let conversations = {};   // userId -> messages, loaded when opened
     let selectedContactId = "";
     let toastTimer;
 
-    // Get the accepted students who can appear in Messages
+    /** API thread -> the contact shape the list template expects. */
+    function mapThread(thread, index) {
+        return {
+            id: thread.person.id,
+            name: thread.person.name,
+            initials: thread.person.initials || SkillMate.initials(thread.person.name),
+            course: SkillMate.courseLabel(thread.person),
+            color: avatarColours[index % avatarColours.length],
+            unreadCount: thread.unreadCount || 0,
+            preview: thread.lastMessage ? thread.lastMessage.content : ""
+        };
+    }
+
+    /** API message -> the shape the chat bubbles already render. */
+    function mapMessage(message) {
+        return {
+            id: message.id,
+            sender: message.mine ? "me" : message.senderId,
+            senderId: message.senderId,
+            text: message.content,
+            createdAt: message.timestamp,
+            read: Boolean(message.read),
+            mine: Boolean(message.mine)
+        };
+    }
+
+    /** Refresh the conversation list from the server. */
+    async function loadThreads() {
+        const payload = await api.messageThreads();
+
+        contacts = (payload.threads || []).map(mapThread);
+    }
+
+    // The accepted students who can appear in Messages
 
     function getChatContacts() {
-        acceptedConnections = readJSON(CONNECTIONS_KEY, []);
-
-        if (!Array.isArray(acceptedConnections)) {
-            acceptedConnections = [];
-        }
-
-        return acceptedConnections
-            .map(id => people[id])
-            .filter(Boolean);
+        return contacts;
     }
 
     function getContact(id) {
@@ -202,11 +129,52 @@ document.addEventListener("DOMContentLoaded", function () {
     function getLastMessage(contactId) {
         const messages = getConversation(contactId);
 
-        if (messages.length === 0) {
-            return "Start a conversation";
+        if (messages.length > 0) {
+            return messages[messages.length - 1].text;
         }
 
-        return messages[messages.length - 1].text;
+        const contact = getContact(contactId);
+
+        if (contact && contact.preview) {
+            return contact.preview;
+        }
+
+        return "Start a conversation";
+    }
+
+    /** Load one conversation from the server the first time it is opened. */
+    async function loadConversation(contactId) {
+        const payload = await api.conversation(contactId);
+
+        const messages = (payload.messages || []).map(mapMessage);
+
+        conversations[contactId] = messages;
+
+        // Mark everything the other student sent as read, then refresh the
+        // thread list so the unread badge disappears.
+        const unread = messages.filter(message => !message.mine && !message.read);
+
+        if (unread.length > 0) {
+            await Promise.all(
+                unread.map(message => api.markMessageRead(message.id))
+            );
+
+            messages.forEach(message => {
+                if (!message.mine) message.read = true;
+            });
+
+            const contact = contacts.find(item => item.id === contactId);
+
+            if (contact) contact.unreadCount = 0;
+        }
+
+        const last = messages[messages.length - 1];
+
+        const contact = contacts.find(item => item.id === contactId);
+
+        if (contact && last) {
+            contact.preview = last.text;
+        }
     }
 
     // Build the Messages interface inside the Dashboard
@@ -307,7 +275,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             </form>
 
                             <div class="chat-demo-note">
-                                Demo chat: messages are saved in this browser.
+                                Messages are stored securely on the SkillMate server.
                             </div>
 
                         </div>
@@ -474,7 +442,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Open a selected student's conversation
 
-    function openConversation(contactId) {
+    async function openConversation(contactId) {
         const person = getContact(contactId);
 
         if (!person) {
@@ -485,12 +453,25 @@ document.addEventListener("DOMContentLoaded", function () {
         selectedContactId = contactId;
 
         renderContacts();
+
+        if (!Array.isArray(conversations[contactId])) {
+            try {
+                await loadConversation(contactId);
+            } catch (error) {
+                showMessageToast(
+                    error.message || "This conversation could not be loaded."
+                );
+                return;
+            }
+        }
+
+        renderContacts();
         renderConversation();
     }
 
     // Send a new message
 
-    function sendMessage(event) {
+    async function sendMessage(event) {
         event.preventDefault();
 
         const input = $("#chatMessageInput");
@@ -507,25 +488,21 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        const messages = getConversation(person.id);
+        input.value = "";
 
-        const newMessage = {
-            id: `message-${Date.now()}`,
-            sender: "me",
-            senderName: currentName,
-            text: text,
-            createdAt: new Date().toISOString()
-        };
+        try {
+            const result = await api.sendMessage(person.id, text);
 
-        messages.push(newMessage);
+            const messages = getConversation(person.id);
 
-        if (!saveJSON(MESSAGES_KEY, conversations)) {
-            messages.pop();
-            showMessageToast("Your message could not be saved.");
+            messages.push(mapMessage(result.data));
+
+            person.preview = text;
+        } catch (error) {
+            input.value = text;
+            showMessageToast(error.message || "Your message could not be sent.");
             return;
         }
-
-        input.value = "";
 
         renderConversation();
         renderContacts();
@@ -557,51 +534,44 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Update the page if another tab changes messages or connections
+    // Start the Messages section with live data from the server.
 
-    window.addEventListener("storage", function (event) {
+    async function startMessages() {
+        if (!SkillMate.requireAuth()) return;
 
-        if (
-            event.key === MESSAGES_KEY ||
-            event.key === CONNECTIONS_KEY
-        ) {
-            conversations = readJSON(MESSAGES_KEY, {});
-            acceptedConnections = readJSON(CONNECTIONS_KEY, []);
+        if (!createMessagesLayout()) return;
 
-            renderContacts();
-            renderConversation();
+        try {
+            await loadThreads();
+        } catch (error) {
+            console.error("Messages could not be loaded:", error);
+
+            if (error.status === 401) {
+                SkillMate.clearSession();
+                window.location.href = "./StudentLogin.html";
+                return;
+            }
+
+            showMessageToast(
+                error.message || "Your conversations could not be loaded."
+            );
         }
-    });
 
-    // Start the Messages section
+        const availableContacts = getChatContacts();
 
-    if (createMessagesLayout()) {
+        if (availableContacts.length > 0) {
+            selectedContactId = availableContacts[0].id;
 
-        const contacts = getChatContacts();
-
-        // Open the last selected conversation if it is still accepted.
-        // Otherwise, open the first available contact.
-
-        const savedContact = readJSON("skillmateActiveChat", "");
-
-        if (contacts.some(person => person.id === savedContact)) {
-            selectedContactId = savedContact;
-        } else if (contacts.length > 0) {
-            selectedContactId = contacts[0].id;
+            try {
+                await loadConversation(selectedContactId);
+            } catch (error) {
+                console.warn("Conversation could not be opened:", error);
+            }
         }
 
         renderContacts();
         renderConversation();
-
-        // Remember which conversation was selected
-
-        document.addEventListener("click", function (event) {
-            const button = event.target.closest("[data-chat-contact]");
-
-            if (button) {
-                saveJSON("skillmateActiveChat", button.dataset.chatContact);
-            }
-        });
     }
 
+    startMessages();
 });

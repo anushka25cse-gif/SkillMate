@@ -7,6 +7,8 @@ const rememberMe = document.getElementById("rememberMe");
 const formMessage = document.getElementById("formMessage");
 const forgotPassword = document.getElementById("forgotPassword");
 
+// SkillMate frontend API client (api.js) owns the server address.
+
 // Restore the remembered email, if one was saved.
 try {
     const savedEmail = localStorage.getItem("skillmateRememberedEmail");
@@ -70,7 +72,7 @@ forgotPassword.addEventListener("click", function (event) {
 });
 
 // Sign in.
-loginForm.addEventListener("submit", function (event) {
+loginForm.addEventListener("submit", async function (event) {
     event.preventDefault();
 
     const email = emailInput.value.trim().toLowerCase();
@@ -81,36 +83,24 @@ loginForm.addEventListener("submit", function (event) {
         return;
     }
 
-    let users;
+    // Sign in through the SkillMate API.
+    let matchedUser = null;
 
     try {
-        users = JSON.parse(localStorage.getItem("skillmateUsers") || "[]");
-    } catch (error) {
-        showMessage("Unable to read saved accounts in this browser.", "error");
-        return;
-    }
+        const result = await SkillMate.api.login(email, password);
 
-    if (!Array.isArray(users) || users.length === 0) {
+        matchedUser = result.user;
+    } catch (error) {
         showMessage(
-            "No registered accounts were found. Create an account first, and make sure registration saves it to SkillMate.",
+            error.message ||
+                "The email ID or password is incorrect. Please try again.",
             "error"
         );
         return;
     }
-
-    const matchedUser = users.find(function (user) {
-        return (
-            user.email &&
-            user.email.trim().toLowerCase() === email &&
-            user.password === password
-        );
-    });
 
     if (!matchedUser) {
-        showMessage(
-            "The email ID or password is incorrect. Please try again.",
-            "error"
-        );
+        showMessage("Login failed. Please try again.", "error");
         return;
     }
 
@@ -121,25 +111,19 @@ loginForm.addEventListener("submit", function (event) {
         } else {
             localStorage.removeItem("skillmateRememberedEmail");
         }
-
-        // Store the current demo session.
-        sessionStorage.setItem(
-            "skillmateCurrentUser",
-            JSON.stringify({
-                email: matchedUser.email,
-                fullName: matchedUser.fullName || matchedUser.name || ""
-            })
-        );
     } catch (error) {
+        console.warn("Could not save the remembered email.");
+    }
+
+    if (!matchedUser.profileCompleted) {
         showMessage(
-            "Your browser could not save the session. Please check its storage settings.",
-            "error"
+            "Your profile is not complete yet. Opening your profile setup...",
+            "success"
         );
+        window.location.href = "CompleteProfile.html";
         return;
     }
 
     showMessage("Login successful! Opening your dashboard...", "success");
-
-    // Create Dashboard.html before using this redirect.
     window.location.href = "Dashboard.html";
 });

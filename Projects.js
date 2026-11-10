@@ -3,54 +3,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const $ = selector => document.querySelector(selector);
     const $$ = selector => [...document.querySelectorAll(selector)];
 
-    const PROJECTS_KEY = "skillmateProjects";
-    const INTERESTS_KEY = "skillmateProjectInterests";
+    // SkillMate API client (api.js) provides every server call.
+    const api = SkillMate.api;
 
-    // -----------------------------------------
-    // STORAGE HELPERS
-    // -----------------------------------------
+    // ---------------------------------------------------------
+    // STUDENT + LIVE PROJECT DATA (from the SkillMate API)
+    // ---------------------------------------------------------
 
-    function readJSON(key, fallback) {
-        try {
-            const value = JSON.parse(localStorage.getItem(key));
-            return value ?? fallback;
-        } catch {
-            return fallback;
-        }
-    }
-
-    function saveJSON(key, value) {
-        try {
-            localStorage.setItem(key, JSON.stringify(value));
-            return true;
-        } catch (error) {
-            console.error("Storage error:", error);
-            return false;
-        }
-    }
-
-    function readSessionJSON(key, fallback) {
-        try {
-            const value = JSON.parse(sessionStorage.getItem(key));
-            return value ?? fallback;
-        } catch {
-            return fallback;
-        }
-    }
-
-    // Read the same logged-in user used by Dashboard.js.
-    const currentUser =
-        readSessionJSON("skillmateCurrentUser", null) ||
-        readJSON("skillmateCurrentUser", null);
-
-    const signupDraft =
-        readSessionJSON("skillmateSignupDraft", {}) ||
-        readJSON("skillmateSignupDraft", {});
-
-    const user = {
-        ...signupDraft,
-        ...(currentUser || {})
-    };
+    const user = SkillMate.getUser() || {};
 
     function getUserName() {
         return user.fullName || user.name || user.username || "SkillMate Student";
@@ -60,56 +20,70 @@ document.addEventListener("DOMContentLoaded", () => {
         return user.email || "";
     }
 
-    // -----------------------------------------
-    // DEMO PROJECTS
-    // -----------------------------------------
-
-    const demoProjects = [
-        {
-            id: "d1",
-            title: "Campus Connect",
-            category: "Web Development",
-            emoji: "✦",
-            description: "A student platform to discover campus events, clubs and people with shared interests.",
-            skills: ["HTML & CSS", "JavaScript", "UI/UX Design"],
-            members: 3,
-            status: "Open"
-        },
-        {
-            id: "d2",
-            title: "Smart Study Buddy",
-            category: "AI & Machine Learning",
-            emoji: "✳",
-            description: "An idea for a study companion that helps students organise learning and revision.",
-            skills: ["Python", "Machine Learning", "UI/UX Design"],
-            members: 3,
-            status: "Open"
-        },
-        {
-            id: "d3",
-            title: "Green Campus Initiative",
-            category: "Social Impact",
-            emoji: "✳",
-            description: "Explore creative ways to make campus life more sustainable and community-driven.",
-            skills: ["Research", "Graphic Design", "Web Development"],
-            members: 4,
-            status: "Open"
-        }
-    ];
-
-    // Load the projects saved by Dashboard.js.
-    let projects = readJSON(PROJECTS_KEY, null);
-
-    if (!Array.isArray(projects)) {
-        projects = demoProjects;
-        saveJSON(PROJECTS_KEY, projects);
-    }
-
-    let interests = readJSON(INTERESTS_KEY, []);
-    if (!Array.isArray(interests)) interests = [];
-
+    let projects = [];
+    let interests = [];   // project ids I already asked to join
+    let editingProjectId = null;
     let activeTab = "all";
     let toastTimer;
+
+    /** API project -> the card shape this page already renders. */
+    function mapProject(project) {
+        const members = Array.isArray(project.teamMembers)
+            ? project.teamMembers.length
+            : 1;
+
+        return {
+            id: project.id,
+            title: project.title,
+            category: project.category || "Other",
+            emoji: project.emoji || "✦",
+            description: project.description || "",
+            skills: Array.isArray(project.requiredSkills)
+                ? project.requiredSkills
+                : [],
+            members: members || 1,
+            teamSize: project.teamSize || Math.max(members, 3),
+            status: project.status || "Open",
+            createdBy: project.creator ? project.creator.name : "SkillMate Student",
+            isCreator: Boolean(project.isCreator),
+            isMember: Boolean(project.isMember),
+            hasPendingRequest: Boolean(project.hasPendingRequest),
+            joinRequests: Array.isArray(project.joinRequests)
+                ? project.joinRequests
+                : []
+        };
+    }
+
+    /** Projects I created, joined or asked to join. */
+    function refreshInterests() {
+        interests = projects
+            .filter(project => project.isCreator || project.isMember || project.hasPendingRequest)
+            .map(project => project.id);
+    }
+
+    // Initialize: session check, then live data, then render.
+    async function initialize() {
+        if (!SkillMate.requireAuth()) return;
+
+        try {
+            const payload = await api.listProjects({ sort: "recent" });
+
+            projects = (payload.projects || []).map(mapProject);
+            refreshInterests();
+        } catch (error) {
+            console.error("Projects could not be loaded:", error);
+
+            if (error.status === 401) {
+                SkillMate.clearSession();
+                window.location.href = "./StudentLogin.html";
+                return;
+            }
+
+            showToast(error.message || "Projects could not be loaded.");
+        }
+
+        refreshPage();
+    }
 
     // -----------------------------------------
     // USER DETAILS
@@ -129,9 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // -----------------------------------------
     // PROJECTS PAGE SIDEBAR NAVIGATION FIX
     // -----------------------------------------
-
-    // Each Dashboard link on Projects.html is assigned
-    // the exact Dashboard section it should open.
 
     const dashboardDestinations = [
         { label: "overview", view: "overview" },
@@ -174,12 +145,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // -----------------------------------------
 
     function escapeHTML(value) {
+        // Escape everything that could be interpreted as markup. Project
+        // titles, descriptions and skill names are student-controlled text.
         return String(value ?? "").replace(/[&<>"']/g, character => ({
             "&": "&amp;",
             "<": "&lt;",
             ">": "&gt;",
             '"': "&quot;",
-            "'": "&#039;"
+            "'": "&#39;"
         })[character]);
     }
 
@@ -197,24 +170,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 2600);
     }
 
-    function saveProjects() {
-        return saveJSON(PROJECTS_KEY, projects);
-    }
-
     function getMyProjects() {
-        const email = getUserEmail().toLowerCase();
-        const name = getUserName().toLowerCase();
-
-        return projects.filter(project => {
-            const creatorEmail = (project.createdByEmail || "").toLowerCase();
-            const creatorName = (project.createdBy || "").toLowerCase();
-
-            if (creatorEmail && email) {
-                return creatorEmail === email;
-            }
-
-            return creatorName === name;
-        });
+        // The API tells us whether the logged-in student created the project.
+        return projects.filter(project => project.isCreator);
     }
 
     // -----------------------------------------
@@ -276,12 +234,21 @@ document.addEventListener("DOMContentLoaded", () => {
                     ${memberCount} / ${teamSize} members
                 </div>
 
+                ${project.isCreator ? `
+                <div class="creator-actions" style="display:flex;gap:8px;">
+                    <button class="outline-button" data-edit="${escapeHTML(project.id)}"
+                        type="button">Edit</button>
+                    <button class="outline-button" data-delete="${escapeHTML(project.id)}"
+                        type="button">Delete</button>
+                </div>
+                ` : `
                 <button
                     class="interest-button ${alreadyInterested ? "interested" : ""}"
                     data-interest="${escapeHTML(project.id)}"
                     ${alreadyInterested ? "disabled" : ""}>
                     ${alreadyInterested ? "Interest sent ✓" : "Interested in this →"}
                 </button>
+                `}
             </div>
         `;
 
@@ -294,13 +261,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderProjects() {
         const grid = $("#projectGrid");
-
-        // Always read the latest shared project data.
-        const latestProjects = readJSON(PROJECTS_KEY, projects);
-
-        if (Array.isArray(latestProjects)) {
-            projects = latestProjects;
-        }
 
         const searchTerm = $("#projectSearch").value.trim().toLowerCase();
         const category = $("#categoryFilter").value;
@@ -388,29 +348,37 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // -----------------------------------------
-    // PROJECT INTEREST
+    // PROJECT INTEREST (ask to join a team)
     // -----------------------------------------
 
-    $("#projectGrid").addEventListener("click", event => {
+    $("#projectGrid").addEventListener("click", async event => {
         const button = event.target.closest("[data-interest]");
         if (!button) return;
 
         const projectId = button.dataset.interest;
 
-        if (!interests.includes(projectId)) {
-            interests.push(projectId);
+        if (interests.includes(projectId)) return;
 
-            if (!saveJSON(INTERESTS_KEY, interests)) {
-                interests = interests.filter(id => id !== projectId);
-                showToast("Could not save your interest. Please try again.");
-                return;
+        button.disabled = true;
+
+        try {
+            const result = await api.joinProject(projectId);
+
+            const index = projects.findIndex(project => project.id === projectId);
+
+            if (index !== -1) {
+                projects[index] = mapProject(result.project);
             }
+
+            refreshInterests();
 
             button.textContent = "Interest sent ✓";
             button.classList.add("interested");
-            button.disabled = true;
 
-            showToast("Your interest has been saved!");
+            showToast("Your request to join has been sent to the project creator.");
+        } catch (error) {
+            button.disabled = false;
+            showToast(error.message || "Could not send your interest.");
         }
     });
 
@@ -421,25 +389,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const modal = $("#projectModal");
 
     $("#openCreateModal").addEventListener("click", () => {
+        editingProjectId = null;
+        $("#projectForm").reset();
         modal.classList.remove("hidden");
         $("#projectTitle").focus();
     });
 
     $("#closeCreateModal").addEventListener("click", () => {
+        editingProjectId = null;
         modal.classList.add("hidden");
     });
 
     modal.addEventListener("click", event => {
         if (event.target === modal) {
+            editingProjectId = null;
             modal.classList.add("hidden");
         }
     });
 
     // -----------------------------------------
-    // CREATE NEW PROJECT
+    // CREATE OR EDIT A PROJECT
     // -----------------------------------------
 
-    $("#projectForm").addEventListener("submit", event => {
+    $("#projectForm").addEventListener("submit", async event => {
         event.preventDefault();
 
         const title = $("#projectTitle").value.trim();
@@ -459,31 +431,44 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const newProject = {
-            id: "custom-" + Date.now(),
+        const payload = {
             title,
             category,
-            emoji: "✦",
             description,
-            skills,
-            members: 1,
-            teamSize,
-            status: "Open",
-            createdBy: getUserName(),
-            createdByEmail: getUserEmail()
+            requiredSkills: skills,
+            teamSize: Number.isFinite(teamSize) && teamSize > 0 ? teamSize : 3
         };
 
-        projects.unshift(newProject);
+        try {
+            if (editingProjectId) {
+                const result = await api.updateProject(editingProjectId, payload);
 
-        if (!saveProjects()) {
-            projects.shift();
-            showToast("Your project could not be saved. Please try again.");
+                projects = projects.map(project =>
+                    project.id === editingProjectId
+                        ? mapProject(result.project)
+                        : project
+                );
+
+                showToast("Your project has been updated successfully!");
+            } else {
+                const result = await api.createProject({
+                    ...payload,
+                    emoji: "✦",
+                    status: "Open"
+                });
+
+                projects.unshift(mapProject(result.project));
+
+                showToast("Your project has been created successfully!");
+            }
+        } catch (error) {
+            showToast(error.message || "The project could not be saved.");
             return;
         }
 
-        $("#projectForm").reset();
+        editingProjectId = null;
         modal.classList.add("hidden");
-
+        $("#projectForm").reset();
         activeTab = "all";
 
         $$(".tab-button").forEach(tab => {
@@ -494,8 +479,8 @@ document.addEventListener("DOMContentLoaded", () => {
         $("#topSearch").value = "";
         $("#categoryFilter").value = "all";
 
+        refreshInterests();
         refreshPage();
-        showToast("Your project has been created successfully!");
     });
 
     // -----------------------------------------
@@ -524,12 +509,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // LOGOUT
     // -----------------------------------------
 
-    $("#logoutBtn").addEventListener("click", () => {
+    $("#logoutBtn").addEventListener("click", async () => {
         const confirmed = confirm("Are you sure you want to log out?");
 
         if (confirmed) {
-            localStorage.removeItem("skillmateCurrentUser");
-            sessionStorage.removeItem("skillmateCurrentUser");
+            await SkillMate.api.logout();
 
             window.location.href = "./Login.html";
         }
@@ -544,18 +528,57 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // -----------------------------------------
-    // REFRESH WHEN SHARED STORAGE CHANGES
+    // EDIT / DELETE A PROJECT YOU CREATED
     // -----------------------------------------
 
-    window.addEventListener("storage", event => {
-        if (event.key === PROJECTS_KEY) {
-            projects = readJSON(PROJECTS_KEY, []);
-            refreshPage();
+    $("#projectGrid").addEventListener("click", event => {
+        const editButton = event.target.closest("[data-edit]");
+        const deleteButton = event.target.closest("[data-delete]");
+
+        if (editButton) {
+            const project = projects.find(
+                item => item.id === editButton.dataset.edit
+            );
+
+            if (!project) return;
+
+            editingProjectId = project.id;
+
+            $("#projectTitle").value = project.title || "";
+            $("#projectCategory").value = project.category || "";
+            $("#projectDescription").value = project.description || "";
+            $("#projectSkills").value = (project.skills || []).join(", ");
+            $("#projectMembers").value = project.teamSize || 3;
+
+            modal.classList.remove("hidden");
+            $("#projectTitle").focus();
+
+            showToast(`Editing "${project.title}".`);
+            return;
         }
 
-        if (event.key === INTERESTS_KEY) {
-            interests = readJSON(INTERESTS_KEY, []);
-            renderProjects();
+        if (deleteButton) {
+            const projectId = deleteButton.dataset.delete;
+            const project = projects.find(item => item.id === projectId);
+
+            if (!project) return;
+
+            const confirmed = confirm(
+                `Delete "${project.title}"? This cannot be undone.`
+            );
+
+            if (!confirmed) return;
+
+            api.deleteProject(projectId)
+                .then(() => {
+                    projects = projects.filter(item => item.id !== projectId);
+                    refreshInterests();
+                    refreshPage();
+                    showToast("Project deleted.");
+                })
+                .catch(error => {
+                    showToast(error.message || "The project could not be deleted.");
+                });
         }
     });
 
@@ -563,6 +586,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // INITIAL PAGE LOAD
     // -----------------------------------------
 
-    refreshPage();
+    initialize();
 
 });

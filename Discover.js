@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const card = $("studentCard");
     const cardStage = $("cardStage");
 
-    // STORAGE
+    // STORAGE (local UI state only: which cards have already been swiped)
     function readStorage(key) {
         try {
             const data = JSON.parse(localStorage.getItem(key));
@@ -20,91 +20,44 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem(key, JSON.stringify(value));
     }
 
-    let savedPeople = readStorage("skillmateSavedPeople");
-    let connections = readStorage("skillmateConnections");
     let passedPeople = readStorage("skillmatePassedPeople");
 
-    // DEMO STUDENT PROFILES
-    const students = [
-        {
-            id: "p1",
-            name: "Riya Kapoor",
-            initials: "RK",
-            course: "CSE",
-            year: "Year 2",
-            college: "BML Munjal University",
-            bio: "Building thoughtful digital experiences through design and code. I enjoy turning creative ideas into useful products.",
-            skills: ["UI/UX Design", "Figma", "Web Development"],
-            teaches: ["Figma", "UI/UX Design"],
-            interests: ["Product Design", "Hackathons"],
-            score: 94
-        },
-        {
-            id: "p2",
-            name: "Aarav Sharma",
-            initials: "AS",
-            course: "CSE",
-            year: "Year 2",
-            college: "BML Munjal University",
-            bio: "AI enthusiast who enjoys experimenting with technology and building smart solutions to real-world problems.",
-            skills: ["Python", "Machine Learning", "Data Analytics"],
-            teaches: ["Python", "Machine Learning"],
-            interests: ["Artificial Intelligence", "Research"],
-            score: 91
-        },
-        {
-            id: "p3",
-            name: "Mehak Verma",
-            initials: "MV",
-            course: "Design",
-            year: "Year 2",
-            college: "BML Munjal University",
-            bio: "Creative thinker passionate about branding, visual storytelling and making digital experiences more engaging.",
-            skills: ["Graphic Design", "Figma", "Content Writing"],
-            teaches: ["Graphic Design", "Figma"],
-            interests: ["Art", "Branding"],
-            score: 88
-        },
-        {
-            id: "p4",
-            name: "Kabir Malhotra",
-            initials: "KM",
-            course: "CSE",
-            year: "Year 1",
-            college: "BML Munjal University",
-            bio: "Web developer learning to build useful digital tools. Always excited to work on new ideas with a team.",
-            skills: ["JavaScript", "Web Development", "HTML & CSS"],
-            teaches: ["Web Development", "JavaScript"],
-            interests: ["Startups", "Web Apps"],
-            score: 86
-        },
-        {
-            id: "p5",
-            name: "Sana Ali",
-            initials: "SA",
-            course: "CSE",
-            year: "Year 2",
-            college: "BML Munjal University",
-            bio: "Interested in data, problem-solving and projects that create a positive impact on people's lives.",
-            skills: ["Python", "SQL", "Data Analytics"],
-            teaches: ["SQL", "Python"],
-            interests: ["Analytics", "Social Impact"],
-            score: 84
-        },
-        {
-            id: "p6",
-            name: "Dev Mehta",
-            initials: "DM",
-            course: "CSE",
-            year: "Year 1",
-            college: "BML Munjal University",
-            bio: "Exploring software development, learning Java and looking forward to collaborating on exciting projects.",
-            skills: ["Java", "C / C++", "Problem Solving"],
-            teaches: ["Java", "C / C++"],
-            interests: ["Coding", "Competitive Programming"],
-            score: 81
-        }
-    ];
+    // LIVE STUDENT PROFILES FROM THE SKILLMATE API
+
+    const api = SkillMate.api;
+
+    let students = [];
+
+    /** API profile -> the card shape this page already renders. */
+    function mapProfile(profile) {
+        return {
+            id: profile.id,
+            name: profile.name,
+            initials: SkillMate.initials(profile.name),
+            course: profile.course || "",
+            year: profile.year ? String(profile.year) : "",
+            college: profile.college || "SkillMate",
+            bio: profile.bio || "This student has not added a bio yet.",
+            skills: Array.isArray(profile.skills) ? profile.skills : [],
+            teaches: Array.isArray(profile.teachSkills) ? profile.teachSkills : [],
+            interests: Array.isArray(profile.interests) ? profile.interests : [],
+            score: typeof profile.matchScore === "number" ? profile.matchScore : 50,
+            isSaved: Boolean(profile.saved),
+            connected: ["pending_sent", "accepted"].includes(
+                profile.relationship ? profile.relationship.status : ""
+            )
+        };
+    }
+
+    /** Load every discoverable student once. */
+    async function loadStudents() {
+        const payload = await api.listProfiles({
+            limit: 100,
+            sort: "match"
+        });
+
+        students = (payload.profiles || []).map(mapProfile);
+    }
 
     let currentProfiles = [];
     let currentIndex = 0;
@@ -136,38 +89,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function calculateMatch(student) {
-        // Uses the student's profile skills when available.
-        let currentUser = {};
-
-        try {
-            currentUser =
-                JSON.parse(sessionStorage.getItem("skillmateCurrentUser")) ||
-                JSON.parse(localStorage.getItem("skillmateCurrentUser")) ||
-                {};
-        } catch {
-            currentUser = {};
-        }
-
-        const mySkills = Array.isArray(currentUser.knownSkills)
-            ? currentUser.knownSkills.map(skill => skill.toLowerCase())
-            : [];
-
-        const theirSkills = student.skills.map(skill => skill.toLowerCase());
-
-        if (mySkills.length === 0) {
-            return student.score;
-        }
-
-        const common = theirSkills.filter(skill => mySkills.includes(skill));
-
-        const complementary = student.teaches.filter(skill =>
-            mySkills.includes(skill.toLowerCase())
-        );
-
-        return Math.min(
-            99,
-            Math.max(65, 75 + common.length * 4 + complementary.length * 5)
-        );
+        // The SkillMate API calculates compatibility for every pair of
+        // students (Backend/utils/matching.js), so all pages agree.
+        return typeof student.score === "number" ? student.score : 50;
     }
 
     // FILTER PROFILES
@@ -274,7 +198,7 @@ document.addEventListener("DOMContentLoaded", function () {
         renderTags("interests", student.interests, "interest");
 
         // Save button state
-        const isSaved = savedPeople.includes(student.id);
+        const isSaved = Boolean(student.isSaved);
 
         $("saveButton").classList.toggle("saved", isSaved);
         $("saveButton").textContent = isSaved ? "✓" : "♧";
@@ -289,7 +213,7 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
         // Connect button state
-        const isConnected = connections.includes(student.id);
+        const isConnected = Boolean(student.connected);
 
         $("connectButton").disabled = isConnected;
         $("connectButton").innerHTML = isConnected
@@ -333,25 +257,34 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // CONNECT WITH STUDENT
-    function connectProfile() {
+    async function connectProfile() {
         const student = currentProfiles[currentIndex];
 
         if (!student || swipeLocked) return;
 
-        if (connections.includes(student.id)) {
+        if (student.connected) {
             showToast("You have already sent a request to this student.");
             return;
         }
 
         swipeLocked = true;
 
-        connections.push(student.id);
-        saveStorage("skillmateConnections", connections);
+        try {
+            await api.sendConnectionRequest(student.id);
+
+            student.connected = true;
+        } catch (error) {
+            swipeLocked = false;
+            showToast(
+                error.message || "The connection request could not be sent."
+            );
+            return;
+        }
 
         card.style.transform = "translateX(120%) rotate(12deg)";
         card.style.opacity = "0";
 
-        showToast(`Connection request saved for ${student.name}!`);
+        showToast(`Connection request sent to ${student.name}!`);
 
         setTimeout(() => {
             card.style.transition = "none";
@@ -369,20 +302,35 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // SAVE OR UNSAVE STUDENT
-    function toggleSave() {
+    async function toggleSave() {
         const student = currentProfiles[currentIndex];
 
         if (!student) return;
 
-        if (savedPeople.includes(student.id)) {
-            savedPeople = savedPeople.filter(id => id !== student.id);
-            showToast("Student removed from your saved people.");
-        } else {
-            savedPeople.push(student.id);
-            showToast("Student added to your saved people.");
+        try {
+            if (student.isSaved) {
+                const saved = await api.listSavedPeople();
+                const record = (saved.saved || []).find(
+                    item => item.savedStudentId === student.id
+                );
+
+                if (record) {
+                    await api.removeSavedPerson(record.id);
+                }
+
+                student.isSaved = false;
+                showToast("Student removed from your saved people.");
+            } else {
+                await api.savePerson(student.id);
+
+                student.isSaved = true;
+                showToast("Student added to your saved people.");
+            }
+        } catch (error) {
+            showToast(error.message || "Your saved people could not be updated.");
+            return;
         }
 
-        saveStorage("skillmateSavedPeople", savedPeople);
         renderProfile();
     }
 
@@ -503,6 +451,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // INITIALISE PAGE
-    applyFilters();
+    async function initialisePage() {
+        if (!SkillMate.requireAuth()) return;
+
+        try {
+            await loadStudents();
+        } catch (error) {
+            console.error("Student profiles could not be loaded:", error);
+
+            if (error.status === 401) {
+                SkillMate.clearSession();
+                window.location.href = "./StudentLogin.html";
+                return;
+            }
+
+            showToast(error.message || "Student profiles could not be loaded.");
+            return;
+        }
+
+        applyFilters();
+    }
+
+    initialisePage();
 
 });

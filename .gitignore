@@ -1,3 +1,6 @@
 node_modules/
 Backend/node_modules/
 .env
+Backend/.env
+Backend/Data/backups/
+*.log

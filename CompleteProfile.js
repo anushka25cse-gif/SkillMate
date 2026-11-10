@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("completeProfileForm");
     const message = document.getElementById("pageMessage");
 
+    // SkillMate frontend API client (api.js) owns the server address.
+
     const readJSON = (key) => {
         try {
             return JSON.parse(sessionStorage.getItem(key) || "null");
@@ -14,8 +16,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const draft = readJSON("skillmateSignupDraft");
     const skillDraft = readJSON("skillmateSkillDraft");
     const existingUser = readJSON("skillmateCurrentUser");
+    const sessionUser = SkillMate.getUser() || existingUser;
 
     const account = draft || existingUser;
+
+    // The API needs the account id created at registration.
+    const accountId = (sessionUser && sessionUser.id) || (account && account.id) || "";
     const knownSkills = skillDraft?.knownSkills ||
         existingUser?.knownSkills || [];
     const teachSkills = skillDraft?.teachSkills ||
@@ -142,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("collaboration").value =
         existingUser?.collaboration || "";
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
         message.classList.remove("visible");
 
@@ -184,25 +190,41 @@ document.addEventListener("DOMContentLoaded", () => {
             profileCompleted: true
         };
 
+        // Save the finished profile in the SkillMate backend (User.json).
+        if (!accountId) {
+            showMessage(
+                "Your session has expired. Please sign in again before completing your profile."
+            );
+            return;
+        }
+
+        let savedBackendUser = null;
+
         try {
-            let users = JSON.parse(localStorage.getItem("skillmateUsers") || "[]");
-            if (!Array.isArray(users)) users = [];
+            const result = await SkillMate.api.updateProfile(accountId, {
+                skills: completedUser.knownSkills,
+                teachSkills: completedUser.teachSkills,
+                learningSkills: completedUser.interests,
+                profileImage: completedUser.profilePhoto,
+                bio: completedUser.bio,
+                interests: completedUser.interests,
+                proficiency: completedUser.proficiency,
+                availability: completedUser.availability,
+                collaboration: completedUser.collaboration,
+                profileCompleted: true
+            });
 
-            const index = users.findIndex(
-                user => user.email?.trim().toLowerCase() === completedUser.email
+            savedBackendUser = result.user;
+        } catch (backendError) {
+            showMessage(
+                backendError.message ||
+                    "The server could not save your profile. Please try again."
             );
+            return;
+        }
 
-            if (index >= 0) {
-                users[index] = { ...users[index], ...completedUser };
-            } else {
-                users.push(completedUser);
-            }
-
-            localStorage.setItem("skillmateUsers", JSON.stringify(users));
-            sessionStorage.setItem(
-                "skillmateCurrentUser",
-                JSON.stringify(completedUser)
-            );
+        try {
+            SkillMate.saveUser(savedBackendUser);
 
             sessionStorage.removeItem("skillmateSignupDraft");
             sessionStorage.removeItem("skillmateSkillDraft");

@@ -3,12 +3,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("signupForm");
     const message = document.getElementById("formMessage");
 
+    // SkillMate frontend API client (api.js) owns the server address.
+
     if (!form) {
         alert("Signup form not found. Please check ProfileDetails.html.");
         return;
     }
 
-    form.addEventListener("submit", function (event) {
+    form.addEventListener("submit", async function (event) {
         event.preventDefault();
 
         function getValue(id) {
@@ -88,6 +90,26 @@ document.addEventListener("DOMContentLoaded", function () {
             graduation: graduation,
             password: password
         };
+
+        // Create the account through the SkillMate API (User.json).
+        try {
+            await SkillMate.api.register({
+                name: fullName,
+                email: email,
+                password: password,
+                course: course,
+                year: year,
+                college: college,
+                registration: registration,
+                graduation: graduation
+            });
+        } catch (error) {
+            showMessage(
+                error.message ||
+                    "The account could not be created. Please try again."
+            );
+            return;
+        }
 
         try {
             sessionStorage.setItem(

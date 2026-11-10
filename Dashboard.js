@@ -2,201 +2,109 @@ document.addEventListener("DOMContentLoaded", function () {
     const $ = selector => document.querySelector(selector);
     const $$ = selector => [...document.querySelectorAll(selector)];
 
-    const PROJECTS_KEY = "skillmateProjects";
+    // ------------------------------------------------------------------
+    // Live data from the SkillMate API
+    // ------------------------------------------------------------------
+    const api = SkillMate.api;
 
-    // Storage helper functions
+    let user = SkillMate.getUser() || {};
+    let knownSkills = [];
+    let teachSkills = [];
 
-    function readJSON(key, fallback) {
-        try {
-            const value = JSON.parse(localStorage.getItem(key));
-            return value ?? fallback;
-        } catch (error) {
-            return fallback;
-        }
+    let people = [];               // other students, best match first
+    let savedPeople = [];          // student ids in "saved people"
+    let savedRecords = new Map();  // student id -> saved-people record id
+    let connections = [];          // student ids with a pending request I sent
+    let acceptedConnections = [];  // student ids I am connected with
+    let incomingRequests = [];     // { id, personId, status } received
+    let projects = [];
+
+    function syncUserSkills() {
+        knownSkills = Array.isArray(user.knownSkills) ? user.knownSkills : [];
+        teachSkills = Array.isArray(user.teachSkills) ? user.teachSkills : [];
     }
 
-    function readSession(key, fallback) {
-        try {
-            const value = JSON.parse(sessionStorage.getItem(key));
-            return value ?? fallback;
-        } catch (error) {
-            return fallback;
-        }
+    syncUserSkills();
+
+    /** Turn an API profile into the shape the existing templates expect. */
+    function mapProfile(profile, index) {
+        const colours = ["", "color-two", "color-three"];
+
+        return {
+            id: profile.id,
+            name: profile.name,
+            initials: SkillMate.initials(profile.name),
+            course: SkillMate.courseLabel(profile),
+            college: profile.college || "SkillMate",
+            bio: profile.bio || "This student has not added a bio yet.",
+            skills: Array.isArray(profile.skills) ? profile.skills : [],
+            teaches: Array.isArray(profile.teachSkills) ? profile.teachSkills : [],
+            interests: Array.isArray(profile.interests) ? profile.interests : [],
+            score: typeof profile.matchScore === "number" ? profile.matchScore : 50,
+            color: colours[index % colours.length]
+        };
     }
 
-    function saveJSON(key, value) {
-        try {
-            localStorage.setItem(key, JSON.stringify(value));
-            return true;
-        } catch (error) {
-            console.error("Storage error:", error);
-            return false;
-        }
+    /** Turn an API project into the shape the existing templates expect. */
+    function mapProject(project) {
+        return {
+            id: project.id,
+            title: project.title,
+            category: project.category || "Other",
+            description: project.description || "",
+            emoji: project.emoji || "✦",
+            skills: Array.isArray(project.requiredSkills)
+                ? project.requiredSkills
+                : [],
+            members: (project.teamMembers || []).length || 1,
+            status: project.status || "Open",
+            isCreator: Boolean(project.isCreator)
+        };
     }
 
-    // Get the logged-in student's information
+    function applyConnections(payload) {
+        incomingRequests = (payload.received || [])
+            .filter(request => request.status === "pending")
+            .map(request => ({
+                id: request.id,
+                personId: request.personId,
+                status: request.status
+            }));
 
-    const currentUser =
-        readSession("skillmateCurrentUser", null) ||
-        readJSON("skillmateCurrentUser", null);
+        connections = (payload.sent || [])
+            .filter(request => request.status === "pending")
+            .map(request => request.personId);
 
-    const signupDraft =
-        readSession("skillmateSignupDraft", {}) ||
-        readJSON("skillmateSignupDraft", {});
-
-    const user = { ...signupDraft, ...(currentUser || {}) };
-
-    const knownSkills = Array.isArray(user.knownSkills)
-        ? user.knownSkills
-        : [];
-
-    const teachSkills = Array.isArray(user.teachSkills)
-        ? user.teachSkills
-        : [];
-
-    let savedPeople = readJSON("skillmateSavedPeople", []);
-    let connections = readJSON("skillmateConnections", []);
-    let projects = readJSON(PROJECTS_KEY, null);
-    let incomingRequests = readJSON("skillmateIncomingRequests", []);
-    let acceptedConnections = readJSON("skillmateAcceptedConnections", []);
-
-    if (!Array.isArray(savedPeople)) savedPeople = [];
-    if (!Array.isArray(connections)) connections = [];
-    if (!Array.isArray(incomingRequests)) incomingRequests = [];
-    if (!Array.isArray(acceptedConnections)) acceptedConnections = [];
-
-    // Sample student information
-
-    const demoPeople = [
-        {
-            id: "p1",
-            name: "Riya Kapoor",
-            initials: "RK",
-            course: "CSE · Year 2",
-            college: "BML Munjal University",
-            bio: "Building thoughtful digital experiences through design and code.",
-            skills: ["UI/UX Design", "Figma", "Web Development"],
-            teaches: ["Figma", "UI/UX Design"],
-            interests: ["Product Design", "Hackathons"],
-            score: 94,
-            color: "color-two"
-        },
-        {
-            id: "p2",
-            name: "Aarav Sharma",
-            initials: "AS",
-            course: "CSE · Year 2",
-            college: "BML Munjal University",
-            bio: "AI enthusiast who enjoys turning interesting ideas into working prototypes.",
-            skills: ["Python", "Machine Learning", "Data Analytics"],
-            teaches: ["Python", "Machine Learning"],
-            interests: ["AI", "Research"],
-            score: 91,
-            color: ""
-        },
-        {
-            id: "p3",
-            name: "Mehak Verma",
-            initials: "MV",
-            course: "Design · Year 2",
-            college: "BML Munjal University",
-            bio: "Creative thinker who loves branding, visual storytelling and collaboration.",
-            skills: ["Graphic Design", "Figma", "Content Writing"],
-            teaches: ["Graphic Design", "Figma"],
-            interests: ["Art", "Branding"],
-            score: 88,
-            color: "color-three"
-        },
-        {
-            id: "p4",
-            name: "Kabir Malhotra",
-            initials: "KM",
-            course: "CSE · Year 1",
-            college: "BML Munjal University",
-            bio: "Web developer learning to build useful tools for campus life.",
-            skills: ["JavaScript", "Web Development", "HTML & CSS"],
-            teaches: ["Web Development", "JavaScript"],
-            interests: ["Startups", "Web Apps"],
-            score: 86,
-            color: "color-two"
-        },
-        {
-            id: "p5",
-            name: "Sana Ali",
-            initials: "SA",
-            course: "CSE · Year 2",
-            college: "BML Munjal University",
-            bio: "Interested in data, problem-solving and projects with real-world impact.",
-            skills: ["Python", "SQL", "Data Analytics"],
-            teaches: ["SQL", "Python"],
-            interests: ["Analytics", "Social Impact"],
-            score: 84,
-            color: "color-three"
-        },
-        {
-            id: "p6",
-            name: "Dev Mehta",
-            initials: "DM",
-            course: "CSE · Year 1",
-            college: "BML Munjal University",
-            bio: "Learning Java and exploring how good software gets built in teams.",
-            skills: ["Java", "C / C++", "Problem Solving"],
-            teaches: ["Java", "C / C++"],
-            interests: ["Coding", "Competitive Programming"],
-            score: 81,
-            color: ""
-        }
-    ];
-
-    // Sample project information
-
-    const demoProjects = [
-        {
-            id: "d1",
-            title: "Campus Connect",
-            category: "Web Development",
-            emoji: "✦",
-            description: "A student platform to discover campus events, clubs and people with shared interests.",
-            skills: ["HTML & CSS", "JavaScript", "UI/UX Design"],
-            members: 3,
-            status: "Looking for teammates"
-        },
-        {
-            id: "d2",
-            title: "Smart Study Buddy",
-            category: "AI & Machine Learning",
-            emoji: "✳",
-            description: "An idea for a study companion that helps students organise learning and revision.",
-            skills: ["Python", "Machine Learning", "UI/UX Design"],
-            members: 2,
-            status: "Idea stage"
-        },
-        {
-            id: "d3",
-            title: "Green Campus Initiative",
-            category: "Social Impact",
-            emoji: "❋",
-            description: "Explore creative ways to make campus life more sustainable and community-driven.",
-            skills: ["Research", "Graphic Design", "Web Development"],
-            members: 4,
-            status: "Looking for teammates"
-        }
-    ];
-
-    if (!Array.isArray(projects)) {
-        projects = demoProjects;
-        saveJSON(PROJECTS_KEY, projects);
+        acceptedConnections = (payload.accepted || []).map(
+            request => request.personId
+        );
     }
 
-    // Add sample connection requests on the first run
+    async function loadDashboardData() {
+        const [me, profiles, connectionPayload, savedPayload, projectPayload] =
+            await Promise.all([
+                api.me(),
+                api.listProfiles({ limit: 100 }),
+                api.listConnections(),
+                api.listSavedPeople(),
+                api.listProjects()
+            ]);
 
-    if (localStorage.getItem("skillmateIncomingRequests") === null) {
-        incomingRequests = [
-            { id: "demo-request-1", personId: "p2", status: "pending" },
-            { id: "demo-request-2", personId: "p4", status: "pending" }
-        ];
+        user = SkillMate.adaptUser(me) || user;
+        syncUserSkills();
 
-        saveJSON("skillmateIncomingRequests", incomingRequests);
+        people = (profiles.profiles || []).map(mapProfile);
+
+        applyConnections(connectionPayload);
+
+        const saved = savedPayload.saved || [];
+
+        savedPeople = saved.map(item => item.savedStudentId);
+        savedRecords = new Map(
+            saved.map(item => [item.savedStudentId, item.id])
+        );
+
+        projects = (projectPayload.projects || []).map(mapProject);
     }
 
     let activeView = "overview";
@@ -255,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function getPerson(id) {
-        return demoPeople.find(person => person.id === id);
+        return people.find(person => person.id === id);
     }
 
     // Profile completion
@@ -396,23 +304,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // Calculate the match score for a student
 
     function matchScore(person) {
-        const mine = new Set(
-            knownSkills.map(skill => skill.toLowerCase())
-        );
-
-        const theirSkills = person.skills.map(skill => skill.toLowerCase());
-
-        const shared = theirSkills.filter(skill => mine.has(skill)).length;
-
-        const complementary = person.teaches.filter(
-            skill => mine.has(skill.toLowerCase())
-        ).length;
-
-        if (!mine.size) return person.score;
-
-        const calculated = Math.min(99, 72 + shared * 5 + complementary * 4);
-
-        return Math.max(65, Math.min(person.score, calculated));
+        // Compatibility is calculated by the API (utils/matching.js) so every
+        // page shows the same percentage for the same pair of students.
+        return typeof person.score === "number" ? person.score : 50;
     }
 
     // Create a full student card
@@ -524,7 +418,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const container = $("#overviewRecommendations");
         if (!container) return;
 
-        const sorted = [...demoPeople].sort(
+        const sorted = [...people].sort(
             (a, b) => matchScore(b) - matchScore(a)
         );
 
@@ -539,26 +433,40 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (!grid || !empty) return;
 
-        const people = demoPeople.filter(person =>
+        const peopleSaved = people.filter(person =>
             savedPeople.includes(person.id)
         );
 
-        grid.innerHTML = people.map(personCard).join("");
+        grid.innerHTML = peopleSaved.map(personCard).join("");
 
-        empty.classList.toggle("hidden", people.length > 0);
+        empty.classList.toggle("hidden", peopleSaved.length > 0);
     }
 
-    function savePerson(id) {
-        if (savedPeople.includes(id)) {
-            savedPeople = savedPeople.filter(item => item !== id);
-            showToast("Removed from your saved teammates.");
-        } else {
-            savedPeople.push(id);
-            showToast("Teammate saved to your shortlist.");
-        }
+    async function savePerson(id) {
+        const recordId = savedRecords.get(id);
 
-        if (!saveJSON("skillmateSavedPeople", savedPeople)) {
-            showToast("Could not update saved people in browser storage.");
+        try {
+            if (savedPeople.includes(id)) {
+                if (recordId) {
+                    await api.removeSavedPerson(recordId);
+                }
+
+                savedPeople = savedPeople.filter(item => item !== id);
+                savedRecords.delete(id);
+                showToast("Removed from your saved teammates.");
+            } else {
+                const result = await api.savePerson(id);
+
+                savedPeople.push(id);
+
+                if (result.saved) {
+                    savedRecords.set(id, result.saved.id);
+                }
+
+                showToast("Teammate saved to your shortlist.");
+            }
+        } catch (error) {
+            showToast(error.message || "Could not update your saved people.");
             return;
         }
 
@@ -614,14 +522,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function renderProjects() {
-        // Read the latest project list from localStorage
-
-        const latestProjects = readJSON(PROJECTS_KEY, projects);
-
-        if (Array.isArray(latestProjects)) {
-            projects = latestProjects;
-        }
-
         const overview = $("#overviewProjects");
         const fullGrid = $("#projectsGrid");
 
@@ -631,6 +531,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (fullGrid) {
             fullGrid.innerHTML = projects.map(projectCard).join("");
+        }
+    }
+
+    /** Ask to join a project from the Dashboard overview. */
+    async function requestToJoinProject(project) {
+        try {
+            const result = await api.joinProject(project.id);
+
+            projects = projects.map(item =>
+                item.id === result.project.id ? mapProject(result.project) : item
+            );
+
+            renderProjects();
+
+            showToast(
+                `Your request to join "${project.title}" has been sent to the project creator.`
+            );
+        } catch (error) {
+            showToast(error.message || "Could not send your join request.");
         }
     }
 
@@ -732,28 +651,29 @@ document.addEventListener("DOMContentLoaded", function () {
         );
     }
 
-    function acceptRequest(requestId) {
+    async function acceptRequest(requestId) {
         const request = incomingRequests.find(item =>
             item.id === requestId && item.status === "pending"
         );
 
         if (!request) return;
 
-        request.status = "accepted";
+        try {
+            await api.acceptConnection(requestId);
+        } catch (error) {
+            showToast(error.message || "Could not accept this request.");
+            return;
+        }
 
         const personId = request.personId;
+
+        incomingRequests = incomingRequests.filter(item => item.id !== requestId);
 
         if (!acceptedConnections.includes(personId)) {
             acceptedConnections.push(personId);
         }
 
-        if (!connections.includes(personId)) {
-            connections.push(personId);
-        }
-
-        saveJSON("skillmateIncomingRequests", incomingRequests);
-        saveJSON("skillmateAcceptedConnections", acceptedConnections);
-        saveJSON("skillmateConnections", connections);
+        connections = connections.filter(id => id !== personId);
 
         renderConnectionRequests();
         renderRecommendations();
@@ -763,18 +683,23 @@ document.addEventListener("DOMContentLoaded", function () {
         showToast("Connection accepted! You are now connected.");
     }
 
-    function declineRequest(requestId) {
+    async function declineRequest(requestId) {
         const request = incomingRequests.find(item =>
             item.id === requestId && item.status === "pending"
         );
 
         if (!request) return;
 
+        try {
+            await api.rejectConnection(requestId);
+        } catch (error) {
+            showToast(error.message || "Could not decline this request.");
+            return;
+        }
+
         incomingRequests = incomingRequests.filter(item =>
             item.id !== requestId
         );
-
-        saveJSON("skillmateIncomingRequests", incomingRequests);
 
         renderConnectionRequests();
 
@@ -830,7 +755,7 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
     }
 
-    function connectPerson(id) {
+    async function connectPerson(id) {
         const person = getPerson(id);
         if (!person) return;
 
@@ -839,14 +764,14 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        connections.push(id);
-
-        if (!saveJSON("skillmateConnections", connections)) {
-            connections = connections.filter(item => item !== id);
-
-            showToast("Could not save the connection request.");
+        try {
+            await api.sendConnectionRequest(id);
+        } catch (error) {
+            showToast(error.message || "Could not send the connection request.");
             return;
         }
+
+        connections.push(id);
 
         renderRecommendations();
         renderConnectionRequests();
@@ -855,9 +780,7 @@ document.addEventListener("DOMContentLoaded", function () {
             renderSaved();
         }
 
-        showToast(
-            `Request saved for ${person.name}. This is a local demo, not a real message to another student.`
-        );
+        showToast(`Connection request sent to ${person.name}.`);
     }
 
     // Request tabs
@@ -980,7 +903,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Create a project from the Dashboard
 
-    function createProject(event) {
+    async function createProject(event) {
         event.preventDefault();
 
         const title = $("#projectTitle")?.value.trim();
@@ -993,24 +916,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const project = {
-            id: `custom-${Date.now()}`,
             title,
             category,
             description,
             emoji: "✦",
-            skills: knownSkills.slice(0, 3),
-            members: 1,
+            requiredSkills: knownSkills.slice(0, 3),
             teamSize: 3,
-            status: "New project idea",
-            createdBy: userName(),
-            createdByEmail: userEmail()
+            status: "New project idea"
         };
 
-        projects.unshift(project);
+        try {
+            const result = await api.createProject(project);
 
-        if (!saveJSON(PROJECTS_KEY, projects)) {
-            projects.shift();
-            showToast("Couldn't save the project in browser storage.");
+            projects.unshift(mapProject(result.project));
+        } catch (error) {
+            showToast(error.message || "Could not create the project.");
             return;
         }
 
@@ -1026,7 +946,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Feedback form
 
-    function submitFeedback(event) {
+    async function submitFeedback(event) {
         event.preventDefault();
 
         const form = $("#feedbackForm");
@@ -1051,29 +971,18 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        const feedback = {
-            id: `feedback-${Date.now()}`,
-            user: userName(),
-            email: user.email || "",
-            rating: Number(rating.value),
-            category,
-            liked,
-            improve,
-            suggestions,
-            submittedAt: new Date().toISOString()
-        };
-
-        const allFeedback = readJSON("skillmateFeedback", []);
-
-        if (!Array.isArray(allFeedback)) {
-            showToast("Could not read the saved feedback.");
-            return;
-        }
-
-        allFeedback.push(feedback);
-
-        if (!saveJSON("skillmateFeedback", allFeedback)) {
-            showToast("Feedback could not be saved. Please try again.");
+        try {
+            await api.submitFeedback({
+                rating: Number(rating.value),
+                category,
+                comments: [liked, improve, suggestions]
+                    .filter(Boolean)
+                    .join(" | ")
+            });
+        } catch (error) {
+            showToast(
+                error.message || "Feedback could not be saved. Please try again."
+            );
             return;
         }
 
@@ -1126,8 +1035,14 @@ document.addEventListener("DOMContentLoaded", function () {
         setView("profile");
     });
 
-    $("#logoutBtn")?.addEventListener("click", () => {
-        window.location.href = "./Login.html";
+    $("#logoutBtn")?.addEventListener("click", async () => {
+        const confirmed = confirm("Are you sure you want to log out?");
+
+        if (confirmed) {
+            await SkillMate.api.logout();
+
+            window.location.href = "./Login.html";
+        }
     });
 
     // Mobile sidebar
@@ -1219,16 +1134,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (projectButton) {
-            const latest = readJSON(PROJECTS_KEY, projects);
-
-            const project = latest.find(item =>
-                item.id === projectButton.dataset.project
+            const project = projects.find(
+                item => item.id === projectButton.dataset.project
             );
 
             if (project) {
-                showToast(
-                    `Interested in "${project.title}"! Project interest is a demo action.`
-                );
+                requestToJoinProject(project);
             }
         }
 
@@ -1268,30 +1179,50 @@ document.addEventListener("DOMContentLoaded", function () {
 
     $("#feedbackForm")?.addEventListener("submit", submitFeedback);
 
-    // Update the project list if it changes in another browser tab
+    // Projects and requests are reloaded from the server, so cross-tab
+    // localStorage events are no longer the source of truth.
 
-    window.addEventListener("storage", event => {
-        if (event.key === PROJECTS_KEY) {
-            projects = readJSON(PROJECTS_KEY, []);
-            renderProjects();
+    // Initial Dashboard setup: check the session, load live data, then render.
+
+    async function initialiseDashboard() {
+        if (!SkillMate.requireAuth()) return;
+
+        try {
+            await loadDashboardData();
+        } catch (error) {
+            console.error("Dashboard data could not be loaded:", error);
+            showToast(
+                error.status === 401
+                    ? "Your session has expired. Please sign in again."
+                    : (error.message || "Your dashboard data could not be loaded.")
+            );
+
+            if (error.status === 401) {
+                SkillMate.clearSession();
+                setTimeout(() => {
+                    window.location.href = "./StudentLogin.html";
+                }, 1500);
+            }
+
+            return;
         }
-    });
 
-    // Initial Dashboard setup
+        renderUser();
+        renderRecommendations();
+        renderProjects();
+        renderSaved();
+        renderConnections();
+        renderConnectionRequests();
 
-    renderUser();
-    renderRecommendations();
-    renderProjects();
-    renderSaved();
-    renderConnections();
-    renderConnectionRequests();
+        switchRequestTab("received");
 
-    switchRequestTab("received");
+        // Open the section passed in the URL.
+        // Example: Dashboard.html?view=messages
 
-    // Open the section passed in the URL.
-    // Example: Dashboard.html?view=messages
+        const requestedView = new URLSearchParams(window.location.search).get("view");
 
-    const requestedView = new URLSearchParams(window.location.search).get("view");
+        setView(requestedView || "overview");
+    }
 
-    setView(requestedView || "overview");
+    initialiseDashboard();
 });

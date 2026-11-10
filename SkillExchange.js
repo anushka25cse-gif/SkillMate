@@ -3,58 +3,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const $ = selector => document.querySelector(selector);
 
-    // Storage keys
-    const LEARNING_KEY = "skillmateLearningSkills";
-    const REQUESTS_KEY = "skillmateSkillSwapRequests";
-    const USER_KEY = "skillmateCurrentUser";
+    // Session and profile data come from api.js (SkillMate.getUser()).
 
-    // Read and save browser storage
-    function readJSON(key, fallback) {
-        try {
-            const data = JSON.parse(localStorage.getItem(key));
-            return data ?? fallback;
-        } catch (error) {
-            return fallback;
-        }
-    }
 
-    function readSession(key, fallback) {
-        try {
-            const data = JSON.parse(sessionStorage.getItem(key));
-            return data ?? fallback;
-        } catch (error) {
-            return fallback;
-        }
-    }
-
-    function saveJSON(key, data) {
-        try {
-            localStorage.setItem(key, JSON.stringify(data));
-            return true;
-        } catch (error) {
-            console.error("Could not save data:", error);
-            return false;
-        }
-    }
-
-    
-// Get the logged-in student's information
-const sessionUser = readSession("skillmateCurrentUser", null);
-const localUser = readJSON("skillmateCurrentUser", null);
-
-// Read registered student profiles
-const registeredUsers = readJSON("skillmateUsers", []);
-
-// Use the logged-in profile if available.
-// If it is missing and there is only one registered student,
-// use that student's profile for this frontend demonstration.
-const signupDraft = readSession("skillmateSignupDraft", {});
-
-const user =
-    sessionUser ||
-    localUser ||
-    (registeredUsers.length === 1 ? registeredUsers[0] : {}) ||
-    {};
+// Get the logged-in student's information (api.js caches it after login)
+const user = SkillMate.getUser() || {};
 
 const studentName =
     user.fullName || user.name || user.username || "Student";
@@ -130,90 +83,57 @@ const skillsToShare = [
         }
     ];
 
-    // Demo student profiles.
+    // LIVE STUDENT MATCHES FROM THE SKILLMATE API.
     // "teaches" means what the student can teach.
     // "wants" means what the student wants to learn.
 
-    const students = [
-        {
-            id: "student1",
-            name: "Riya Kapoor",
-            initials: "RK",
-            course: "CSE · Year 2",
-            bio: "Enjoys creating user-friendly designs and digital experiences.",
-            teaches: ["Figma", "UI/UX Design", "Graphic Design"],
-            wants: ["Python", "Machine Learning", "SQL"],
-            color: ""
-        },
-        {
-            id: "student2",
-            name: "Aarav Sharma",
-            initials: "AS",
-            course: "CSE · Year 2",
-            bio: "Interested in artificial intelligence and real-world projects.",
-            teaches: ["Python", "Machine Learning", "Data Analytics", "SQL"],
-            wants: ["Figma", "UI/UX Design", "Graphic Design"],
-            color: "avatar-two"
-        },
-        {
-            id: "student3",
-            name: "Mehak Verma",
-            initials: "MV",
-            course: "Design · Year 2",
-            bio: "Loves visual storytelling and creative projects.",
-            teaches: ["Graphic Design", "Figma", "Illustration"],
-            wants: ["Python", "Web Development", "JavaScript"],
-            color: "avatar-three"
-        },
-        {
-            id: "student4",
-            name: "Kabir Malhotra",
-            initials: "KM",
-            course: "CSE · Year 1",
-            bio: "A web development enthusiast who enjoys learning by building.",
-            teaches: ["JavaScript", "HTML & CSS", "Web Development", "Java"],
-            wants: ["UI/UX Design", "Figma", "Graphic Design"],
-            color: "avatar-four"
-        },
-        {
-            id: "student5",
-            name: "Sana Ali",
-            initials: "SA",
-            course: "CSE · Year 2",
-            bio: "Enjoys working with data and finding useful insights.",
-            teaches: ["Python", "SQL", "Data Analytics", "Data Science"],
-            wants: ["Figma", "UI/UX Design", "Content Writing"],
-            color: "avatar-five"
-        },
-        {
-            id: "student6",
-            name: "Dev Mehta",
-            initials: "DM",
-            course: "CSE · Year 1",
-            bio: "Interested in programming and software development.",
-            teaches: ["Java", "C / C++", "Python"],
-            wants: ["Web Development", "Graphic Design", "Video Editing"],
-            color: "avatar-six"
-        }
-    ];
+    const api = SkillMate.api;
 
-    // Load saved learning goals and exchange requests
-    const savedLearningSkills = readJSON(LEARNING_KEY, null);
+    let students = [];
+    let pendingMatches = null;   // matches loaded but not yet rendered
 
-const profileLearningSkills = Array.isArray(user.learningSkills)
-    ? user.learningSkills
-    : [];
+    const avatarColours = ["", "avatar-two", "avatar-three", "avatar-four", "avatar-five", "avatar-six"];
 
-let learningSkills =
-    Array.isArray(savedLearningSkills) && savedLearningSkills.length > 0
-        ? savedLearningSkills
-        : profileLearningSkills;
-
-    let requests = readJSON(REQUESTS_KEY, []);
-
-    if (!Array.isArray(requests)) {
-        requests = [];
+    /** API match -> the card shape this page already renders. */
+    function mapMatch(match, index) {
+        return {
+            id: match.student.id,
+            name: match.student.name,
+            initials: match.student.initials || SkillMate.initials(match.student.name),
+            course: SkillMate.courseLabel(match.student),
+            bio: match.student.bio || "",
+            teaches: Array.isArray(match.teaches) ? match.teaches : [],
+            wants: Array.isArray(match.wants) ? match.wants : [],
+            score: typeof match.score === "number" ? match.score : 50,
+            match: {
+                theyCanTeachYou: match.theyCanTeachYou || [],
+                youCanTeachThem: match.youCanTeachThem || [],
+                isMutual: Boolean(match.isMutual)
+            },
+            alreadyRequested: Boolean(match.alreadyRequested),
+            color: avatarColours[index % avatarColours.length]
+        };
     }
+
+    /** Load mutual skill matches and my exchange requests from the server. */
+    async function loadExchangeData() {
+        const [matches, exchange] = await Promise.all([
+            api.skillMatches(true),
+            api.listSkillExchanges()
+        ]);
+
+        students = (matches.matches || []).map(mapMatch);
+        requests = (exchange.sent || [])
+            .concat(exchange.received || [])
+            .map(mapRequest);
+    }
+
+    // Learning goals and exchange requests live on the server.
+    let learningSkills = Array.isArray(user.learningSkills)
+        ? user.learningSkills
+        : [];
+
+    let requests = [];
 
     let toastTimer;
 
@@ -413,69 +333,83 @@ let learningSkills =
         showToast("Skill added to your learning goals.");
     }
 
+    /** API exchange request -> the row shape this page already renders. */
+    function mapRequest(request) {
+        const sentByMe = request.direction === "sent";
+        const other = sentByMe ? request.matchedStudent : request.student;
+
+        return {
+            id: request.id,
+            studentId: other ? other.id : "",
+            studentName: other ? other.name : "Student",
+            status: request.status,
+            // Reframed from the viewer's point of view.
+            skillsTheyTeach: sentByMe ? request.skillsToLearn : request.skillsToTeach,
+            skillsYouTeach: sentByMe ? request.skillsToTeach : request.skillsToLearn,
+            direction: request.direction,
+            createdAt: request.createdAt || null
+        };
+    }
+
     // Save learning goals
-    function saveLearningSkills() {
-        if (!saveJSON(LEARNING_KEY, learningSkills)) {
-            showToast("Your learning goals could not be saved.");
+    async function saveLearningSkills() {
+        // Learning goals belong to the student's profile on the server.
+        if (!user.id) {
+            showToast("Please sign in again to save your learning goals.");
             return;
         }
 
         try {
-            if (sessionUser) {
-                sessionStorage.setItem(
-                    USER_KEY,
-                    JSON.stringify({
-                        ...sessionUser,
-                        learningSkills: learningSkills
-                    })
-                );
+            const result = await api.updateProfile(user.id, {
+                learningSkills
+            });
+
+            user.learningSkills = [...learningSkills];
+
+            if (result.user) {
+                SkillMate.saveUser(result.user);
             }
 
-            if (localUser) {
-                localStorage.setItem(
-                    USER_KEY,
-                    JSON.stringify({
-                        ...localUser,
-                        learningSkills: learningSkills
-                    })
-                );
-            }
+            showToast("Your learning goals have been saved!");
         } catch (error) {
-            console.error("Profile update error:", error);
+            showToast(error.message || "Your learning goals could not be saved.");
+            return;
         }
-
-        user.learningSkills = [...learningSkills];
-
-        showToast("Your learning goals have been saved!");
 
         renderMatches();
         updateStatistics();
     }
 
-    // Find mutual skill matches
+    // Find mutual skill matches (the API already calculated the overlap)
     function getMutualMatch(student) {
+        if (student && student.match) {
+            return student.match;
+        }
 
-        // Skills the student can teach you
+        // Fallback: compute locally from the two skill lists.
         const theyCanTeachYou = student.teaches.filter(skill =>
             hasSkill(learningSkills, skill)
         );
 
-        // Skills you can teach the student
         const youCanTeachThem = student.wants.filter(skill =>
             hasSkill(skillsToShare, skill)
         );
 
-        return {
-            theyCanTeachYou,
-            youCanTeachThem
-        };
+        return { theyCanTeachYou, youCanTeachThem };
     }
 
     // Check whether a request has already been sent
     function hasSentRequest(studentId) {
+        if (studentId) {
+            const student = students.find(item => item.id === studentId);
+
+            if (student && student.alreadyRequested) return true;
+        }
+
         return requests.some(request =>
             request.studentId === studentId &&
-            request.status !== "declined"
+            request.status !== "declined" &&
+            request.status !== "cancelled"
         );
     }
 
@@ -490,11 +424,15 @@ let learningSkills =
             match.theyCanTeachYou.length +
             match.youCanTeachThem.length;
 
-        const matchPercentage = totalPossible > 0
-            ? Math.min(100, Math.round(
-                (matchedCount / totalPossible) * 100
-            ))
-            : 0;
+        // The API already calculated the compatibility percentage; the local
+        // calculation only remains for students loaded without one.
+        const matchPercentage = typeof student.score === "number"
+            ? student.score
+            : (totalPossible > 0
+                ? Math.min(100, Math.round(
+                    (matchedCount / totalPossible) * 100
+                ))
+                : 0);
 
         const alreadyRequested = hasSentRequest(student.id);
 
@@ -620,7 +558,7 @@ let learningSkills =
     }
 
     // Send a two-way skill exchange request
-    function sendExchangeRequest(studentId) {
+    async function sendExchangeRequest(studentId) {
         const student = students.find(item => item.id === studentId);
 
         if (!student) return;
@@ -640,32 +578,21 @@ let learningSkills =
             return;
         }
 
-        const newRequest = {
-            id: "swap-" + Date.now(),
-            studentId: student.id,
-            studentName: student.name,
-            studentEmail: studentEmail,
-            yourName: studentName,
+        try {
+            const result = await api.createSkillExchange({
+                matchedStudentId: studentId,
+                skillsToTeach: match.youCanTeachThem,
+                skillsToLearn: match.theyCanTeachYou
+            });
 
-            // What they will teach you
-            skillsTheyTeach: match.theyCanTeachYou,
+            requests.unshift(mapRequest(result.request));
+            student.alreadyRequested = true;
 
-            // What you can teach them
-            skillsYouTeach: match.youCanTeachThem,
-
-            status: "pending",
-            createdAt: new Date().toISOString()
-        };
-
-        requests.push(newRequest);
-
-        if (!saveJSON(REQUESTS_KEY, requests)) {
-            requests.pop();
-            showToast("Your request could not be saved.");
+            showToast("Your skill exchange request has been sent!");
+        } catch (error) {
+            showToast(error.message || "Your request could not be sent.");
             return;
         }
-
-        showToast("Your skill exchange request has been saved!");
 
         renderMatches();
         renderMyRequests();
@@ -862,36 +789,42 @@ let learningSkills =
     const logoutButton = $("#logoutBtn");
 
     if (logoutButton) {
-        logoutButton.addEventListener("click", function (event) {
+        logoutButton.addEventListener("click", async function (event) {
             event.preventDefault();
 
             const confirmed = confirm("Are you sure you want to log out?");
 
             if (confirmed) {
-                localStorage.removeItem(USER_KEY);
-                sessionStorage.removeItem(USER_KEY);
+                await SkillMate.api.logout();
 
                 window.location.href = "./Login.html";
             }
         });
     }
 
-    // Refresh the page if saved information changes in another tab
-    window.addEventListener("storage", function (event) {
-        if (
-            event.key === LEARNING_KEY ||
-            event.key === REQUESTS_KEY ||
-            event.key === USER_KEY
-        ) {
-            learningSkills = readJSON(LEARNING_KEY, []);
-            requests = readJSON(REQUESTS_KEY, []);
+    // Initial page setup: session check, live data, then render.
+    async function initialisePage() {
+        if (!SkillMate.requireAuth()) return;
 
-            renderAll();
+        renderUser();
+
+        try {
+            await loadExchangeData();
+        } catch (error) {
+            console.error("Skill exchange data could not be loaded:", error);
+
+            if (error.status === 401) {
+                SkillMate.clearSession();
+                window.location.href = "./StudentLogin.html";
+                return;
+            }
+
+            showToast(error.message || "Your skill matches could not be loaded.");
         }
-    });
 
-    // Initial page setup
-    renderUser();
-    renderAll();
+        renderAll();
+    }
+
+    initialisePage();
 
 });

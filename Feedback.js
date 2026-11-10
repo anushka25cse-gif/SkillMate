@@ -2,7 +2,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const $ = selector => document.querySelector(selector);
 
-    const FEEDBACK_KEY = "skillmateFeedback";
+    // Feedback can only be submitted by a signed-in student.
+    if (!SkillMate.requireAuth()) return;
+
+    // SkillMate API client (api.js) owns the session and every server call.
+    const api = SkillMate.api;
 
     const feedbackForm = $("#feedbackForm");
     const nameInput = $("#name");
@@ -13,55 +17,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const statusMessage = $("#statusMessage");
     const characterCount = $("#characterCount");
 
-    // Read data from localStorage
+    // Get the logged-in student's information (api.js caches it at login)
 
-    function readJSON(key, fallback) {
-        try {
-            const value = JSON.parse(localStorage.getItem(key));
-            return value ?? fallback;
-        } catch (error) {
-            return fallback;
-        }
-    }
-
-    // Read data from sessionStorage
-
-    function readSession(key, fallback) {
-        try {
-            const value = JSON.parse(sessionStorage.getItem(key));
-            return value ?? fallback;
-        } catch (error) {
-            return fallback;
-        }
-    }
-
-    // Save data in localStorage
-
-    function saveJSON(key, value) {
-        try {
-            localStorage.setItem(key, JSON.stringify(value));
-            return true;
-        } catch (error) {
-            console.error("Storage error:", error);
-            return false;
-        }
-    }
-
-    // Get the logged-in student's information
-
-    const currentUser =
-        readSession("skillmateCurrentUser", null) ||
-        readJSON("skillmateCurrentUser", null) ||
-        {};
-
-    const signupDraft =
-        readSession("skillmateSignupDraft", null) ||
-        readJSON("skillmateSignupDraft", {});
-
-    const user = {
-        ...signupDraft,
-        ...currentUser
-    };
+    const user = SkillMate.getUser() || {};
 
     const studentName = user.fullName || user.name || "";
     const studentEmail = user.email || "";
@@ -134,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Submit feedback form
 
-    feedbackForm.addEventListener("submit", function (event) {
+    feedbackForm.addEventListener("submit", async function (event) {
 
         event.preventDefault();
 
@@ -217,36 +175,17 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // Get previously submitted feedback
+        // Store the feedback on the SkillMate server (Feedback.json)
 
-        let allFeedback = readJSON(FEEDBACK_KEY, []);
-
-        if (!Array.isArray(allFeedback)) {
-            allFeedback = [];
-        }
-
-        // Create a new feedback record
-
-        const newFeedback = {
-            id: "feedback-" + Date.now(),
-            user: name,
-            email: email,
-            rating: Number(selectedRating.value),
-            category: category,
-            feedback: feedbackText,
-            suggestions: feedbackText,
-            submittedAt: new Date().toISOString()
-        };
-
-        // Add feedback to the existing list
-
-        allFeedback.push(newFeedback);
-
-        // Save feedback
-
-        if (!saveJSON(FEEDBACK_KEY, allFeedback)) {
+        try {
+            await api.submitFeedback({
+                rating: Number(selectedRating.value),
+                category: category,
+                comments: feedbackText
+            });
+        } catch (error) {
             showStatus(
-                "Feedback could not be saved. Please try again.",
+                error.message || "Feedback could not be saved. Please try again.",
                 "failure"
             );
 
@@ -306,7 +245,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (logoutButton) {
 
-        logoutButton.addEventListener("click", function (event) {
+        logoutButton.addEventListener("click", async function (event) {
 
             event.preventDefault();
 
@@ -314,8 +253,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (confirmed) {
 
-                localStorage.removeItem("skillmateCurrentUser");
-                sessionStorage.removeItem("skillmateCurrentUser");
+                await SkillMate.api.logout();
 
                 window.location.href = "./Login.html";
             }
