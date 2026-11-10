@@ -1,1 +1,68 @@
-[]
+[
+  {
+    "id": "P001",
+    "title": "Campus Connect",
+    "description": "A student platform to discover campus events, clubs and people with shared interests.",
+    "category": "Web Development",
+    "requiredSkills": [
+      "HTML & CSS",
+      "JavaScript",
+      "UI/UX Design"
+    ],
+    "creatorId": "U004",
+    "teamMembers": [
+      "U004",
+      "U003"
+    ],
+    "teamSize": 4,
+    "status": "Looking for teammates",
+    "emoji": "✦",
+    "joinRequests": [],
+    "createdAt": "2026-10-20T07:24:15.267Z",
+    "updatedAt": "2026-11-06T07:24:15.267Z"
+  },
+  {
+    "id": "P002",
+    "title": "Smart Study Buddy",
+    "description": "A study companion that helps students organise learning and revision with spaced repetition.",
+    "category": "AI & Machine Learning",
+    "requiredSkills": [
+      "Python",
+      "Machine Learning",
+      "UI/UX Design"
+    ],
+    "creatorId": "U002",
+    "teamMembers": [
+      "U002"
+    ],
+    "teamSize": 3,
+    "status": "Open",
+    "emoji": "✳",
+    "joinRequests": [],
+    "createdAt": "2026-10-27T07:24:15.267Z",
+    "updatedAt": "2026-11-08T07:24:15.267Z"
+  },
+  {
+    "id": "P003",
+    "title": "Green Campus Initiative",
+    "description": "Creative ways to make campus life more sustainable and community-driven.",
+    "category": "Social Impact",
+    "requiredSkills": [
+      "Research",
+      "Graphic Design",
+      "Web Development"
+    ],
+    "creatorId": "U005",
+    "teamMembers": [
+      "U005",
+      "U006",
+      "U001"
+    ],
+    "teamSize": 5,
+    "status": "Open",
+    "emoji": "❋",
+    "joinRequests": [],
+    "createdAt": "2026-11-01T07:24:15.267Z",
+    "updatedAt": "2026-11-09T07:24:15.267Z"
+  }
+]

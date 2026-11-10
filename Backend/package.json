@@ -1,17 +1,33 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "skillmate-backend",
+  "version": "2.0.0",
+  "description": "SkillMate REST API - student collaboration and skill exchange platform (Express + JSON files)",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "dev": "node --watch app.js",
+    "start:legacy": "node server.js",
+    "seed": "node scripts/seed.js",
+    "test": "node --test tests/",
+    "test:watch": "node --test --watch tests/"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "skillmate",
+    "express",
+    "rest-api",
+    "student-collaboration",
+    "json-database"
+  ],
+  "author": "SkillMate Team",
   "license": "ISC",
+  "engines": {
+    "node": ">=18"
+  },
   "type": "commonjs",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
-    "express": "^5.3.0"
+    "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3"
   }
 }

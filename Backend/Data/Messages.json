@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "id": "M001",
+    "senderId": "U003",
+    "receiverId": "U002",
+    "content": "Hi Riya! Loved your Figma prototype for the campus app.",
+    "timestamp": "2026-11-08T07:24:15.267Z",
+    "read": true
+  },
+  {
+    "id": "M002",
+    "senderId": "U002",
+    "receiverId": "U003",
+    "content": "Thank you! Want to pair up on the visual design for Campus Connect?",
+    "timestamp": "2026-11-08T07:24:15.267Z",
+    "read": true
+  },
+  {
+    "id": "M003",
+    "senderId": "U003",
+    "receiverId": "U002",
+    "content": "Absolutely. I can start on the branding next week.",
+    "timestamp": "2026-11-09T07:24:15.267Z",
+    "read": false
+  },
+  {
+    "id": "M004",
+    "senderId": "U006",
+    "receiverId": "U001",
+    "content": "Hello! How are you?",
+    "timestamp": "2026-11-09T07:24:15.267Z",
+    "read": false
+  }
+]

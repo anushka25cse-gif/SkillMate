@@ -1,1 +1,229 @@
-[]
+[
+  {
+    "id": "U001",
+    "name": "Aarav Sharma",
+    "email": "aarav@example.com",
+    "course": "B.Tech",
+    "year": "2nd Year",
+    "college": "BML Munjal University",
+    "registration": "BMU2024001",
+    "graduation": "2027",
+    "skills": [
+      "Python",
+      "Machine Learning",
+      "Data Analytics"
+    ],
+    "teachSkills": [
+      "Python",
+      "Machine Learning"
+    ],
+    "learningSkills": [
+      "Figma",
+      "UI/UX Design",
+      "JavaScript"
+    ],
+    "interests": [
+      "Artificial Intelligence",
+      "Research"
+    ],
+    "bio": "AI enthusiast who enjoys turning interesting ideas into working prototypes.",
+    "proficiency": "Intermediate",
+    "availability": "Weekends",
+    "collaboration": "Remote",
+    "passwordHash": "$2b$10$gXQZii8zSIcipfu.BQMZW.wXgEDrZMMq.k0raWTPj03.jjC2EP1uC",
+    "profileImage": "",
+    "profileCompleted": true,
+    "createdAt": "2026-10-01T07:24:15.267Z",
+    "updatedAt": "2026-11-10T07:24:15.267Z"
+  },
+  {
+    "id": "U002",
+    "name": "Riya Kapoor",
+    "email": "riya@example.com",
+    "course": "B.Tech",
+    "year": "2nd Year",
+    "college": "BML Munjal University",
+    "registration": "BMU2024002",
+    "graduation": "2027",
+    "skills": [
+      "UI/UX Design",
+      "Figma",
+      "Web Development"
+    ],
+    "teachSkills": [
+      "Figma",
+      "UI/UX Design",
+      "Graphic Design"
+    ],
+    "learningSkills": [
+      "Python",
+      "Machine Learning",
+      "SQL"
+    ],
+    "interests": [
+      "Product Design",
+      "Hackathons"
+    ],
+    "bio": "Building thoughtful digital experiences through design and code.",
+    "proficiency": "Advanced",
+    "availability": "Evenings",
+    "collaboration": "Hybrid",
+    "passwordHash": "$2b$10$gXQZii8zSIcipfu.BQMZW.wXgEDrZMMq.k0raWTPj03.jjC2EP1uC",
+    "profileImage": "",
+    "profileCompleted": true,
+    "createdAt": "2026-10-04T07:24:15.267Z",
+    "updatedAt": "2026-11-09T07:24:15.267Z"
+  },
+  {
+    "id": "U003",
+    "name": "Mehak Verma",
+    "email": "mehak@example.com",
+    "course": "B.Des",
+    "year": "2nd Year",
+    "college": "BML Munjal University",
+    "registration": "BMU2024003",
+    "graduation": "2027",
+    "skills": [
+      "Graphic Design",
+      "Figma",
+      "Content Writing"
+    ],
+    "teachSkills": [
+      "Graphic Design",
+      "Figma",
+      "Illustration"
+    ],
+    "learningSkills": [
+      "Python",
+      "Web Development",
+      "JavaScript"
+    ],
+    "interests": [
+      "Art",
+      "Branding"
+    ],
+    "bio": "Creative thinker who loves branding, visual storytelling and collaboration.",
+    "proficiency": "Advanced",
+    "availability": "Weekdays",
+    "collaboration": "In person",
+    "passwordHash": "$2b$10$gXQZii8zSIcipfu.BQMZW.wXgEDrZMMq.k0raWTPj03.jjC2EP1uC",
+    "profileImage": "",
+    "profileCompleted": true,
+    "createdAt": "2026-10-07T07:24:15.267Z",
+    "updatedAt": "2026-11-08T07:24:15.267Z"
+  },
+  {
+    "id": "U004",
+    "name": "Kabir Malhotra",
+    "email": "kabir@example.com",
+    "course": "B.Tech",
+    "year": "1st Year",
+    "college": "BML Munjal University",
+    "registration": "BMU2025004",
+    "graduation": "2028",
+    "skills": [
+      "JavaScript",
+      "Web Development",
+      "HTML & CSS"
+    ],
+    "teachSkills": [
+      "Web Development",
+      "JavaScript",
+      "HTML & CSS"
+    ],
+    "learningSkills": [
+      "UI/UX Design",
+      "Figma",
+      "Graphic Design"
+    ],
+    "interests": [
+      "Startups",
+      "Web Apps"
+    ],
+    "bio": "Web developer learning to build useful tools for campus life.",
+    "proficiency": "Intermediate",
+    "availability": "Weekends",
+    "collaboration": "Remote",
+    "passwordHash": "$2b$10$gXQZii8zSIcipfu.BQMZW.wXgEDrZMMq.k0raWTPj03.jjC2EP1uC",
+    "profileImage": "",
+    "profileCompleted": true,
+    "createdAt": "2026-10-10T07:24:15.267Z",
+    "updatedAt": "2026-11-07T07:24:15.267Z"
+  },
+  {
+    "id": "U005",
+    "name": "Sana Ali",
+    "email": "sana@example.com",
+    "course": "B.Tech",
+    "year": "2nd Year",
+    "college": "BML Munjal University",
+    "registration": "BMU2024005",
+    "graduation": "2027",
+    "skills": [
+      "Python",
+      "SQL",
+      "Data Analytics"
+    ],
+    "teachSkills": [
+      "SQL",
+      "Python",
+      "Data Analytics"
+    ],
+    "learningSkills": [
+      "Figma",
+      "UI/UX Design",
+      "Content Writing"
+    ],
+    "interests": [
+      "Analytics",
+      "Social Impact"
+    ],
+    "bio": "Interested in data, problem-solving and projects with real-world impact.",
+    "proficiency": "Intermediate",
+    "availability": "Evenings",
+    "collaboration": "Hybrid",
+    "passwordHash": "$2b$10$gXQZii8zSIcipfu.BQMZW.wXgEDrZMMq.k0raWTPj03.jjC2EP1uC",
+    "profileImage": "",
+    "profileCompleted": true,
+    "createdAt": "2026-10-13T07:24:15.267Z",
+    "updatedAt": "2026-11-06T07:24:15.267Z"
+  },
+  {
+    "id": "U006",
+    "name": "Dev Mehta",
+    "email": "dev@example.com",
+    "course": "B.Tech",
+    "year": "1st Year",
+    "college": "BML Munjal University",
+    "registration": "BMU2025006",
+    "graduation": "2028",
+    "skills": [
+      "Java",
+      "C / C++",
+      "Problem Solving"
+    ],
+    "teachSkills": [
+      "Java",
+      "C / C++",
+      "Python"
+    ],
+    "learningSkills": [
+      "Web Development",
+      "Graphic Design",
+      "Video Editing"
+    ],
+    "interests": [
+      "Coding",
+      "Competitive Programming"
+    ],
+    "bio": "Learning Java and exploring how good software gets built in teams.",
+    "proficiency": "Beginner",
+    "availability": "Weekdays",
+    "collaboration": "In person",
+    "passwordHash": "$2b$10$gXQZii8zSIcipfu.BQMZW.wXgEDrZMMq.k0raWTPj03.jjC2EP1uC",
+    "profileImage": "",
+    "profileCompleted": true,
+    "createdAt": "2026-10-16T07:24:15.267Z",
+    "updatedAt": "2026-11-05T07:24:15.267Z"
+  }
+]

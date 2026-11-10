@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "id": "SP001",
+    "userId": "U001",
+    "savedStudentId": "U004",
+    "createdAt": "2026-11-06T07:24:15.267Z"
+  },
+  {
+    "id": "SP002",
+    "userId": "U001",
+    "savedStudentId": "U006",
+    "createdAt": "2026-11-07T07:24:15.267Z"
+  }
+]

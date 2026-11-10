@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "id": "C001",
+    "senderId": "U002",
+    "receiverId": "U001",
+    "status": "pending",
+    "createdAt": "2026-11-07T07:24:15.267Z",
+    "updatedAt": "2026-11-07T07:24:15.267Z"
+  },
+  {
+    "id": "C002",
+    "senderId": "U004",
+    "receiverId": "U001",
+    "status": "pending",
+    "createdAt": "2026-11-08T07:24:15.267Z",
+    "updatedAt": "2026-11-08T07:24:15.267Z"
+  },
+  {
+    "id": "C003",
+    "senderId": "U003",
+    "receiverId": "U002",
+    "status": "accepted",
+    "createdAt": "2026-11-02T07:24:15.267Z",
+    "updatedAt": "2026-11-03T07:24:15.267Z"
+  },
+  {
+    "id": "C004",
+    "senderId": "U001",
+    "receiverId": "U006",
+    "status": "accepted",
+    "createdAt": "2026-10-29T07:24:15.267Z",
+    "updatedAt": "2026-10-30T07:24:15.267Z"
+  }
+]

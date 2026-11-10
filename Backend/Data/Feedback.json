@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "id": "F001",
+    "studentId": "U001",
+    "rating": 5,
+    "category": "Platform",
+    "comments": "The platform is easy to use and the skill matching is genuinely useful.",
+    "createdAt": "2026-11-04T07:24:15.267Z"
+  },
+  {
+    "id": "F002",
+    "studentId": "U003",
+    "rating": 4,
+    "category": "Skill Exchange",
+    "comments": "Found a design partner in two days. Would love a calendar view for swaps.",
+    "createdAt": "2026-11-05T07:24:15.267Z"
+  }
+]

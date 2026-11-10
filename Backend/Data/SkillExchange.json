@@ -1,1 +1,36 @@
-[]
+[
+  {
+    "id": "S001",
+    "studentId": "U001",
+    "skillsToTeach": [
+      "Python",
+      "Machine Learning"
+    ],
+    "skillsToLearn": [
+      "Figma",
+      "UI/UX Design"
+    ],
+    "matchedStudentId": "U002",
+    "message": "I can help with the ML model if you can review our UI.",
+    "status": "pending",
+    "createdAt": "2026-11-08T07:24:15.267Z",
+    "updatedAt": "2026-11-08T07:24:15.267Z"
+  },
+  {
+    "id": "S002",
+    "studentId": "U003",
+    "skillsToTeach": [
+      "Graphic Design",
+      "Figma"
+    ],
+    "skillsToLearn": [
+      "Python",
+      "Web Development"
+    ],
+    "matchedStudentId": "U001",
+    "message": "Happy to swap design for some Python basics!",
+    "status": "pending",
+    "createdAt": "2026-11-09T07:24:15.267Z",
+    "updatedAt": "2026-11-09T07:24:15.267Z"
+  }
+]
