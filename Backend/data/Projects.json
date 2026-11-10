@@ -1,0 +1,182 @@
+{
+    "projects": [
+        {
+            "_id": "6af21f8f16bc49e6db2dae54",
+            "isSample": true,
+            "title": "Campus Connect",
+            "__v": 1,
+            "category": "Web Development",
+            "createdAt": "2026-11-09T19:31:26.816Z",
+            "createdBy": null,
+            "description": "A student platform to discover campus events, clubs and people with shared interests.",
+            "interestedUsers": [
+                "6aef79c53f40c5edff404bc0"
+            ],
+            "members": [],
+            "skills": [
+                "HTML & CSS",
+                "JavaScript",
+                "UI/UX Design"
+            ],
+            "status": "Open",
+            "teamSize": 5,
+            "updatedAt": "2026-11-10T13:54:35.099Z"
+        },
+        {
+            "_id": "6af21f8f16bc49e6db2dae55",
+            "title": "Smart Study Buddy",
+            "isSample": true,
+            "__v": 1,
+            "category": "AI & Machine Learning",
+            "createdAt": "2026-11-09T19:31:28.116Z",
+            "createdBy": null,
+            "description": "An idea for a study companion that helps students organise learning and revision.",
+            "interestedUsers": [
+                "6aef79c53f40c5edff404bc0"
+            ],
+            "members": [],
+            "skills": [
+                "Python",
+                "Machine Learning",
+                "UI/UX Design"
+            ],
+            "status": "Open",
+            "teamSize": 5,
+            "updatedAt": "2026-11-10T13:54:35.193Z"
+        },
+        {
+            "_id": "6af21f8f16bc49e6db2dae56",
+            "isSample": true,
+            "title": "Green Campus Initiative",
+            "__v": 1,
+            "category": "Social Impact",
+            "createdAt": "2026-11-09T19:31:28.156Z",
+            "createdBy": null,
+            "description": "Explore creative ways to make campus life more sustainable and community-driven.",
+            "interestedUsers": [
+                "6aef79c53f40c5edff404bc0"
+            ],
+            "members": [],
+            "skills": [
+                "Research",
+                "Graphic Design",
+                "Web Development"
+            ],
+            "status": "Open",
+            "teamSize": 5,
+            "updatedAt": "2026-11-10T13:54:35.231Z"
+        },
+        {
+            "_id": "6af221c81357327bc591ed71",
+            "title": "Campus Project",
+            "category": "Web Development",
+            "description": "website",
+            "skills": [
+                "HTML",
+                "CSS<JS"
+            ],
+            "teamSize": 5,
+            "members": [
+                "6aef79c53f40c5edff404bc0"
+            ],
+            "interestedUsers": [],
+            "createdBy": "6aef79c53f40c5edff404bc0",
+            "isSample": false,
+            "status": "Open",
+            "createdAt": "2026-11-09T19:40:56.832Z",
+            "updatedAt": "2026-11-09T20:13:38.593Z",
+            "__v": 8
+        },
+        {
+            "_id": "6af22aeffdab234222608b09",
+            "title": "campus defend",
+            "category": "AI & Machine Learning",
+            "description": "Ai agent",
+            "skills": [
+                "HTML",
+                "CSS",
+                "JS"
+            ],
+            "teamSize": 4,
+            "members": [
+                "6aef79c53f40c5edff404bc0",
+                "6aef877d3f40c5edff404bc1"
+            ],
+            "interestedUsers": [],
+            "createdBy": "6aef79c53f40c5edff404bc0",
+            "isSample": false,
+            "status": "Open",
+            "createdAt": "2026-11-09T20:19:59.495Z",
+            "updatedAt": "2026-11-10T09:24:20.145Z",
+            "__v": 2
+        },
+        {
+            "_id": "6af2e933e891b3ed374f540e",
+            "title": "JSON Sync Test",
+            "category": "Web Development",
+            "description": "Testing MongoDB and JSON synchronisation",
+            "skills": [
+                "HTML",
+                "CSS",
+                "JS"
+            ],
+            "teamSize": 5,
+            "members": [
+                "6aef877d3f40c5edff404bc1"
+            ],
+            "interestedUsers": [],
+            "createdBy": "6aef877d3f40c5edff404bc1",
+            "isSample": false,
+            "status": "Open",
+            "createdAt": "2026-11-10T09:51:47.497Z",
+            "updatedAt": "2026-11-10T10:04:04.647Z",
+            "__v": 2
+        },
+        {
+            "_id": "6af2ea52e891b3ed374f540f",
+            "title": "Website Check",
+            "category": "Web Development",
+            "description": "Built a website.",
+            "skills": [
+                "HTML",
+                "CSS",
+                "JS"
+            ],
+            "teamSize": 3,
+            "members": [
+                "6aef877d3f40c5edff404bc1",
+                "6aef79c53f40c5edff404bc0"
+            ],
+            "interestedUsers": [],
+            "createdBy": "6aef877d3f40c5edff404bc1",
+            "isSample": false,
+            "status": "Open",
+            "createdAt": "2026-11-10T09:56:34.146Z",
+            "updatedAt": "2026-11-10T10:03:59.397Z",
+            "__v": 2
+        },
+        {
+            "_id": "6af2f180e891b3ed374f5410",
+            "title": "Website Checking",
+            "category": "Web Development",
+            "description": "working",
+            "skills": [
+                "HTML",
+                "CSS",
+                "JS"
+            ],
+            "teamSize": 3,
+            "members": [
+                "6aef877d3f40c5edff404bc1",
+                "6aef79c53f40c5edff404bc0"
+            ],
+            "interestedUsers": [],
+            "createdBy": "6aef877d3f40c5edff404bc1",
+            "isSample": false,
+            "status": "Open",
+            "createdAt": "2026-11-10T10:27:12.832Z",
+            "updatedAt": "2026-11-10T10:38:14.434Z",
+            "__v": 2
+        }
+    ]
+}

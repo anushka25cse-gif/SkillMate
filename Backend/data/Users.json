@@ -1,0 +1,126 @@
+{
+    "users": [
+        {
+            "_id": "6aef6bd33b9584a233a0fa5c",
+            "fullName": "Test Student",
+            "email": "teststudent@gmail.com",
+            "passwordHash": "$2b$10$Hn3MAXQYrFaDY3Fgl5m/SO8fKHcHV6SUJXcstfG2FbppDUspAc..y",
+            "college": "BML Munjal University",
+            "registration": "",
+            "course": "B.Tech CSE",
+            "year": "2nd Year",
+            "graduation": "2029",
+            "knownSkills": [
+                "HTML",
+                "CSS"
+            ],
+            "teachSkills": [
+                "Java"
+            ],
+            "bio": "I am a computer science student.",
+            "interests": [
+                "Web Development",
+                "AI"
+            ],
+            "profilePhoto": "",
+            "proficiency": "",
+            "availability": "",
+            "collaboration": "",
+            "createdAt": "2026-11-07T18:20:03.736Z",
+            "updatedAt": "2026-11-07T18:20:03.736Z",
+            "__v": 0
+        },
+        {
+            "_id": "6aef79c53f40c5edff404bc0",
+            "fullName": "Taksh yadav",
+            "email": "taksh3195@gmail.com",
+            "passwordHash": "$2b$10$skdeodaoWtzl3pYhcjeZ3Orcw4QCSd.Z1UGNTrnu8hBzWOWN3I.dO",
+            "college": "jg",
+            "registration": "1455r5",
+            "course": "B.Tech",
+            "year": "3rd Year",
+            "graduation": "2029",
+            "knownSkills": [
+                "Python",
+                "Java",
+                "C / C++",
+                "HTML & CSS",
+                "JavaScript",
+                "Web Development",
+                "UI/UX Design",
+                "Figma"
+            ],
+            "teachSkills": [
+                "Python",
+                "Java",
+                "C / C++",
+                "HTML & CSS",
+                "JavaScript",
+                "Web Development",
+                "UI/UX Design",
+                "Figma"
+            ],
+            "bio": "My name is Taksh Yadav. I am coder.",
+            "interests": [
+                "Gaming"
+            ],
+            "profilePhoto": "",
+            "proficiency": "Intermediate",
+            "availability": "Weekends",
+            "collaboration": "Hybrid",
+            "createdAt": "2026-11-07T19:19:33.444Z",
+            "updatedAt": "2026-11-10T14:13:42.151Z",
+            "__v": 0
+        },
+        {
+            "_id": "6aef877d3f40c5edff404bc1",
+            "fullName": "Bharat Gupta",
+            "email": "taksh.yadav.25cse@bmu.edu.in",
+            "passwordHash": "$2b$10$A8pqgpdt4Al6h5SMLbGpj.mZpe9TS/SmCFjIPhJCFVFxUGYhDTV56",
+            "college": "BML",
+            "registration": "250335",
+            "course": "B.Tech",
+            "year": "2nd Year",
+            "graduation": "2029",
+            "knownSkills": [
+                "Python",
+                "Java",
+                "HTML & CSS",
+                "JavaScript",
+                "UI/UX Design",
+                "Graphic Design",
+                "Machine Learning",
+                "Data Analytics",
+                "SQL",
+                "Video Editing",
+                "Photography",
+                "Content Writing"
+            ],
+            "teachSkills": [
+                "Python",
+                "Java",
+                "HTML & CSS",
+                "JavaScript",
+                "UI/UX Design",
+                "Graphic Design",
+                "Machine Learning",
+                "Data Analytics",
+                "SQL",
+                "Video Editing",
+                "Photography",
+                "Content Writing"
+            ],
+            "bio": "I am Don!",
+            "interests": [
+                "Drawing"
+            ],
+            "profilePhoto": "",
+            "proficiency": "Advanced",
+            "availability": "Weekday evenings",
+            "collaboration": "In person",
+            "createdAt": "2026-11-07T20:18:05.695Z",
+            "updatedAt": "2026-11-10T07:43:51.717Z",
+            "__v": 0
+        }
+    ]
+}

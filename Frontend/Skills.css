@@ -1,0 +1,848 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap');
+
+/* ==============================
+   SKILLMATE — ORIGINAL BRAND THEME
+   Plum + Orange + Cream + Blush
+   ============================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --plum: #71345f;
+    --plum-dark: #542640;
+    --orange: #f47735;
+    --text: #45243d;
+    --muted: #927772;
+    --border: #efd9ce;
+    --cream: #fff8f2;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(ellipse at 90% 10%, #ffe1d0 0%, transparent 38%),
+        radial-gradient(ellipse at 8% 80%, #f8e5e9 0%, transparent 35%),
+        linear-gradient(120deg, #fff8f2, #fff0e7 60%, #fff8f4);
+}
+
+/* NAVIGATION */
+
+.navbar {
+    min-height: 62px;
+    padding: 10px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    background: rgba(255, 250, 246, 0.96);
+    border-bottom: 1px solid #efddd4;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--plum-dark);
+    font: 800 21px 'Poppins', sans-serif;
+    text-decoration: none;
+}
+
+.logo-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 11px;
+    color: white;
+    background: linear-gradient(135deg, #71345f, #984b78);
+    box-shadow: 0 4px 12px rgba(83, 35, 69, 0.16);
+}
+
+.logo-orange {
+    color: var(--orange);
+}
+
+.step-label {
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+}
+
+.step-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-right: 6px;
+    border-radius: 50%;
+    background: var(--orange);
+}
+
+.step-divider {
+    padding: 0 5px;
+    color: #d2b7a8;
+}
+
+/* MAIN PAGE */
+
+.page-container {
+    width: min(1050px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 22px 0 16px;
+}
+
+/* INTRODUCTION */
+
+.intro {
+    text-align: center;
+    margin-bottom: 17px;
+}
+
+.eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    margin-bottom: 7px;
+    color: var(--orange);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.1px;
+}
+
+.orange-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--orange);
+}
+
+.intro h1 {
+    color: var(--plum-dark);
+    font: 800 clamp(26px, 3vw, 34px)/1.25 'Poppins', sans-serif;
+    letter-spacing: -0.8px;
+    margin-bottom: 7px;
+}
+
+.intro h1 span {
+    color: var(--orange);
+}
+
+.intro p {
+    max-width: 600px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* PROGRESS BAR */
+
+.progress-area {
+    max-width: 550px;
+    margin: 0 auto 16px;
+}
+
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 7px;
+    color: #826a66;
+    font-size: 10px;
+}
+
+.progress-label strong {
+    color: var(--plum);
+}
+
+.progress-track {
+    height: 5px;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #f0dfd6;
+}
+
+.progress-fill {
+    width: 66.7%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #71345f, #984b78, #f47735);
+}
+
+/* LARGE SECTION CARDS */
+
+.skill-card {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    padding: 20px 22px;
+    margin-bottom: 14px;
+    border: 1px solid #efd3c5;
+    border-radius: 19px;
+    background:
+        radial-gradient(ellipse at top left,
+            rgba(255, 255, 255, 0.55), transparent 55%),
+        linear-gradient(125deg, #fff0e4 0%, #f8e7e5 52%, #f5e5ed 100%);
+    box-shadow:
+        0 9px 28px rgba(113, 52, 95, 0.055),
+        inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.teach-card {
+    background:
+        radial-gradient(ellipse at top right,
+            rgba(255, 255, 255, 0.5), transparent 55%),
+        linear-gradient(125deg, #fff1df, #f8e6e9 55%, #f9e8dc);
+}
+
+/* SECTION HEADINGS */
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.section-icon {
+    width: 41px;
+    height: 41px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #f6e3ec, #ead0e1);
+    color: var(--plum);
+    font-size: 22px;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.orange-icon {
+    background: linear-gradient(135deg, #fff0df, #f5d9d9);
+    color: #c76540;
+}
+
+.section-title {
+    flex: 1;
+    min-width: 0;
+}
+
+.section-kicker {
+    display: block;
+    margin-bottom: 3px;
+    color: var(--plum);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.9px;
+}
+
+.orange-kicker {
+    color: #c66a43;
+}
+
+.section-title h2 {
+    color: var(--plum-dark);
+    font: 700 17px 'Poppins', sans-serif;
+    margin-bottom: 3px;
+}
+
+.section-title p {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+/* SELECTION COUNTERS */
+
+.selection-count {
+    min-width: 54px;
+    padding: 7px 9px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ead0df;
+    border-radius: 11px;
+    background: linear-gradient(135deg, #fff0f4, #f6e4eb);
+    color: var(--plum);
+}
+
+.selection-count strong {
+    font-size: 17px;
+    line-height: 1.2;
+}
+
+.selection-count span {
+    font-size: 9px;
+}
+
+.orange-count {
+    border-color: #f0d3c2;
+    background: linear-gradient(135deg, #fff2e5, #f7e5e8);
+    color: #a8562c;
+}
+
+/* CATEGORY FILTERS */
+
+.category-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.category-btn {
+    padding: 8px 13px;
+    border: 1px solid #e9cfc8;
+    border-radius: 30px;
+    background: linear-gradient(120deg, #fff8ed, #f7e8ec);
+    color: #80606a;
+    font: 600 11px 'DM Sans', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(84, 38, 64, 0.035);
+    transition: all 0.2s ease;
+}
+
+.category-btn:hover {
+    background: linear-gradient(120deg, #f6e0e8, #f9e4d9);
+    border-color: #c997ad;
+    color: var(--plum);
+}
+
+.category-btn.active {
+    background: linear-gradient(110deg, #682b55, #914271);
+    border-color: #71345f;
+    color: white;
+    box-shadow: 0 4px 12px rgba(84, 38, 64, 0.17);
+}
+
+/* SKILL GRID */
+
+.skill-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    width: 100%;
+}
+
+/* INDIVIDUAL SKILL BUTTONS */
+
+.skill-option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+    min-height: 54px;
+    padding: 9px 11px;
+    border: 1px solid #e8cbd5;
+    border-radius: 13px;
+    background: linear-gradient(120deg, #fff0e6, #f7e5eb 55%, #f0e5ef);
+    box-shadow:
+        0 3px 9px rgba(84, 38, 64, 0.035),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition: all 0.22s ease;
+}
+
+.skill-option:nth-child(4n + 2) {
+    background: linear-gradient(120deg, #fbefdf, #f4e3eb 58%, #eee2ed);
+}
+
+.skill-option:nth-child(4n + 3) {
+    background: linear-gradient(120deg, #f6e2ea, #fff0e6 55%, #f2e3ec);
+}
+
+.skill-option:nth-child(4n + 4) {
+    background: linear-gradient(120deg, #fff0e1, #f5e4e9 52%, #ebdeeb);
+}
+
+.skill-option:hover {
+    transform: translateY(-2px);
+    border-color: #c18aa5;
+    box-shadow: 0 6px 15px rgba(84, 38, 64, 0.1);
+}
+
+/* Keep checkboxes accessible without showing a separate box */
+.skill-option input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.skill-symbol {
+    width: 31px;
+    height: 31px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #fffaf4, #f5e4ed);
+    color: var(--plum);
+    font-size: 10px;
+    font-weight: 800;
+    box-shadow: 0 2px 6px rgba(84, 38, 64, 0.07);
+}
+
+.skill-name {
+    flex: 1;
+    min-width: 0;
+    color: #593a4c;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.35;
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
+.check-mark {
+    display: none;
+    flex-shrink: 0;
+    color: var(--plum);
+    font-size: 13px;
+    font-weight: 800;
+}
+
+/* SELECTED SKILL */
+
+.skill-option:has(input:checked) {
+    background:
+        radial-gradient(ellipse at top left,
+            rgba(255, 255, 255, 0.5), transparent 65%),
+        linear-gradient(120deg, #e8c9dc, #dfbdd4 52%, #f1d1c8);
+    border: 2px solid #71345f;
+    box-shadow:
+        0 0 0 3px rgba(113, 52, 95, 0.08),
+        0 6px 15px rgba(84, 38, 64, 0.1);
+}
+
+.skill-option:has(input:checked) .skill-symbol {
+    background: linear-gradient(135deg, #71345f, #984b78);
+    color: white;
+}
+
+.skill-option:has(input:checked) .check-mark {
+    display: block;
+    color: #71345f;
+}
+
+.skill-option:focus-within {
+    outline: 2px solid #d49c80;
+    outline-offset: 2px;
+}
+
+/* CUSTOM SKILL INPUTS */
+
+.custom-skill {
+    margin-top: 15px;
+    padding-top: 13px;
+    border-top: 1px solid #efd9ce;
+}
+
+.custom-skill > label {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--plum-dark);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.custom-input-row {
+    display: flex;
+    gap: 9px;
+}
+
+.custom-input-row input {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    height: 40px;
+    padding: 0 13px;
+    border: 1px solid #e9cfc5;
+    border-radius: 11px;
+    outline: none;
+    background: linear-gradient(120deg, #fffdf9, #fff3f0);
+    color: var(--text);
+    font: 12px 'DM Sans', sans-serif;
+}
+
+.custom-input-row input:focus {
+    border-color: #bd795d;
+    box-shadow: 0 0 0 3px rgba(244, 119, 53, 0.12);
+}
+
+.custom-input-row input::placeholder {
+    color: #b59a96;
+}
+
+.add-button {
+    flex-shrink: 0;
+    padding: 0 15px;
+    border: 1px solid #e8c8bd;
+    border-radius: 10px;
+    background: linear-gradient(120deg, #fff0df, #f5e1e9);
+    color: var(--plum);
+    font: 700 11px 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.add-button:hover {
+    background: linear-gradient(120deg, #f6dce6, #f8dfd3);
+    border-color: #d7a7b8;
+}
+
+.custom-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 8px;
+}
+
+.custom-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 10px;
+    border: 1px solid #e5c6d4;
+    border-radius: 30px;
+    background: linear-gradient(120deg, #f6e3eb, #f9e9df);
+    color: var(--plum);
+    font-size: 11px;
+}
+
+.custom-chip button {
+    border: none;
+    background: transparent;
+    color: inherit;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* TEACH OR SWAP */
+
+.teach-note {
+    display: flex;
+    gap: 8px;
+    padding: 11px 13px;
+    margin-bottom: 13px;
+    border: 1px solid #efd8cf;
+    border-radius: 11px;
+    background: linear-gradient(120deg, #fff0df, #f7e5e9, #fff0e7);
+    color: #8c654e;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.teach-note span {
+    color: var(--orange);
+}
+
+.teach-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.teach-option {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 13px;
+    border: 1px solid #e8cbd5;
+    border-radius: 11px;
+    background: linear-gradient(120deg, #fff0e6, #f5e3eb);
+    color: #684a5b;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.teach-option:nth-child(3n + 2) {
+    background: linear-gradient(120deg, #f9eddf, #f0e2ec);
+}
+
+.teach-option:nth-child(3n + 3) {
+    background: linear-gradient(120deg, #f5e0e9, #fff0e5);
+}
+
+.teach-option:hover {
+    transform: translateY(-1px);
+    border-color: #c18aa5;
+}
+
+.teach-option input {
+    accent-color: var(--plum);
+}
+
+.teach-option:has(input:checked) {
+    background: linear-gradient(120deg, #e8c9dc, #dfbdd4 52%, #f1d1c8);
+    border: 2px solid #71345f;
+    color: #542640;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(84, 38, 64, 0.09);
+}
+
+.empty-teach {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+/* FORM MESSAGES */
+
+.form-message {
+    display: none;
+    margin: 8px 0 12px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.form-message.error {
+    display: block;
+    color: #b73737;
+}
+
+.form-message.success {
+    display: block;
+    color: #287a4a;
+}
+
+/* BOTTOM ACTIONS */
+
+.bottom-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 17px;
+}
+
+.back-button {
+    padding: 11px 13px;
+    border: 1px solid #e6d3ca;
+    border-radius: 10px;
+    color: var(--plum);
+    background: linear-gradient(120deg, #fff8ef, #f8e9ec);
+    font-size: 11px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.back-button:hover {
+    background: linear-gradient(120deg, #f7e0e9, #fbe8dc);
+}
+
+.continue-button {
+    min-height: 42px;
+    padding: 11px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(110deg, #682b55, #914271);
+    color: white;
+    font: 700 12px 'DM Sans', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(104, 43, 85, 0.16);
+    transition: all 0.2s ease;
+}
+
+.continue-button:hover {
+    background: linear-gradient(110deg, #542040, #80385f);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(104, 43, 85, 0.22);
+}
+
+.continue-button span {
+    font-size: 17px;
+}
+
+.privacy-note {
+    margin-top: 12px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.page-footer {
+    padding: 15px 0 4px;
+    text-align: center;
+    color: #967c76;
+    font-size: 10px;
+}
+
+.page-footer span {
+    color: var(--orange);
+}
+
+/* RESPONSIVE */
+
+@media (min-width: 1200px) {
+    .page-container {
+        width: min(1050px, calc(100% - 48px));
+    }
+
+    .skill-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 760px) {
+    .page-container {
+        width: calc(100% - 28px);
+        padding-top: 18px;
+    }
+
+    .skill-card {
+        padding: 16px;
+    }
+
+    .skill-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .section-heading {
+        gap: 9px;
+    }
+
+    .section-title h2 {
+        font-size: 15px;
+    }
+
+    .skill-option {
+        padding: 8px;
+        gap: 6px;
+    }
+
+    .skill-name {
+        font-size: 10px;
+    }
+
+    .skill-symbol {
+        width: 27px;
+        height: 27px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 10px 4%;
+    }
+
+    .logo {
+        font-size: 18px;
+    }
+
+    .step-label {
+        font-size: 8px;
+        letter-spacing: 0;
+    }
+
+    .page-container {
+        width: calc(100% - 22px);
+    }
+
+    .intro h1 {
+        font-size: 26px;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .selection-count {
+        margin-left: auto;
+    }
+
+    .skill-grid {
+        gap: 7px;
+    }
+
+    .skill-option {
+        padding: 7px;
+        gap: 5px;
+    }
+
+    .skill-name {
+        font-size: 10px;
+    }
+
+    .bottom-actions {
+        align-items: stretch;
+        flex-direction: column-reverse;
+    }
+
+    .back-button,
+    .continue-button {
+        justify-content: center;
+        text-align: center;
+    }
+}
+
+/* ===== BOLDER SKILL BUTTON TEXT ===== */
+
+/* Skill names */
+.skill-name {
+    font-weight: 700 !important;
+    color: #542640 !important;
+    font-size: 12px;
+}
+
+/* Skill abbreviations inside the small boxes */
+.skill-symbol {
+    font-weight: 800 !important;
+    color: #542640 !important;
+}
+
+/* Categories: All skills, Coding, Design, etc. */
+.category-btn {
+    font-weight: 700 !important;
+    color: #542640;
+}
+
+/* Selected category */
+.category-btn.active {
+    font-weight: 800 !important;
+}
+
+/* Skills I can teach or swap */
+.teach-option {
+    font-weight: 700 !important;
+    color: #542640;
+}
+
+/* Add skill button */
+.add-button {
+    font-weight: 800 !important;
+}
+
+/* Bottom action buttons */
+.continue-button,
+.back-button {
+    font-weight: 800 !important;
+}
+
+/* Custom skill labels */
+.custom-skill > label {
+    font-weight: 800 !important;
+    color: #542640;
+}

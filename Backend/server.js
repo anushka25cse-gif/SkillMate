@@ -1,80 +1,154 @@
 
-const express = require("express");
+require("dotenv").config();
+
 const cors = require("cors");
-const fs = require("fs");
-const path = require("path");
+const express = require("express");
+const session = require("express-session");
+const MongoStore = require("connect-mongo").default || require("connect-mongo");
+
+const connectDB = require("./config/db");
+
+const userRoutes = require("./routes/userRoutes");
+const projectRoutes = require("./routes/projectRoutes");
+const connectionRoutes = require("./routes/connectionRoutes");
+const skillExchangeRoutes = require("./routes/skillExchangeRoutes");
+const feedbackRoutes = require("./routes/feedbackRoutes");
+const savedPeopleRoutes = require("./routes/savedPeopleRoutes");
+const messageRoutes = require("./routes/messagesRoutes");
+
+const Project = require("./models/Project");
+const { writeProjects } = require("./utils/projectStorage");
+const Connection = require("./models/Connection");
+const { writeConnections } = require("./utils/connectionStorage");
 
 const app = express();
-const PORT = 3000;
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+app.use(cors({
+    origin: [
+        "http://127.0.0.1:5500",
+        "http://localhost:5500"
+    ],
+    credentials: true
+}));
 
-// Location of JSON database files
-const DATA_FOLDER = path.join(__dirname, "Data");
+app.use(express.json({ limit: "5mb" }));
 
-// Function to read data from JSON files
-function readData(fileName) {
-    const filePath = path.join(DATA_FOLDER, fileName);
-    const data = fs.readFileSync(filePath, "utf8");
-    return JSON.parse(data);
+app.use(express.urlencoded({
+    extended: true,
+    limit: "5mb"
+}));
+
+app.use(
+    session({
+        name: "skillmate.sid",
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: false,
+        store: MongoStore.create({
+            mongoUrl: process.env.MONGO_URI,
+            collectionName: "sessions"
+        }),
+        cookie: {
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax",
+            maxAge: 24 * 60 * 60 * 1000
+        }
+    })
+);
+
+app.use("/api/users", userRoutes);
+app.use("/api/projects", projectRoutes);
+app.use("/api/connections", connectionRoutes);
+app.use("/api/skill-exchange", skillExchangeRoutes);
+app.use("/api/feedback", feedbackRoutes);
+app.use("/api/saved-people", savedPeopleRoutes);
+app.use("/api/messages", messageRoutes);
+
+const sampleProjects = [
+    {
+        title: "Campus Connect",
+        category: "Web Development",
+        description: "A student platform to discover campus events, clubs and people with shared interests.",
+        skills: ["HTML & CSS", "JavaScript", "UI/UX Design"],
+        teamSize: 5
+    },
+    {
+        title: "Smart Study Buddy",
+        category: "AI & Machine Learning",
+        description: "An idea for a study companion that helps students organise learning and revision.",
+        skills: ["Python", "Machine Learning", "UI/UX Design"],
+        teamSize: 5
+    },
+    {
+        title: "Green Campus Initiative",
+        category: "Social Impact",
+        description: "Explore creative ways to make campus life more sustainable and community-driven.",
+        skills: ["Research", "Graphic Design", "Web Development"],
+        teamSize: 5
+    }
+];
+
+async function seedSampleProjects() {
+    for (const sample of sampleProjects) {
+        await Project.updateOne(
+            {
+                title: sample.title,
+                isSample: true
+            },
+            {
+                $setOnInsert: {
+                    ...sample,
+                    isSample: true,
+                    createdBy: null,
+                    members: [],
+                    interestedUsers: [],
+                    status: "Open"
+                }
+            },
+            {
+                upsert: true
+            }
+        );
+    }
+
+    console.log("Default sample projects checked successfully!");
 }
 
-// Function to write data into JSON files
-function writeData(fileName, data) {
-    const filePath = path.join(DATA_FOLDER, fileName);
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+async function syncAllProjectsToJson() {
+    const projects = await Project.find().lean();
+    writeProjects(projects);
+    console.log("Projects.json synced successfully!");
 }
 
-// Test route
+async function syncAllConnectionsToJson() {
+    const connections = await Connection.find().lean();
+    writeConnections(connections);
+    console.log("Connections.json synced successfully!");
+}
+
 app.get("/", (req, res) => {
-    res.send("SkillMate Backend is running!");
+    res.send("SkillMate Backend is Running!");
 });
 
-// Get all students
-app.get("/api/users", (req, res) => {
-    const users = readData("User.json");
-    res.json(users);
-});
+const startServer = async () => {
+    try {
+        await connectDB();
 
-// Get all projects
-app.get("/api/Projects", (req, res) => {
-    const Projects = readData("Projects.json");
-    res.json(Projects);
-});
+        await seedSampleProjects();
+        await syncAllProjectsToJson();
+        await syncAllConnectionsToJson();
 
-// Get all connection requests
-app.get("/api/Connections", (req, res) => {
-    const Connections = readData("Connections.json");
-    res.json(Connections);
-});
+        const PORT = process.env.PORT || 5000;
 
-// Get all skill exchange requests
-app.get("/api/SkillExchange", (req, res) => {
-    const requests = readData("SkillExchange.json");
-    res.json(requests);
-});
+        app.listen(PORT, () => {
+            console.log(`SkillMate Server running on port ${PORT}`);
+        });
 
-// Get all messages
-app.get("/api/Messages", (req, res) => {
-    const Messages = readData("Messages.json");
-    res.json(Messages);
-});
+    } catch (error) {
+        console.error("Server startup failed:", error.message);
+        process.exit(1);
+    }
+};
 
-// Get all feedback
-app.get("/api/Feedback", (req, res) => {
-    const Feedback = readData("Feedback.json");
-    res.json(Feedback);
-});
-
-// Get saved people
-app.get("/api/Savedpeople", (req, res) => {
-    const Savedpeople = readData("Savedpeople.json");
-    res.json(Savedpeople);
-});
-
-// Start server
-app.listen(PORT, () => {
-    console.log(`SkillMate server running at http://localhost:${PORT}`);
-});
+startServer();

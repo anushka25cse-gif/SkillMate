@@ -1,0 +1,54 @@
+{
+    "feedback": [
+        {
+            "id": "feedback-1794312061665",
+            "user": "Taksh yadav",
+            "email": "taksh3195@gmail.com",
+            "rating": 5,
+            "category": "Overall Experience",
+            "feedback": "great work",
+            "suggestions": "great work",
+            "submittedAt": "2026-11-10T12:01:01.667Z"
+        },
+        {
+            "id": "feedback-1794312118964",
+            "user": "Taksh yadav",
+            "email": "taksh3195@gmail.com",
+            "rating": 4,
+            "category": "Projects",
+            "feedback": "Good Job guys..",
+            "suggestions": "Good Job guys..",
+            "submittedAt": "2026-11-10T12:01:58.964Z"
+        },
+        {
+            "id": "feedback-1794312683343",
+            "user": "Taksh yadav",
+            "email": "taksh3195@gmail.com",
+            "rating": 4,
+            "category": "Skill Exchange",
+            "feedback": "hjfceydtfht",
+            "suggestions": "hjfceydtfht",
+            "submittedAt": "2026-11-10T12:11:23.343Z"
+        },
+        {
+            "id": "feedback-1794313050848",
+            "user": "Taksh yadav",
+            "email": "taksh3195@gmail.com",
+            "rating": 3,
+            "category": "Discover Teammates",
+            "feedback": "vdfheeedrf",
+            "suggestions": "vdfheeedrf",
+            "submittedAt": "2026-11-10T12:17:30.848Z"
+        },
+        {
+            "id": "feedback-1794317763548",
+            "user": "Taksh yadav",
+            "email": "taksh3195@gmail.com",
+            "rating": 3,
+            "category": "Design and Navigation",
+            "feedback": "takshyadav",
+            "suggestions": "takshyadav",
+            "submittedAt": "2026-11-10T13:36:03.560Z"
+        }
+    ]
+}

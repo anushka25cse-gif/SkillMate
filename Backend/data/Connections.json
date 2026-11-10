@@ -1,0 +1,31 @@
+{
+    "connections": [
+        {
+            "_id": "6af23303e2c2323df602098d",
+            "sender": "6aef79c53f40c5edff404bc0",
+            "receiver": "6aef6bd33b9584a233a0fa5c",
+            "status": "Pending",
+            "createdAt": "2026-11-09T20:54:27.638Z",
+            "updatedAt": "2026-11-09T20:54:27.638Z",
+            "__v": 0
+        },
+        {
+            "_id": "6af23308e2c2323df602098e",
+            "sender": "6aef79c53f40c5edff404bc0",
+            "receiver": "6aef877d3f40c5edff404bc1",
+            "status": "Accepted",
+            "createdAt": "2026-11-09T20:54:32.650Z",
+            "updatedAt": "2026-11-09T21:06:39.592Z",
+            "__v": 0
+        },
+        {
+            "_id": "6af2335de2c2323df602098f",
+            "sender": "6aef877d3f40c5edff404bc1",
+            "receiver": "6aef6bd33b9584a233a0fa5c",
+            "status": "Pending",
+            "createdAt": "2026-11-09T20:55:57.234Z",
+            "updatedAt": "2026-11-09T20:55:57.234Z",
+            "__v": 0
+        }
+    ]
+}

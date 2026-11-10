@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build Your Skill Profile | SkillMate</title>
+    <link rel="stylesheet" href="./Skills.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <a href="Login.html" class="logo">
+            <span class="logo-icon">S</span>
+            <span>Skill<span class="logo-orange">Mate</span></span>
+        </a>
+
+        <div class="step-label">
+            <span class="step-dot"></span>
+            PROFILE SETUP <span class="step-divider">/</span> STEP 2 OF 3
+        </div>
+    </header>
+
+    <main class="page-container">
+
+        <section class="intro">
+            <div class="eyebrow">
+                <span class="orange-dot"></span>
+                LET YOUR SKILLS SPEAK
+            </div>
+            <h1>Your skills. Your <span>superpower.</span></h1>
+            <p>
+                Tell us what you know and what you can share.
+                We'll help you find students who complement your skills.
+            </p>
+        </section>
+
+        <div class="progress-area">
+            <div class="progress-label">
+                <span>Building your SkillMate profile</span>
+                <strong>STEP 2 OF 3</strong>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+
+        <form id="skillsForm" novalidate>
+
+            <section class="skill-card">
+                <div class="section-heading">
+                    <div class="section-icon">✦</div>
+                    <div class="section-title">
+                        <span class="section-kicker">YOUR EXPERTISE</span>
+                        <h2>Skills I know</h2>
+                        <p>Select the skills you already have, even if you're still learning.</p>
+                    </div>
+                    <div class="selection-count">
+                        <strong id="knownCount">0</strong>
+                        <span>selected</span>
+                    </div>
+                </div>
+
+                <div class="category-bar" id="knownCategories">
+                    <button type="button" class="category-btn active" data-category="all">All skills</button>
+                    <button type="button" class="category-btn" data-category="coding">Coding</button>
+                    <button type="button" class="category-btn" data-category="design">Design</button>
+                    <button type="button" class="category-btn" data-category="data">Data & AI</button>
+                    <button type="button" class="category-btn" data-category="creative">Creative</button>
+                    <button type="button" class="category-btn" data-category="other">Other</button>
+                </div>
+
+                <div class="skill-grid" id="knownSkills">
+                    <label class="skill-option" data-category="coding">
+                        <input type="checkbox" name="knownSkills" value="Python">
+                        <span class="skill-symbol">Py</span>
+                        <span class="skill-name">Python</span><span class="check-mark">✓</span>
+                    </label>
+                    <label class="skill-option" data-category="coding">
+                        <input type="checkbox" name="knownSkills" value="Java">
+                        <span class="skill-symbol">Ja</span>
+                        <span class="skill-name">Java</span><span class="check-mark">✓</span>
+                    </label>
+                    <label class="skill-option" data-category="coding">
+                        <input type="checkbox" name="knownSkills" value="C / C++">
+                        <span class="skill-symbol">C+</span>
+                        <span class="skill-name">C / C++</span><span class="check-mark">✓</span>
+                    </label>
+                    <label class="skill-option" data-category="coding">
+                        <input type="checkbox" name="knownSkills" value="HTML & CSS">
+                       <span class="skill-symbol">{"</>"}</span>
+                        <span class="skill-name">HTML & CSS</span><span class="check-mark">✓</span>
+                    </label>
+                    <label class="skill-option" data-category="coding">
+                        <input type="checkbox" name="knownSkills" value="JavaScript">
+                        <span class="skill-symbol">JS</span>
+                        <span class="skill-name">JavaScript</span><span class="check-mark">✓</span>
+                    </label>
+                    <label class="skill-option" data-category="coding">
+                        <input type="checkbox" name="knownSkills" value="Web Development">
+                        <span class="skill-symbol">WD</span>
+                        <span class="skill-name">Web Development</span><span class="check-mark">✓</span>
+                    </label>
+                    <label class="skill-option" data-category="design">
+                        <input type="checkbox" name="knownSkills" value="UI/UX Design">
+                        <span class="skill-symbol">UX</span>
+                        <span class="skill-name">UI/UX Design</span><span class="check-mark">✓</span>
+                    </label>
+                    <label class="skill-option" data-category="design">
+                        <input type="checkbox" name="knownSkills" value="Figma">
+                        <span class="skill-symbol">Fi</span>
+                        <span class="skill-name">Figma</span><span class="check-mark">✓</span>
+                    </label>
+                    <label class="skill-option" data-category="design">
+                        <input type="checkbox" name="knownSkills" value="Graphic Design">
+                        <span class="skill-symbol">GD</span>
+                        <span class="skill-name">Graphic Design</span><span class="check-mark">✓</span>
+                    </label>
+                    <label class="skill-option" data-category="data">
+                        <input type="checkbox" name="knownSkills" value="Machine Learning">
+                        <span class="skill-symbol">ML</span>
+                        <span class="skill-name">Machine Learning</span><span class="check-mark">✓</span>
+                    </label>
+                    <label class="skill-option" data-category="data">
+                        <input type="checkbox" name="knownSkills" value="Data Analytics">
+                        <span class="skill-symbol">DA</span>
+                        <span class="skill-name">Data Analytics</span><span class="check-mark">✓</span>
+                    </label>
+                    <label class="skill-option" data-category="data">
+                        <input type="checkbox" name="knownSkills" value="SQL">
+                        <span class="skill-symbol">DB</span>
+                        <span class="skill-name">SQL</span><span class="check-mark">✓</span>
+                    </label>
+                    <label class="skill-option" data-category="creative">
+                        <input type="checkbox" name="knownSkills" value="Video Editing">
+                        <span class="skill-symbol">VE</span>
+                        <span class="skill-name">Video Editing</span><span class="check-mark">✓</span>
+                    </label>
+                    <label class="skill-option" data-category="creative">
+                        <input type="checkbox" name="knownSkills" value="Photography">
+                        <span class="skill-symbol">PH</span>
+                        <span class="skill-name">Photography</span><span class="check-mark">✓</span>
+                    </label>
+                    <label class="skill-option" data-category="other">
+                        <input type="checkbox" name="knownSkills" value="Public Speaking">
+                        <span class="skill-symbol">PS</span>
+                        <span class="skill-name">Public Speaking</span><span class="check-mark">✓</span>
+                    </label>
+                    <label class="skill-option" data-category="other">
+                        <input type="checkbox" name="knownSkills" value="Content Writing">
+                        <span class="skill-symbol">CW</span>
+                        <span class="skill-name">Content Writing</span><span class="check-mark">✓</span>
+                    </label>
+                </div>
+
+                <div class="custom-skill">
+                    <label for="customKnown">Have a different skill?</label>
+                    <div class="custom-input-row">
+                        <input id="customKnown" type="text" maxlength="40" placeholder="Type another skill...">
+                        <button type="button" id="addKnownSkill" class="add-button">+ Add skill</button>
+                    </div>
+                    <div id="customKnownList" class="custom-list"></div>
+                </div>
+            </section>
+
+            <section class="skill-card teach-card">
+                <div class="section-heading">
+                    <div class="section-icon orange-icon">↗</div>
+                    <div class="section-title">
+                        <span class="section-kicker orange-kicker">SHARE WHAT YOU KNOW</span>
+                        <h2>Skills I can teach or swap</h2>
+                        <p>Choose skills you're comfortable helping another student with.</p>
+                    </div>
+                    <div class="selection-count orange-count">
+                        <strong id="teachCount">0</strong>
+                        <span>selected</span>
+                    </div>
+                </div>
+
+                <div class="teach-note">
+                    <span>✦</span>
+                    Select from the skills above. You can offer help without being an expert.
+                </div>
+
+                <div id="teachSkills" class="teach-skills">
+                    <p class="empty-teach">First select skills you know above. They'll appear here.</p>
+                </div>
+
+                <div class="custom-skill teach-custom">
+                    <label for="customTeach">Want to offer another skill?</label>
+                    <div class="custom-input-row">
+                        <input id="customTeach" type="text" maxlength="40" placeholder="Add a skill you can teach...">
+                        <button type="button" id="addTeachSkill" class="add-button">+ Add skill</button>
+                    </div>
+                    <div id="customTeachList" class="custom-list"></div>
+                </div>
+            </section>
+
+            <div class="form-message" id="skillsMessage" role="status"></div>
+
+            <div class="bottom-actions">
+                <a href="ProfileDetails.html" class="back-button">← Back to account details</a>
+                <button type="submit" class="continue-button">
+                    Complete My Profile <span>→</span>
+                </button>
+            </div>
+
+            <p class="privacy-note">
+                <span>🔒</span>
+                Your skills help us suggest relevant student connections.
+            </p>
+
+        </form>
+
+        <footer class="page-footer">
+            Made for students who love learning together. <span>✦</span>
+        </footer>
+
+    </main>
+
+    <script src="./Skills.js"></script>
+</body>
+</html>

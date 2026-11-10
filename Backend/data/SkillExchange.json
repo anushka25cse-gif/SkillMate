@@ -1,0 +1,59 @@
+{
+    "profiles": [
+        {
+            "studentId": "6aef79c53f40c5edff404bc0",
+            "teachSkills": [
+                "Python",
+                "Java",
+                "C / C++",
+                "HTML & CSS",
+                "JavaScript",
+                "Web Development",
+                "UI/UX Design",
+                "Figma"
+            ],
+            "learnSkills": [
+                "Web Development",
+                "Machine Learning",
+                "Python",
+                "Java",
+                "HTML & CSS",
+                "Figma"
+            ],
+            "status": "Active",
+            "updatedAt": "2026-11-10T14:13:42.153Z",
+            "createdAt": "2026-11-10T05:03:00.506Z"
+        },
+        {
+            "studentId": "6aef877d3f40c5edff404bc1",
+            "teachSkills": [
+                "Web Development",
+                "UI/UX Design",
+                "Machine Learning",
+                "Data Analytics"
+            ],
+            "learnSkills": [
+                "C / C++",
+                "JavaScript",
+                "HTML & CSS",
+                "Artificial Intelligence",
+                "Graphic Design",
+                "Video Editing",
+                "Photography"
+            ],
+            "status": "Active",
+            "updatedAt": "2026-11-10T05:28:00.945Z",
+            "createdAt": "2026-11-10T05:14:27.863Z"
+        }
+    ],
+    "requests": [
+        {
+            "id": "94e29753-3e77-43a2-8cb6-85605563a535",
+            "senderId": "6aef877d3f40c5edff404bc1",
+            "receiverId": "6aef79c53f40c5edff404bc0",
+            "status": "Accepted",
+            "createdAt": "2026-11-10T05:20:59.245Z",
+            "updatedAt": "2026-11-10T05:43:14.361Z"
+        }
+    ]
+}

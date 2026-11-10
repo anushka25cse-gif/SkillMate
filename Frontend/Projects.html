@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | SkillMate</title>
+    <link rel="stylesheet" href="Projects.css">
+    <script src="Projects.js" defer></script>
+</head>
+<body>
+
+<div class="app-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <a href="Dashboard.html" class="brand">
+            <span class="brand-icon">S</span>
+            <span>Skill<span class="brand-orange">Mate</span></span>
+        </a>
+
+        <p class="workspace-label">YOUR WORKSPACE</p>
+
+        <nav class="main-nav">
+            <a href="Dashboard.html" class="nav-item">
+                <span class="nav-icon">⌂</span> Overview
+            </a>
+
+            <a href="Discover.html" class="nav-item">
+                <span class="nav-icon">✦</span> Discover Teammates
+                <span class="nav-count">New</span>
+            </a>
+
+            <a href="Projects.html" class="nav-item active">
+                <span class="nav-icon">▧</span> Projects
+            </a>
+
+            <a href="Dashboard.html" class="nav-item">
+                <span class="nav-icon">◇</span> Skill Exchange
+            </a>
+
+            <a href="Dashboard.html" class="nav-item">
+                <span class="nav-icon">✓</span> Saved People
+            </a>
+
+            <a href="Dashboard.html" class="nav-item">
+                <span class="nav-icon">⇄</span> Connection Requests
+                <span class="nav-count">5</span>
+            </a>
+
+            <a href="Dashboard.html" class="nav-item">
+                <span class="nav-icon">✉</span> Messages
+                <span class="message-dot"></span>
+            </a>
+        </nav>
+
+        <div class="sidebar-divider"></div>
+
+        <p class="workspace-label">YOUR ACCOUNT</p>
+
+        <nav class="main-nav">
+            <a href="Dashboard.html" class="nav-item">
+                <span class="nav-icon">◎</span> My Profile
+            </a>
+
+            <a href="Dashboard.html" class="nav-item">
+                <span class="nav-icon">⚙</span> Edit Profile
+            </a>
+
+            <a href="Dashboard.html" class="nav-item">
+                <span class="nav-icon">▤</span> Feedback
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="help-card">
+                <div class="help-spark">✦</div>
+                <strong>Build something together</strong>
+                <p>Find students who share your interests and turn ideas into projects.</p>
+                <a href="Discover.html">Find teammates →</a>
+            </div>
+
+            <button class="logout-btn" id="logoutBtn">
+                <span>↪</span> Log out
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <main class="main-area">
+
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu" id="mobileMenu">☰</button>
+                <div>
+                    <div class="breadcrumb">WORKSPACE <span>/</span> <b>PROJECTS</b></div>
+                    <p class="topbar-subtitle">Your space to learn, build and connect.</p>
+                </div>
+            </div>
+
+            <div class="topbar-actions">
+                <label class="global-search">
+                    <span>⌕</span>
+                    <input type="search" id="topSearch" placeholder="Search projects...">
+                    <kbd>⌘ K</kbd>
+                </label>
+
+                <button class="icon-button" id="notificationBtn" title="Notifications">
+                    ♧<i class="notification-dot"></i>
+                </button>
+
+                <div class="top-profile">
+                    <span class="mini-avatar" id="topAvatar">S</span>
+                    <span class="top-profile-name" id="topUserName">Student</span>
+                    <span>⌄</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- PAGE CONTENT -->
+        <div class="page-content">
+
+            <section class="page-intro">
+                <div class="intro-text">
+                    <span class="eyebrow">BUILD SOMETHING TOGETHER</span>
+                    <h1>Explore <span>Projects</span></h1>
+                    <p>Find exciting projects, collaborate with students, and turn your ideas into reality.</p>
+                </div>
+
+                <button class="primary-button create-button" id="openCreateModal">
+                    <span>＋</span> Create a project
+                </button>
+            </section>
+
+            <!-- STATISTICS -->
+            <section class="stats-grid">
+                <article class="stat-card stat-pink">
+                    <div class="stat-icon">▦</div>
+                    <div>
+                        <p>Total Projects</p>
+                        <h2 id="totalProjects">0</h2>
+                    </div>
+                </article>
+
+                <article class="stat-card stat-peach">
+                    <div class="stat-icon">⌁</div>
+                    <div>
+                        <p>Open Projects</p>
+                        <h2 id="openProjects">0</h2>
+                    </div>
+                </article>
+
+                <article class="stat-card stat-sage">
+                    <div class="stat-icon">✓</div>
+                    <div>
+                        <p>My Projects</p>
+                        <h2 id="myProjectsCount">0</h2>
+                    </div>
+                </article>
+            </section>
+
+            <!-- PROJECT DISCOVERY -->
+            <section class="discover-section">
+                <div class="section-heading">
+                    <div>
+                        <h2>Discover Projects</h2>
+                        <p>Find a project that matches your interests and skills.</p>
+                    </div>
+                    <span class="project-count" id="resultCount">0 projects</span>
+                </div>
+
+                <div class="filter-bar">
+                    <label class="filter-search">
+                        <span>⌕</span>
+                        <input type="search" id="projectSearch"
+                               placeholder="Search projects, skills or keywords...">
+                    </label>
+
+                    <select id="categoryFilter">
+                        <option value="all">All Categories</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="AI & Machine Learning">AI & Machine Learning</option>
+                        <option value="Social Impact">Social Impact</option>
+                        <option value="Design">Design</option>
+                        <option value="Business">Business</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="project-tabs">
+                    <button class="tab-button active" data-tab="all">All Projects</button>
+                    <button class="tab-button" data-tab="mine">My Projects</button>
+                </div>
+
+                <div class="project-grid" id="projectGrid"></div>
+            </section>
+
+            <footer class="page-footer">
+                <span>© 2026 SkillMate</span>
+                <span>Made for students who build better things together <b>✓</b></span>
+            </footer>
+
+        </div>
+    </main>
+</div>
+
+<!-- CREATE PROJECT MODAL -->
+<div class="modal-overlay hidden" id="projectModal">
+    <div class="modal-card">
+        <button class="modal-close" id="closeCreateModal">×</button>
+
+        <span class="eyebrow">START SOMETHING NEW</span>
+        <h2>Create a project</h2>
+        <p>Share your idea and invite other students to collaborate.</p>
+
+        <form id="projectForm">
+            <label for="projectTitle">Project name</label>
+            <input type="text" id="projectTitle" placeholder="e.g. Campus Connect" required>
+
+            <label for="projectCategory">Category</label>
+            <select id="projectCategory" required>
+                <option value="">Select a category</option>
+                <option>Web Development</option>
+                <option>AI & Machine Learning</option>
+                <option>Social Impact</option>
+                <option>Design</option>
+                <option>Business</option>
+                <option>Other</option>
+            </select>
+
+            <label for="projectDescription">Project description</label>
+            <textarea id="projectDescription" rows="3"
+                placeholder="What do you want to build?" required></textarea>
+
+            <label for="projectSkills">Skills required</label>
+            <input type="text" id="projectSkills"
+                placeholder="HTML, JavaScript, UI/UX Design">
+
+            <label for="projectMembers">Team size</label>
+            <select id="projectMembers">
+                <option value="2">2 members</option>
+                <option value="3" selected>3 members</option>
+                <option value="4">4 members</option>
+                <option value="5">5 members</option>
+                <option value="6">6 members</option>
+            </select>
+
+            <button type="submit" class="primary-button submit-button">
+                Create Project →
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+</body>
+</html>

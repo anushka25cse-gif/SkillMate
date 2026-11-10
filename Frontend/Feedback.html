@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Feedback | SkillMate</title>
+
+    <link rel="stylesheet" href="Feedback.css">
+    <script src="Feedback.js" defer></script>
+</head>
+
+<body>
+
+    <div class="app-shell">
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+
+            <a href="Dashboard.html?view=overview" class="brand">
+                <span class="brand-mark">S</span>
+                <span>Skill<span class="brand-highlight">Mate</span></span>
+            </a>
+
+            <div class="sidebar-label">YOUR WORKSPACE</div>
+
+            <nav class="sidebar-nav">
+
+                <a href="Dashboard.html?view=overview" class="nav-item">
+                    <span class="nav-symbol">⌂</span>
+                    <span>Overview</span>
+                </a>
+
+                <a href="Discover.html" class="nav-item">
+                    <span class="nav-symbol">✦</span>
+                    <span>Discover Teammates</span>
+                    <span class="nav-badge">New</span>
+                </a>
+
+                <a href="Projects.html" class="nav-item">
+                    <span class="nav-symbol">▦</span>
+                    <span>Projects</span>
+                </a>
+
+                <a href="SkillExchange.html" class="nav-item">
+                    <span class="nav-symbol">◇</span>
+                    <span>Skill Exchange</span>
+                </a>
+
+                <a href="Dashboard.html?view=saved" class="nav-item">
+                    <span class="nav-symbol">✓</span>
+                    <span>Saved People</span>
+                </a>
+
+                <a href="Dashboard.html?view=connections" class="nav-item">
+                    <span class="nav-symbol">⇄</span>
+                    <span>Connection Requests</span>
+                </a>
+
+                <a href="./Dashboard.html?view=messages" class="nav-item">
+                <span class="nav-icon">▤</span>
+                <span>Messages</span>
+                </a>
+
+            </nav>
+
+            <div class="sidebar-label account-label">YOUR ACCOUNT</div>
+
+            <nav class="sidebar-nav">
+
+                <a href="Dashboard.html?view=profile" class="nav-item">
+                    <span class="nav-symbol">◎</span>
+                    <span>My Profile</span>
+                </a>
+
+                <a href="./CompleteProfile.html" class="nav-item">
+                <span class="nav-icon">✎</span>
+                <span>Edit Profile</span>
+                </a>
+
+                <a href="Feedback.html" class="nav-item active">
+                    <span class="nav-symbol">✎</span>
+                    <span>Feedback</span>
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <div class="sidebar-help">
+                    <div class="help-icon">✦</div>
+                    <h3>Grow together</h3>
+                    <p>Share what you know and learn something new.</p>
+                </div>
+
+                <a href="Login.html" class="logout-link" id="logoutBtn">
+                    <span>↪</span>
+                    Log out
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- Main area -->
+        <main class="main-area">
+
+            <!-- Topbar -->
+            <header class="topbar">
+
+                <div class="topbar-left">
+
+                    <button
+                        type="button"
+                        class="mobile-menu"
+                        id="mobileMenu"
+                        aria-label="Open navigation">
+                        ☰
+                    </button>
+
+                    <div class="breadcrumb-area">
+                        <div class="breadcrumb">
+                            WORKSPACE <span>/</span> <strong>FEEDBACK</strong>
+                        </div>
+
+                        <p>Your space to learn, build and connect.</p>
+                    </div>
+
+                </div>
+
+                <div class="topbar-right">
+
+                    <div class="user-info">
+                        <span class="user-name" id="topUserName">Student</span>
+                        <span class="user-avatar" id="topAvatar">S</span>
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- Feedback page -->
+            <div class="page-content">
+
+                <section class="feedback-layout">
+
+                    <!-- Left introduction -->
+                    <div class="feedback-intro">
+
+                        <div class="intro-eyebrow">
+                            <span>✦</span>
+                            YOUR OPINION MATTERS
+                        </div>
+
+                        <h1>
+                            Share your
+                            <span>feedback.</span>
+                        </h1>
+
+                        <p class="intro-description">
+                            Help us make SkillMate better for everyone.
+                            Your thoughts, ideas and suggestions help us
+                            create a better learning and collaboration
+                            experience.
+                        </p>
+
+                        <div class="benefits">
+
+                            <div class="benefit-item">
+                                <span class="benefit-icon sage">✦</span>
+                                <span>Better<br>Learning</span>
+                            </div>
+
+                            <div class="benefit-item">
+                                <span class="benefit-icon peach">★</span>
+                                <span>Improved<br>Features</span>
+                            </div>
+
+                            <div class="benefit-item">
+                                <span class="benefit-icon orange">✧</span>
+                                <span>Stronger<br>Community</span>
+                            </div>
+
+                        </div>
+
+                        <div class="intro-note">
+                            <span class="note-icon">i</span>
+                            <p>
+                                Your feedback helps us understand what
+                                students need and how SkillMate can improve.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Right feedback form -->
+                    <div class="feedback-card">
+
+                        <div class="form-heading">
+                            <span class="form-eyebrow">WE VALUE YOUR IDEAS</span>
+                            <h2>Tell us what you think</h2>
+                            <p>Fill in the details below to submit your feedback.</p>
+                        </div>
+
+
+                        <form id="feedbackForm" novalidate>
+
+                            <!-- Name and email -->
+                            <div class="form-row">
+
+                                <div class="form-group">
+                                    <label for="name">Your name</label>
+
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        placeholder="Enter your name"
+                                        autocomplete="name"
+                                        minlength="2"
+                                        required
+                                    >
+
+                                    <span class="error" id="nameError"></span>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="email">Email address</label>
+
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        placeholder="you@example.com"
+                                        autocomplete="email"
+                                        required
+                                    >
+
+                                    <span class="error" id="emailError"></span>
+                                </div>
+
+                            </div>
+
+
+                            <!-- Feedback category -->
+                            <div class="form-group">
+
+                                <label for="feedbackCategory">
+                                    What would you like to give feedback about?
+                                </label>
+
+                                <select
+                                    id="feedbackCategory"
+                                    name="category"
+                                    required
+                                >
+                                    <option value="">Select a category</option>
+                                    <option value="Overall Experience">Overall Experience</option>
+                                    <option value="Discover Teammates">Discover Teammates</option>
+                                    <option value="Projects">Projects</option>
+                                    <option value="Skill Exchange">Skill Exchange</option>
+                                    <option value="Messages">Messages</option>
+                                    <option value="Design and Navigation">Design and Navigation</option>
+                                    <option value="Other">Other</option>
+                                </select>
+
+                                <span class="error" id="categoryError"></span>
+
+                            </div>
+
+
+                            <!-- Rating -->
+                            <fieldset class="form-group rating-group">
+
+                                <legend>How would you rate your experience?</legend>
+
+                                <div class="rating-options">
+
+                                    <label class="rating-option rating-one">
+                                        <input type="radio" name="rating" value="1">
+                                        <span>1</span>
+                                    </label>
+
+                                    <label class="rating-option rating-two">
+                                        <input type="radio" name="rating" value="2">
+                                        <span>2</span>
+                                    </label>
+
+                                    <label class="rating-option rating-three">
+                                        <input type="radio" name="rating" value="3">
+                                        <span>3</span>
+                                    </label>
+
+                                    <label class="rating-option rating-four">
+                                        <input type="radio" name="rating" value="4">
+                                        <span>4</span>
+                                    </label>
+
+                                    <label class="rating-option rating-five">
+                                        <input type="radio" name="rating" value="5">
+                                        <span>5</span>
+                                    </label>
+
+                                </div>
+
+                                <div class="rating-labels">
+                                    <span>Needs improvement</span>
+                                    <span>Excellent</span>
+                                </div>
+
+                                <span class="error" id="ratingError"></span>
+
+                            </fieldset>
+
+
+                            <!-- Feedback message -->
+                            <div class="form-group">
+
+                                <label for="feedback">
+                                    Your feedback and suggestions
+                                </label>
+
+                                <textarea
+                                    id="feedback"
+                                    name="feedback"
+                                    rows="4"
+                                    minlength="10"
+                                    maxlength="1000"
+                                    placeholder="Tell us what worked well or what we can improve..."
+                                    required
+                                ></textarea>
+
+                                <div class="character-count">
+                                    <span id="characterCount">0</span>/1000 characters
+                                </div>
+
+                                <span class="error" id="feedbackError"></span>
+
+                            </div>
+
+
+                            <!-- Submit -->
+                            <button
+                                type="submit"
+                                class="submit-button"
+                                id="submitButton">
+
+                                <span>➤</span>
+                                Submit Feedback
+
+                            </button>
+
+
+                            <div
+                                id="statusMessage"
+                                class="status-message"
+                                role="status"
+                                aria-live="polite">
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </section>
+
+
+                <!-- Footer -->
+                <footer class="page-footer">
+                    <span>Made for students who learn better together.</span>
+                    <span>SkillMate © 2026</span>
+                </footer>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+</html>

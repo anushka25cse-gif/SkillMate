@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillMate | Your Student Hub</title>
+    <link rel="stylesheet" href="./Dashboard.css">
+    <link rel="stylesheet" href="Messages.css">
+    <script src="./Dashboard.js" defer></script>
+</head>
+<body>
+<div class="app-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <a href="./Dashboard.html" class="brand">
+            <span class="brand-icon">S</span>
+            <span>Skill<span class="brand-orange">Mate</span></span>
+        </a>
+
+        <div class="workspace-label">YOUR WORKSPACE</div>
+
+        <nav class="main-nav">
+            <button class="nav-item active" data-view="overview">
+                <span class="nav-icon">⌂</span> Overview
+            </button>
+
+            <a href="./Discover.html" class="nav-item">
+                <span class="nav-icon">✦</span> Discover Teammates
+                <span class="nav-count">New</span>
+            </a>
+
+            <button class="nav-item" data-view="projects">
+                <span class="nav-icon">▧</span> Projects
+            </button>
+
+            <button class="nav-item" data-view="skills">
+                <span class="nav-icon">◇</span> Skill Exchange
+            </button>
+
+            <button class="nav-item" data-view="saved">
+                <span class="nav-icon">✓</span> Saved People
+            </button>
+
+            <button class="nav-item" data-view="connections">
+                <span class="nav-icon">⇄</span> Connection Requests
+                <span class="nav-count" id="requestCount">0</span>
+            </button>
+
+            <button class="nav-item" data-view="messages">
+                <span class="nav-icon">✉</span> Messages
+                <span class="message-dot"></span>
+            </button>
+        </nav>
+
+        <div class="sidebar-divider"></div>
+        <div class="workspace-label">YOUR ACCOUNT</div>
+
+        <nav class="main-nav">
+            <button class="nav-item" data-view="profile">
+                <span class="nav-icon">◎</span> My Profile
+            </button>
+
+            <button class="nav-item" id="editProfileBtn">
+                <span class="nav-icon">⚙</span> Edit Profile
+            </button>
+
+            <!-- CHANGE PASSWORD -->
+            <a href="./ChangePassword.html" class="nav-item">
+                <span class="nav-icon">🔒</span> Change Password
+            </a>
+
+            <button class="nav-item" data-view="feedback">
+                <span class="nav-icon">☷</span> Feedback
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="help-card">
+                <div class="help-spark">✦</div>
+                <strong>Better together.</strong>
+                <p>Your next great collaboration starts with one connection.</p>
+                <a href="./Discover.html" id="helpDiscover">Find teammates →</a>
+            </div>
+
+            <!-- LOGOUT -->
+            <button class="logout-btn" id="logoutBtn">
+                <span>↪</span> Logout
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <main class="main-area">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">☰</button>
+
+                <div>
+                    <div class="breadcrumb">
+                        WORKSPACE <span>/</span>
+                        <b id="breadcrumbTitle">Overview</b>
+                    </div>
+                    <p class="topbar-subtitle">Your space to learn, build and connect.</p>
+                </div>
+            </div>
+
+            <div class="topbar-actions">
+                <label class="global-search">
+                    <span>⌕</span>
+                    <input type="search" id="globalSearch" placeholder="Search skills, people...">
+                    <kbd>⌘ K</kbd>
+                </label>
+
+                <button class="icon-button notification-button" id="notificationBtn" aria-label="Notifications">
+                    ♧<span class="notification-dot"></span>
+                </button>
+
+                <button class="top-profile" id="topProfileBtn">
+                    <span class="mini-avatar" id="topAvatar">S</span>
+                    <span class="top-profile-name" id="topName">Student</span>
+                    <span>⌄</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="page-content">
+
+            <!-- OVERVIEW -->
+            <section class="view-section" id="overviewView">
+
+                <section class="welcome-hero">
+                    <div class="hero-decoration hero-decoration-one"></div>
+                    <div class="hero-decoration hero-decoration-two"></div>
+
+                    <div class="hero-content">
+                        <span class="hero-pill">
+                            <span class="live-dot"></span>
+                            YOUR NEXT CHAPTER STARTS HERE
+                        </span>
+
+                        <h1>
+                            Good morning!<br>
+                            <span id="welcomeName">Anushka</span>
+                            <span class="wave">✦</span>
+                        </h1>
+
+                        <p>
+                            Ready to meet your people, share your skills, and turn your next big idea into something amazing?
+                        </p>
+
+                        <div class="hero-actions">
+                            <a href="./Discover.html" class="primary-button">
+                                Find my people <span>→</span>
+                            </a>
+                            <button class="hero-secondary" data-go="projects">
+                                Explore projects ↗
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="hero-art" aria-hidden="true">
+                        <div class="orbit orbit-one"></div>
+                        <div class="orbit orbit-two"></div>
+
+                        <div class="art-card art-card-main">
+                            <div class="art-card-top">
+                                <span>✦</span><span>SKILL MATCH</span>
+                            </div>
+                            <div class="art-score">92<span>%</span></div>
+                            <div class="art-caption">
+                                A great team begins with complementary skills.
+                            </div>
+                            <div class="art-avatars">
+                                <span>AN</span><span>RK</span><span>PS</span>
+                                <span class="avatar-plus">+</span>
+                            </div>
+                        </div>
+
+                        <div class="floating-chip floating-chip-top">✧ Creative minds</div>
+                        <div class="floating-chip floating-chip-bottom">↗ Ideas into action</div>
+                        <div class="hero-star">✳</div>
+                    </div>
+                </section>
+
+                <!-- STATISTICS -->
+                <div class="section-heading stats-heading">
+                    <div>
+                        <span class="eyebrow">YOUR PROGRESS</span>
+                        <h2>Your SkillMate snapshot</h2>
+                    </div>
+                    <button class="text-button" data-go="profile">View my profile ↗</button>
+                </div>
+
+                <div class="stats-grid">
+                    <article class="stat-card stat-peach">
+                        <div class="stat-top">
+                            <span>Skills I know</span><span class="stat-icon">◇</span>
+                        </div>
+                        <div class="stat-number" id="knownCount">0</div>
+                        <p>Skills in your toolkit</p>
+                        <div class="stat-bottom">
+                            <span class="stat-line"></span><span>Keep growing</span>
+                        </div>
+                    </article>
+
+                    <article class="stat-card stat-pink">
+                        <div class="stat-top">
+                            <span>Skills I can teach</span><span class="stat-icon">✦</span>
+                        </div>
+                        <div class="stat-number" id="teachCount">0</div>
+                        <p>Things you can share</p>
+                        <div class="stat-bottom">
+                            <span class="stat-line"></span><span>Knowledge is power</span>
+                        </div>
+                    </article>
+
+                    <article class="stat-card stat-cream">
+                        <div class="stat-top">
+                            <span>Saved teammates</span><span class="stat-icon">✓</span>
+                        </div>
+                        <div class="stat-number" id="savedCount">0</div>
+                        <p>People to connect with</p>
+                        <div class="stat-bottom">
+                            <span class="stat-line"></span><span>Your shortlist</span>
+                        </div>
+                    </article>
+
+                    <article class="stat-card stat-lilac">
+                        <div class="stat-top">
+                            <span>Profile strength</span><span class="stat-icon">↗</span>
+                        </div>
+                        <div class="stat-number" id="profilePercent">0%</div>
+                        <p>Make your profile shine</p>
+                        <div class="stat-progress">
+                            <span id="profileProgress"></span>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- RECOMMENDATIONS AND PROFILE -->
+                <div class="content-grid">
+                    <section class="content-panel recommendations-panel">
+                        <div class="section-heading panel-heading">
+                            <div>
+                                <span class="eyebrow">MADE FOR YOU</span>
+                                <h2>People you might click with <span class="heading-spark">✦</span></h2>
+                            </div>
+                            <a href="./Discover.html" class="text-button">See all →</a>
+                        </div>
+                        <div class="recommendation-list" id="overviewRecommendations"></div>
+                    </section>
+
+                    <section class="content-panel profile-panel">
+                        <div class="section-heading panel-heading">
+                            <div>
+                                <span class="eyebrow">YOUR IDENTITY</span>
+                                <h2>Your profile card</h2>
+                            </div>
+                            <button class="small-edit" data-go="profile">↗</button>
+                        </div>
+
+                        <div class="profile-preview">
+                            <div class="profile-cover"></div>
+                            <div class="profile-avatar-wrap">
+                                <div class="large-avatar" id="profileAvatar">S</div>
+                                <span class="online-indicator"></span>
+                            </div>
+                            <h3 id="profileName">Your name</h3>
+                            <p id="profileCourse">Student · SkillMate</p>
+                            <p class="profile-college" id="profileCollege">Your college</p>
+                            <p class="profile-bio" id="profileBio">
+                                Add a short bio to let people know what you're passionate about.
+                            </p>
+                            <div class="profile-tags" id="profileTags"></div>
+                            <button class="outline-button full-button" data-go="profile">
+                                View full profile
+                            </button>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- PROJECTS PREVIEW -->
+                <section class="content-panel projects-panel">
+                    <div class="section-heading panel-heading">
+                        <div>
+                            <span class="eyebrow">IDEAS NEED PEOPLE</span>
+                            <h2>Projects worth building</h2>
+                        </div>
+                        <button class="text-button" data-go="projects">Explore projects →</button>
+                    </div>
+                    <div class="project-grid" id="overviewProjects"></div>
+                </section>
+            </section>
+
+            <!-- PROJECTS -->
+            <section class="view-section hidden" id="projectsView">
+                <div class="page-intro page-intro-row">
+                    <div>
+                        <span class="eyebrow">MAKE SOMETHING MEANINGFUL</span>
+                        <h1>Ideas become <span>impact.</span></h1>
+                        <p>Find a project to join or start building something of your own.</p>
+                    </div>
+                    <button class="primary-button" id="createProjectBtn">
+                        ＋ Create a project
+                    </button>
+                </div>
+                <div class="project-grid projects-full-grid" id="projectsGrid"></div>
+            </section>
+
+            <!-- SKILL EXCHANGE -->
+            <section class="view-section hidden" id="skillsView">
+                <div class="page-intro">
+                    <span class="eyebrow">GIVE A LITTLE. LEARN A LOT.</span>
+                    <h1>Skills are better <span>shared.</span></h1>
+                    <p>Discover skills you can learn from other students and skills you can offer in return.</p>
+                </div>
+
+                <div class="exchange-banner">
+                    <div class="exchange-symbol">⇄</div>
+                    <div>
+                        <h2>Your next skill could come from a teammate.</h2>
+                        <p>Explore students whose teaching skills match what you want to learn.</p>
+                    </div>
+                    <a href="./Discover.html" class="primary-button">Find a skill partner →</a>
+                </div>
+
+                <div class="section-heading">
+                    <div>
+                        <span class="eyebrow">YOUR SKILL TOOLKIT</span>
+                        <h2>What you bring to the table</h2>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="content-panel">
+                        <h2>Skills I know</h2>
+                        <div class="skill-cloud" id="myKnownSkills"></div>
+                    </div>
+                    <div class="content-panel">
+                        <h2>Skills I can teach</h2>
+                        <div class="skill-cloud" id="myTeachSkills"></div>
+                    </div>
+                </div>
+
+                <div class="content-panel">
+                    <div class="section-heading panel-heading">
+                        <div>
+                            <span class="eyebrow">LEARN TOGETHER</span>
+                            <h2>Skill exchange ideas</h2>
+                        </div>
+                    </div>
+                    <div class="exchange-ideas">
+                        <div>
+                            <span>01</span>
+                            <strong>Code for design</strong>
+                            <p>Pair up with a designer to make your next project look as good as it works.</p>
+                        </div>
+                        <div>
+                            <span>02</span>
+                            <strong>Learn by teaching</strong>
+                            <p>Help someone practise your strongest skill while learning something new.</p>
+                        </div>
+                        <div>
+                            <span>03</span>
+                            <strong>Build side by side</strong>
+                            <p>Choose a shared goal and learn through a real project.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SAVED PEOPLE -->
+            <section class="view-section hidden" id="savedView">
+                <div class="page-intro">
+                    <span class="eyebrow">YOUR SHORTLIST</span>
+                    <h1>People to keep <span>close.</span></h1>
+                    <p>Your saved student profiles, all in one place.</p>
+                </div>
+                <div class="people-grid" id="savedGrid"></div>
+                <p class="empty-state hidden" id="savedEmpty">
+                    You haven't saved anyone yet. Visit Discover Teammates and use the save option on a profile you like.
+                </p>
+            </section>
+
+            <!-- CONNECTION REQUESTS -->
+            <section class="view-section hidden" id="connectionsView">
+                <div class="page-intro">
+                    <span class="eyebrow">BUILD YOUR COLLABORATION CIRCLE</span>
+                    <h1>Connection <span>requests.</span></h1>
+                    <p>Manage the people who want to connect with you and the requests you've sent.</p>
+                </div>
+
+                <div class="content-panel requests-panel">
+                    <div class="request-tabs">
+                        <button class="request-tab active" data-request-tab="received" type="button">
+                            Received
+                            <span id="receivedRequestCount">0</span>
+                        </button>
+                        <button class="request-tab" data-request-tab="sent" type="button">
+                            Sent
+                            <span id="sentRequestCount">0</span>
+                        </button>
+                        <button class="request-tab" data-request-tab="accepted" type="button">
+                            Accepted
+                            <span id="acceptedRequestCount">0</span>
+                        </button>
+                    </div>
+
+                    <div class="request-content" id="receivedRequests">
+                        <div id="receivedRequestsList" class="connection-list"></div>
+                        <p class="empty-state" id="receivedRequestsEmpty">
+                            You don't have any received requests yet.
+                        </p>
+                    </div>
+
+                    <div class="request-content hidden" id="sentRequests">
+                        <div id="sentRequestsList" class="connection-list"></div>
+                        <p class="empty-state" id="sentRequestsEmpty">
+                            You haven't sent any connection requests yet.
+                        </p>
+                    </div>
+
+                    <div class="request-content hidden" id="acceptedRequests">
+                        <div id="acceptedRequestsList" class="connection-list"></div>
+                        <p class="empty-state" id="acceptedRequestsEmpty">
+                            You don't have any accepted connections yet.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MESSAGES -->
+            <section class="view-section hidden" id="messagesView">
+                <div class="page-intro">
+                    <span class="eyebrow">GOOD THINGS START WITH HELLO</span>
+                    <h1>Your <span>connections.</span></h1>
+                    <p>Keep track of your connections and start a conversation.</p>
+                </div>
+
+                <div class="content-panel messages-panel">
+                    <div class="message-illustration">✉</div>
+                    <h2>Your conversations start here</h2>
+                    <p>When you connect with students, they can become part of your collaboration circle.</p>
+                    <a href="./Discover.html" class="primary-button">Discover teammates →</a>
+                    <div id="connectionList" class="connection-list"></div>
+                </div>
+            </section>
+
+            <!-- PROFILE -->
+            <section class="view-section hidden" id="profileView">
+                <div class="page-intro">
+                    <span class="eyebrow">THIS IS YOU</span>
+                    <h1>Your profile, your <span>story.</span></h1>
+                    <p>Here's what other students can learn about you.</p>
+                </div>
+
+                <div class="content-grid profile-detail-grid">
+                    <div class="content-panel">
+                        <div class="profile-cover profile-cover-large"></div>
+                        <div class="profile-avatar-wrap">
+                            <div class="large-avatar profile-avatar-large" id="fullProfileAvatar">S</div>
+                        </div>
+                        <h2 id="fullProfileName">Your name</h2>
+                        <p id="fullProfileCourse">Student</p>
+                        <p id="fullProfileBio">Add your bio to tell your story.</p>
+                        <button class="primary-button" id="profileEditAction">
+                            Edit profile details
+                        </button>
+                    </div>
+
+                    <div class="content-panel">
+                        <span class="eyebrow">YOUR DETAILS</span>
+                        <h2>About you</h2>
+
+                        <div class="detail-row"><span>Email</span><strong id="detailEmail">—</strong></div>
+                        <div class="detail-row"><span>College</span><strong id="detailCollege">—</strong></div>
+                        <div class="detail-row"><span>Registration</span><strong id="detailRegistration">—</strong></div>
+                        <div class="detail-row"><span>Graduation</span><strong id="detailGraduation">—</strong></div>
+                        <div class="detail-row"><span>Availability</span><strong id="detailAvailability">—</strong></div>
+                        <div class="detail-row"><span>Collaboration</span><strong id="detailCollaboration">—</strong></div>
+
+                        <h3 class="subheading">Interests</h3>
+                        <div class="skill-cloud" id="detailInterests"></div>
+
+                        <h3 class="subheading">Skills I know</h3>
+                        <div class="skill-cloud" id="fullKnownSkills"></div>
+
+                        <h3 class="subheading">Skills I can teach</h3>
+                        <div class="skill-cloud" id="fullTeachSkills"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FEEDBACK -->
+            <section class="view-section hidden" id="feedbackView">
+                <div class="page-intro">
+                    <span class="eyebrow">HELP US MAKE SKILLMATE BETTER</span>
+                    <h1>Your feedback <span>matters.</span></h1>
+                    <p>Tell us about your experience. Your suggestions help us improve SkillMate for students.</p>
+                </div>
+
+                <div class="content-panel feedback-panel">
+                    <div class="feedback-heading">
+                        <span class="eyebrow">SHARE YOUR EXPERIENCE</span>
+                        <h2>How has your SkillMate experience been?</h2>
+                        <p>We'd love to know what you think.</p>
+                    </div>
+
+                    <form id="feedbackForm">
+
+                        <div class="feedback-field">
+                            <label>How would you rate SkillMate?</label>
+                            <div class="rating-options">
+                                <label>
+                                    <input type="radio" name="feedbackRating" value="1" required>
+                                    <span>1</span>
+                                    <small>Poor</small>
+                                </label>
+                                <label>
+                                    <input type="radio" name="feedbackRating" value="2">
+                                    <span>2</span>
+                                    <small>Fair</small>
+                                </label>
+                                <label>
+                                    <input type="radio" name="feedbackRating" value="3">
+                                    <span>3</span>
+                                    <small>Good</small>
+                                </label>
+                                <label>
+                                    <input type="radio" name="feedbackRating" value="4">
+                                    <span>4</span>
+                                    <small>Very good</small>
+                                </label>
+                                <label>
+                                    <input type="radio" name="feedbackRating" value="5">
+                                    <span>5</span>
+                                    <small>Excellent</small>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="feedback-field">
+                            <label for="feedbackCategory">What is your feedback about?</label>
+                            <select id="feedbackCategory" name="feedbackCategory" required>
+                                <option value="">Select a category</option>
+                                <option value="Website design">Website design</option>
+                                <option value="Discover Teammates">Discover Teammates</option>
+                                <option value="Projects">Projects</option>
+                                <option value="Skill Exchange">Skill Exchange</option>
+                                <option value="Connection Requests">Connection Requests</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="feedback-field">
+                            <label for="feedbackLiked">What did you like about SkillMate?</label>
+                            <textarea
+                                id="feedbackLiked"
+                                name="feedbackLiked"
+                                rows="3"
+                                maxlength="500"
+                                placeholder="Tell us what you enjoyed..."
+                            ></textarea>
+                        </div>
+
+                        <div class="feedback-field">
+                            <label for="feedbackImprove">What can we improve?</label>
+                            <textarea
+                                id="feedbackImprove"
+                                name="feedbackImprove"
+                                rows="3"
+                                maxlength="500"
+                                placeholder="Tell us what could be better..."
+                            ></textarea>
+                        </div>
+
+                        <div class="feedback-field">
+                            <label for="feedbackSuggestions">Any additional suggestions?</label>
+                            <textarea
+                                id="feedbackSuggestions"
+                                name="feedbackSuggestions"
+                                rows="3"
+                                maxlength="500"
+                                placeholder="Share your ideas with us..."
+                            ></textarea>
+                        </div>
+
+                        <button type="submit" class="primary-button" id="submitFeedbackBtn">
+                            Submit feedback →
+                        </button>
+
+                        <p class="feedback-success hidden" id="feedbackSuccess" role="status">
+                            ✓ Thank you! Your feedback has been submitted successfully.
+                        </p>
+                    </form>
+                </div>
+            </section>
+
+            <!-- FOOTER -->
+            <footer class="page-footer">
+                <span>© 2026 SkillMate</span>
+                <span>Made for students who build better things together <b>✓</b></span>
+            </footer>
+
+        </div>
+    </main>
+</div>
+
+<!-- CREATE PROJECT MODAL -->
+<div class="modal-overlay hidden" id="projectModal">
+    <form class="modal-card" id="projectForm">
+        <button type="button" class="modal-close" id="closeProjectModal" aria-label="Close">×</button>
+
+        <span class="eyebrow">START SOMETHING GREAT</span>
+        <h2>Create a project</h2>
+        <p>Give your idea a name and invite the right people to help bring it to life.</p>
+
+        <label for="projectTitle">Project name</label>
+        <input id="projectTitle" required maxlength="70" placeholder="e.g. Campus sustainability app">
+
+        <label for="projectCategory">Category</label>
+        <select id="projectCategory" required>
+            <option value="">Choose a category</option>
+            <option>AI & Machine Learning</option>
+            <option>Web Development</option>
+            <option>Design & Creativity</option>
+            <option>Social Impact</option>
+            <option>Research</option>
+            <option>Other</option>
+        </select>
+
+        <label for="projectDescription">Short description</label>
+        <textarea id="projectDescription" required maxlength="240" rows="3"
+            placeholder="What do you want to build?"></textarea>
+
+        <button class="primary-button full-button" type="submit">
+            Publish project idea →
+        </button>
+    </form>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast" role="status"></div>
+
+<!-- JavaScript files -->
+<script src="Messages.js"></script>
+
+</body>
+</html>

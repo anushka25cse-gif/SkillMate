@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Profile | SkillMate</title>
+    <link rel="stylesheet" href="./CompleteProfile.css">
+    <script src="./CompleteProfile.js" defer></script>
+</head>
+<body>
+    <header class="topbar">
+        <a class="logo" href="./Login.html">Skill<span>Mate</span></a>
+        <div class="step-label">STEP 3 OF 3</div>
+    </header>
+
+    <main class="page">
+        <section class="heading">
+            <p class="eyebrow">YOUR SKILLMATE IDENTITY</p>
+            <h1>Complete Your Profile <span>✦</span></h1>
+            <p>Tell other students who you are, what you love, and how you like to collaborate.</p>
+        </section>
+
+        <form id="completeProfileForm">
+            <div id="pageMessage" class="message" role="status"></div>
+
+            <section class="panel profile-intro">
+                <div class="photo-area">
+                    <div class="avatar" id="avatarPreview">SM</div>
+                    <label class="upload-button" for="profilePhoto">Upload photo</label>
+                    <input type="file" id="profilePhoto" accept="image/*" hidden>
+                    <p class="hint">Or keep your initials avatar</p>
+                </div>
+
+                <div class="intro-text">
+                    <h2 id="displayName">Your name</h2>
+                    <p id="displayEmail">Your email</p>
+                    <span class="profile-badge">Future collaborator ✨</span>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="section-heading">
+                    <span class="number">01</span>
+                    <div>
+                        <h2>Your account details</h2>
+                        <p>Review the information you entered earlier.</p>
+                    </div>
+                </div>
+
+                <div class="details-grid">
+                    <div class="detail">
+                        <label>Full name</label>
+                        <p id="fullName">—</p>
+                    </div>
+                    <div class="detail">
+                        <label>Email address</label>
+                        <p id="email">—</p>
+                    </div>
+                    <div class="detail">
+                        <label>College / University</label>
+                        <p id="college">—</p>
+                    </div>
+                    <div class="detail">
+                        <label>Registration number</label>
+                        <p id="registration">—</p>
+                    </div>
+                    <div class="detail">
+                        <label>Course</label>
+                        <p id="course">—</p>
+                    </div>
+                    <div class="detail">
+                        <label>Current year</label>
+                        <p id="year">—</p>
+                    </div>
+                    <div class="detail">
+                        <label>Graduation year</label>
+                        <p id="graduation">—</p>
+                    </div>
+                </div>
+
+<a class="edit-link" href="./ProfileDetails.html?mode=edit">← Edit account details</a>
+            </section>
+
+            <section class="panel">
+                <div class="section-heading">
+                    <span class="number">02</span>
+                    <div>
+                        <h2>Your skills</h2>
+                        <p>These are the skills selected on the previous page.</p>
+                    </div>
+                </div>
+
+                <div class="skills-columns">
+                    <div>
+                        <h3>Skills I know</h3>
+                        <div class="tags" id="knownSkills"></div>
+                        <p class="hint" id="knownCount">0 skills selected</p>
+                    </div>
+                    <div>
+                        <h3>Skills I can teach</h3>
+                        <div class="tags" id="teachSkills"></div>
+                        <p class="hint" id="teachCount">0 skills selected</p>
+                    </div>
+                </div>
+
+               <a class="edit-link" href="./Skills.html?mode=edit">← Edit skills</a>
+            </section>
+
+            <section class="panel">
+                <div class="section-heading">
+                    <span class="number">03</span>
+                    <div>
+                        <h2>Let's get to know you</h2>
+                        <p>Help potential teammates understand your personality and goals.</p>
+                    </div>
+                </div>
+
+                <label for="bio">Short bio</label>
+                <textarea id="bio" maxlength="300" rows="3"
+                    placeholder="Hey! I'm a CSE student who loves building creative projects..."></textarea>
+                <p class="hint">Up to 300 characters.</p>
+
+                <label for="interests">Interests</label>
+                <input id="interests" type="text"
+                    placeholder="e.g. AI, design, hackathons, entrepreneurship">
+                <p class="hint">Separate interests with commas.</p>
+            </section>
+
+            <section class="panel">
+                <div class="section-heading">
+                    <span class="number">04</span>
+                    <div>
+                        <h2>Your collaboration preferences</h2>
+                        <p>Help SkillMate recommend compatible teammates.</p>
+                    </div>
+                </div>
+
+                <label for="proficiency">Overall skill proficiency</label>
+                <select id="proficiency" required>
+                    <option value="">Choose your level</option>
+                    <option value="Beginner">Beginner — learning the basics</option>
+                    <option value="Intermediate">Intermediate — comfortable practising</option>
+                    <option value="Advanced">Advanced — confident in my skills</option>
+                    <option value="Mixed">Mixed — different levels across skills</option>
+                </select>
+
+                <label for="availability">Availability</label>
+                <select id="availability" required>
+                    <option value="">When are you usually available?</option>
+                    <option value="Weekday mornings">Weekday mornings</option>
+                    <option value="Weekday afternoons">Weekday afternoons</option>
+                    <option value="Weekday evenings">Weekday evenings</option>
+                    <option value="Weekends">Weekends</option>
+                    <option value="Flexible">Flexible schedule</option>
+                </select>
+
+                <label for="collaboration">Preferred collaboration style</label>
+                <select id="collaboration" required>
+                    <option value="">Choose your preferred style</option>
+                    <option value="In person">In person</option>
+                    <option value="Online">Online / remote</option>
+                    <option value="Hybrid">A mix of online and in person</option>
+                    <option value="No preference">No preference</option>
+                </select>
+            </section>
+
+            <div class="form-actions">
+<a class="back-button" href="./Skills.html?mode=edit">Back to skills</a>
+                <button class="submit-button" type="submit">
+                    Complete My Profile <span>→</span>
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <footer>Made for students who build better things together. <strong>SkillMate</strong></footer>
+</body>
+</html>

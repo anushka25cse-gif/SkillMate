@@ -1,0 +1,20 @@
+{
+    "messages": [
+        {
+            "id": "07551955-bac4-4564-9c44-ebaf13502db3",
+            "senderId": "6aef79c53f40c5edff404bc0",
+            "receiverId": "6aef877d3f40c5edff404bc1",
+            "senderName": "Taksh yadav",
+            "text": "hlooo",
+            "createdAt": "2026-11-10T14:09:31.989Z"
+        },
+        {
+            "id": "1b502c23-e0b7-44d9-9ed3-82b67168d19c",
+            "senderId": "6aef877d3f40c5edff404bc1",
+            "receiverId": "6aef79c53f40c5edff404bc0",
+            "senderName": "Bharat Gupta",
+            "text": "hii",
+            "createdAt": "2026-11-10T14:10:15.130Z"
+        }
+    ]
+}
