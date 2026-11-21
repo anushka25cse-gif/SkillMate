@@ -121,6 +121,430 @@
             "createdAt": "2026-11-07T20:18:05.695Z",
             "updatedAt": "2026-11-10T07:43:51.717Z",
             "__v": 0
+        },
+        {
+            "_id": "6b017b8adced974144492730",
+            "fullName": "Anushka",
+            "email": "anushka.25cse@bmu.edu.in",
+            "passwordHash": "$2b$10$9hJ/psZYib1gNZMV6NrqeuLPlLHRbwroU6uOMfYd4jOcCW1f5Thvy",
+            "college": "",
+            "registration": "",
+            "course": "",
+            "year": "",
+            "graduation": "",
+            "knownSkills": [],
+            "teachSkills": [],
+            "bio": "",
+            "interests": [],
+            "profilePhoto": "",
+            "proficiency": "",
+            "availability": "",
+            "collaboration": "",
+            "createdAt": "2026-11-21T11:07:54.006Z",
+            "updatedAt": "2026-11-21T11:07:54.006Z"
+        },
+        {
+            "_id": "6b0182bfdced974144492732",
+            "fullName": "Sunita",
+            "email": "aaru2cute@gmail.com",
+            "passwordHash": "$2b$10$ePHuxSImNV9JNZLyKesGMOFSehCZ0hNipZ0t50.9WKRvBb29X1/qO",
+            "college": "Bml munjal university",
+            "registration": "250314",
+            "course": "B.Tech",
+            "year": "2nd Year",
+            "graduation": "2029",
+            "knownSkills": [
+                "Java",
+                "C / C++",
+                "Web Development",
+                "UI/UX Design"
+            ],
+            "teachSkills": [
+                "Web Development",
+                "UI/UX Design"
+            ],
+            "bio": "hi my name is sunita",
+            "interests": [
+                "hackathons"
+            ],
+            "profilePhoto": "",
+            "proficiency": "Beginner",
+            "availability": "Weekends",
+            "collaboration": "In person",
+            "createdAt": "2026-11-21T11:38:39.076Z",
+            "updatedAt": "2026-11-21T11:38:39.076Z"
+        },
+        {
+            "_id": "6b018386dced974144492733",
+            "fullName": "Sunita",
+            "email": "sunita.rana4560@gmail.com",
+            "passwordHash": "$2b$10$d57GXQHvWvtYcKcmBjthwu9LXRGXpF.RLKeZ0oT6X.hkDxCXSceAi",
+            "college": "Bml munjal university",
+            "registration": "250314",
+            "course": "B.Tech",
+            "year": "2nd Year",
+            "graduation": "2029",
+            "knownSkills": [
+                "Java",
+                "Web Development",
+                "UI/UX Design",
+                "Data Analytics"
+            ],
+            "teachSkills": [
+                "Web Development",
+                "UI/UX Design"
+            ],
+            "bio": "hi my name is sunita",
+            "interests": [
+                "hackathons"
+            ],
+            "profilePhoto": "",
+            "proficiency": "Beginner",
+            "availability": "Weekends",
+            "collaboration": "Online",
+            "createdAt": "2026-11-21T11:41:58.277Z",
+            "updatedAt": "2026-11-21T11:41:58.277Z"
+        },
+        {
+            "_id": "6b018446dced974144492734",
+            "fullName": "Arjun",
+            "email": "arjun4560mishra@gmail.com",
+            "passwordHash": "$2b$10$/CJpF8hDaf4ym9RsevmMIOZmzIqd4XDh0Ik/zf6lTWqHr7/kb747y",
+            "college": "Bml munjal university",
+            "registration": "250315",
+            "course": "B.Tech",
+            "year": "2nd Year",
+            "graduation": "2029",
+            "knownSkills": [
+                "Web Development",
+                "UI/UX Design",
+                "Machine Learning",
+                "Data Analytics"
+            ],
+            "teachSkills": [
+                "Web Development",
+                "Machine Learning"
+            ],
+            "bio": "hi i am arjun",
+            "interests": [
+                "ai"
+            ],
+            "profilePhoto": "",
+            "proficiency": "Beginner",
+            "availability": "Weekends",
+            "collaboration": "No preference",
+            "createdAt": "2026-11-21T11:45:10.506Z",
+            "updatedAt": "2026-11-21T11:45:10.506Z"
+        },
+        {
+            "_id": "6b018cd573b2a565c32dc89c",
+            "fullName": "Akshita",
+            "email": "akshita.setia.25cse@bu.edu.in",
+            "passwordHash": "$2b$10$5MuzXtj1agjPvO1u47RhhO3V89KdN45to4bSBwKUQKaKYa3VsoG1q",
+            "college": "Bml munjal university",
+            "registration": "250317",
+            "course": "B.Tech",
+            "year": "2nd Year",
+            "graduation": "2029",
+            "knownSkills": [
+                "Web Development",
+                "UI/UX Design",
+                "Data Analytics",
+                "Public Speaking"
+            ],
+            "teachSkills": [
+                "UI/UX Design",
+                "Data Analytics"
+            ],
+            "bio": "akshita this side",
+            "interests": [
+                "ai"
+            ],
+            "profilePhoto": "",
+            "proficiency": "Beginner",
+            "availability": "Weekday mornings",
+            "collaboration": "Online",
+            "createdAt": "2026-11-21T12:21:41.759Z",
+            "updatedAt": "2026-11-21T12:21:41.759Z"
+        },
+        {
+            "_id": "6b01905d73b2a565c32dc89d",
+            "fullName": "shubhi",
+            "email": "shubhi.vajpayee.25cse@bmu.edu.in",
+            "passwordHash": "$2b$10$4JBIokeMsLJYN73wMdvHBe6M2uzA6GU.Xk4CpVFmFJhYuqJr/pNOG",
+            "college": "Bml munjal university",
+            "registration": "250318",
+            "course": "B.Tech",
+            "year": "2nd Year",
+            "graduation": "2029",
+            "knownSkills": [
+                "Java",
+                "Web Development",
+                "UI/UX Design",
+                "Figma"
+            ],
+            "teachSkills": [
+                "UI/UX Design",
+                "Figma"
+            ],
+            "bio": "shubhi me",
+            "interests": [
+                "ai"
+            ],
+            "profilePhoto": "",
+            "proficiency": "Beginner",
+            "availability": "Weekday mornings",
+            "collaboration": "In person",
+            "createdAt": "2026-11-21T12:36:45.880Z",
+            "updatedAt": "2026-11-21T12:36:45.880Z"
+        },
+        {
+            "_id": "6b01945b73b2a565c32dc89e",
+            "fullName": "Akankshi",
+            "email": "aksnkshi.singh.25cse@bmu.edu.in",
+            "passwordHash": "$2b$10$EqOWP/yLxQ5lUPq/jps8FeDMhjpTbDSLANNp9BXzAyyFVdgIPR.ce",
+            "college": "Bml munjal university",
+            "registration": "250319",
+            "course": "B.Tech",
+            "year": "2nd Year",
+            "graduation": "2029",
+            "knownSkills": [
+                "UI/UX Design",
+                "Machine Learning",
+                "Data Analytics",
+                "Public Speaking"
+            ],
+            "teachSkills": [
+                "Machine Learning",
+                "Data Analytics"
+            ],
+            "bio": "akankshi",
+            "interests": [
+                "ai"
+            ],
+            "profilePhoto": "",
+            "proficiency": "Beginner",
+            "availability": "Weekends",
+            "collaboration": "Hybrid",
+            "createdAt": "2026-11-21T12:53:47.795Z",
+            "updatedAt": "2026-11-21T12:53:47.795Z"
+        },
+        {
+            "_id": "6b01971573b2a565c32dc89f",
+            "fullName": "Vanshika",
+            "email": "vanshika.rai.25sce@bmu.edu.in",
+            "passwordHash": "$2b$10$LV61AnJfeK1wo/9AvI2XxeLDLEmaq63.PUEM9ytQ3YAOa0FlHjMBC",
+            "college": "Bml munjal university",
+            "registration": "250320",
+            "course": "B.Tech",
+            "year": "2nd Year",
+            "graduation": "2029",
+            "knownSkills": [
+                "Web Development",
+                "UI/UX Design",
+                "Machine Learning",
+                "Data Analytics"
+            ],
+            "teachSkills": [
+                "UI/UX Design",
+                "Machine Learning"
+            ],
+            "bio": "hey",
+            "interests": [
+                "ai"
+            ],
+            "profilePhoto": "",
+            "proficiency": "Beginner",
+            "availability": "Weekends",
+            "collaboration": "Hybrid",
+            "createdAt": "2026-11-21T13:05:25.620Z",
+            "updatedAt": "2026-11-21T13:05:25.620Z"
+        },
+        {
+            "_id": "6b01975473b2a565c32dc8a0",
+            "fullName": "Vanshika",
+            "email": "vanshika.rai.25cse@bmu.edu.in",
+            "passwordHash": "$2b$10$VqCNkNdo7ucMogRh888Hz.CVKosoioFMvXXnLSChb3dz2f1.Chywi",
+            "college": "Bml munjal university",
+            "registration": "250320",
+            "course": "B.Tech",
+            "year": "2nd Year",
+            "graduation": "2029",
+            "knownSkills": [
+                "Machine Learning",
+                "Data Analytics",
+                "Photography",
+                "Public Speaking"
+            ],
+            "teachSkills": [
+                "Data Analytics",
+                "Photography"
+            ],
+            "bio": "hey",
+            "interests": [
+                "ai"
+            ],
+            "profilePhoto": "",
+            "proficiency": "Beginner",
+            "availability": "Weekends",
+            "collaboration": "Hybrid",
+            "createdAt": "2026-11-21T13:06:28.039Z",
+            "updatedAt": "2026-11-21T13:06:28.039Z"
+        },
+        {
+            "_id": "6b01987173b2a565c32dc8a1",
+            "fullName": "Anshika",
+            "email": "anshika.rai.25cse@bmu.edu.in",
+            "passwordHash": "$2b$10$7njqhL1m0OTXT4x5rexNFu2/KDf4fTzesFANGBLS.7Gq5sFssjdTa",
+            "college": "Bml munjal university",
+            "registration": "250329",
+            "course": "B.Tech",
+            "year": "2nd Year",
+            "graduation": "2029",
+            "knownSkills": [
+                "Web Development",
+                "Machine Learning",
+                "Data Analytics",
+                "Public Speaking"
+            ],
+            "teachSkills": [
+                "Machine Learning",
+                "Data Analytics"
+            ],
+            "bio": "hey",
+            "interests": [
+                "ai"
+            ],
+            "profilePhoto": "",
+            "proficiency": "Beginner",
+            "availability": "Weekends",
+            "collaboration": "Hybrid",
+            "createdAt": "2026-11-21T13:11:13.655Z",
+            "updatedAt": "2026-11-21T13:11:13.655Z"
+        },
+        {
+            "_id": "6b01ace1d6392110b3c346d7",
+            "fullName": "Anita",
+            "email": "anita.25cse@bmu.edu.in",
+            "passwordHash": "$2b$10$nZYfmKY5gWtx4Fyt7L2P7ebtWJ2O4dx327vyWyPPoPvOcCbJuJYj6",
+            "college": "Bml munjal university",
+            "registration": "250320",
+            "course": "B.E.",
+            "year": "3rd Year",
+            "graduation": "2029",
+            "knownSkills": [
+                "Java",
+                "C / C++",
+                "Web Development",
+                "UI/UX Design"
+            ],
+            "teachSkills": [
+                "Web Development",
+                "UI/UX Design"
+            ],
+            "bio": "hey",
+            "interests": [
+                "ai"
+            ],
+            "profilePhoto": "",
+            "proficiency": "Beginner",
+            "availability": "Weekends",
+            "collaboration": "Hybrid",
+            "createdAt": "2026-11-21T14:38:25.392Z",
+            "updatedAt": "2026-11-21T14:38:25.392Z"
+        },
+        {
+            "_id": "6b01ace1d6392110b3c346d8",
+            "fullName": "Anita",
+            "email": "anita.25cse@bmu.edu.in",
+            "passwordHash": "$2b$10$.by2Yk5l59qD8SY4L4GVfeAogL4QSghjsTAt/z779Um0aQ26ZZ4nW",
+            "college": "Bml munjal university",
+            "registration": "250320",
+            "course": "B.E.",
+            "year": "3rd Year",
+            "graduation": "2029",
+            "knownSkills": [
+                "Java",
+                "C / C++",
+                "Web Development",
+                "UI/UX Design"
+            ],
+            "teachSkills": [
+                "Web Development",
+                "UI/UX Design"
+            ],
+            "bio": "hey",
+            "interests": [
+                "ai"
+            ],
+            "profilePhoto": "",
+            "proficiency": "Beginner",
+            "availability": "Weekends",
+            "collaboration": "Hybrid",
+            "createdAt": "2026-11-21T14:38:25.421Z",
+            "updatedAt": "2026-11-21T14:38:25.421Z"
+        },
+        {
+            "_id": "6b01ace6d6392110b3c346d9",
+            "fullName": "Anita",
+            "email": "anita.25cse@bmu.edu.in",
+            "passwordHash": "$2b$10$brQ9JBM9HNtEmBPLIhNDSOQHjtMPvUqe40X8mdvbHCMw0AcFnedlu",
+            "college": "Bml munjal university",
+            "registration": "250320",
+            "course": "B.E.",
+            "year": "3rd Year",
+            "graduation": "2029",
+            "knownSkills": [
+                "Java",
+                "C / C++",
+                "Web Development",
+                "UI/UX Design"
+            ],
+            "teachSkills": [
+                "Web Development",
+                "UI/UX Design"
+            ],
+            "bio": "hey",
+            "interests": [
+                "ai"
+            ],
+            "profilePhoto": "",
+            "proficiency": "Beginner",
+            "availability": "Weekends",
+            "collaboration": "Hybrid",
+            "createdAt": "2026-11-21T14:38:30.629Z",
+            "updatedAt": "2026-11-21T14:38:30.629Z"
+        },
+        {
+            "_id": "6b01ad1bd6392110b3c346da",
+            "fullName": "Anita",
+            "email": "anita.25cse@bmu.edu.in",
+            "passwordHash": "$2b$10$WZ9aiRAyYXizmwi/OKtgleSRyLTe2L3Hmop/M.7jBH1hHSG3viUgK",
+            "college": "Bml munjal university",
+            "registration": "250320",
+            "course": "B.E.",
+            "year": "3rd Year",
+            "graduation": "2029",
+            "knownSkills": [
+                "Java",
+                "C / C++",
+                "Web Development",
+                "UI/UX Design"
+            ],
+            "teachSkills": [
+                "Web Development",
+                "UI/UX Design"
+            ],
+            "bio": "hey",
+            "interests": [
+                "ai"
+            ],
+            "profilePhoto": "",
+            "proficiency": "Beginner",
+            "availability": "Weekends",
+            "collaboration": "Hybrid",
+            "createdAt": "2026-11-21T14:39:23.521Z",
+            "updatedAt": "2026-11-21T14:39:23.521Z"
         }
     ]
 }

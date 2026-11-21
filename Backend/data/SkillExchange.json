@@ -44,6 +44,157 @@
             "status": "Active",
             "updatedAt": "2026-11-10T05:28:00.945Z",
             "createdAt": "2026-11-10T05:14:27.863Z"
+        },
+        {
+            "studentId": "6b017b8adced974144492730",
+            "teachSkills": [],
+            "learnSkills": [],
+            "status": "Active",
+            "createdAt": "2026-11-21T11:07:54.011Z",
+            "updatedAt": "2026-11-21T11:07:54.011Z"
+        },
+        {
+            "studentId": "6b0182bfdced974144492732",
+            "teachSkills": [
+                "Web Development",
+                "UI/UX Design"
+            ],
+            "learnSkills": [],
+            "status": "Active",
+            "createdAt": "2026-11-21T11:38:39.084Z",
+            "updatedAt": "2026-11-21T11:38:39.084Z"
+        },
+        {
+            "studentId": "6b018386dced974144492733",
+            "teachSkills": [
+                "Web Development",
+                "UI/UX Design"
+            ],
+            "learnSkills": [],
+            "status": "Active",
+            "createdAt": "2026-11-21T11:41:58.283Z",
+            "updatedAt": "2026-11-21T11:41:58.283Z"
+        },
+        {
+            "studentId": "6b018446dced974144492734",
+            "teachSkills": [
+                "Web Development",
+                "Machine Learning"
+            ],
+            "learnSkills": [],
+            "status": "Active",
+            "createdAt": "2026-11-21T11:45:10.515Z",
+            "updatedAt": "2026-11-21T11:45:10.515Z"
+        },
+        {
+            "studentId": "6b018cd573b2a565c32dc89c",
+            "teachSkills": [
+                "UI/UX Design",
+                "Data Analytics"
+            ],
+            "learnSkills": [],
+            "status": "Active",
+            "createdAt": "2026-11-21T12:21:41.768Z",
+            "updatedAt": "2026-11-21T12:21:41.768Z"
+        },
+        {
+            "studentId": "6b01905d73b2a565c32dc89d",
+            "teachSkills": [
+                "UI/UX Design",
+                "Figma"
+            ],
+            "learnSkills": [],
+            "status": "Active",
+            "createdAt": "2026-11-21T12:36:45.885Z",
+            "updatedAt": "2026-11-21T12:36:45.885Z"
+        },
+        {
+            "studentId": "6b01945b73b2a565c32dc89e",
+            "teachSkills": [
+                "Machine Learning",
+                "Data Analytics"
+            ],
+            "learnSkills": [],
+            "status": "Active",
+            "createdAt": "2026-11-21T12:53:47.801Z",
+            "updatedAt": "2026-11-21T12:53:47.801Z"
+        },
+        {
+            "studentId": "6b01971573b2a565c32dc89f",
+            "teachSkills": [
+                "UI/UX Design",
+                "Machine Learning"
+            ],
+            "learnSkills": [],
+            "status": "Active",
+            "createdAt": "2026-11-21T13:05:25.629Z",
+            "updatedAt": "2026-11-21T13:05:25.629Z"
+        },
+        {
+            "studentId": "6b01975473b2a565c32dc8a0",
+            "teachSkills": [
+                "Data Analytics",
+                "Photography"
+            ],
+            "learnSkills": [],
+            "status": "Active",
+            "createdAt": "2026-11-21T13:06:28.046Z",
+            "updatedAt": "2026-11-21T13:06:28.046Z"
+        },
+        {
+            "studentId": "6b01987173b2a565c32dc8a1",
+            "teachSkills": [
+                "Machine Learning",
+                "Data Analytics"
+            ],
+            "learnSkills": [],
+            "status": "Active",
+            "createdAt": "2026-11-21T13:11:13.660Z",
+            "updatedAt": "2026-11-21T13:11:13.660Z"
+        },
+        {
+            "studentId": "6b01ace1d6392110b3c346d7",
+            "teachSkills": [
+                "Web Development",
+                "UI/UX Design"
+            ],
+            "learnSkills": [],
+            "status": "Active",
+            "createdAt": "2026-11-21T14:38:25.413Z",
+            "updatedAt": "2026-11-21T14:38:25.413Z"
+        },
+        {
+            "studentId": "6b01ace1d6392110b3c346d8",
+            "teachSkills": [
+                "Web Development",
+                "UI/UX Design"
+            ],
+            "learnSkills": [],
+            "status": "Active",
+            "createdAt": "2026-11-21T14:38:25.428Z",
+            "updatedAt": "2026-11-21T14:38:25.428Z"
+        },
+        {
+            "studentId": "6b01ace6d6392110b3c346d9",
+            "teachSkills": [
+                "Web Development",
+                "UI/UX Design"
+            ],
+            "learnSkills": [],
+            "status": "Active",
+            "createdAt": "2026-11-21T14:38:30.632Z",
+            "updatedAt": "2026-11-21T14:38:30.632Z"
+        },
+        {
+            "studentId": "6b01ad1bd6392110b3c346da",
+            "teachSkills": [
+                "Web Development",
+                "UI/UX Design"
+            ],
+            "learnSkills": [],
+            "status": "Active",
+            "createdAt": "2026-11-21T14:39:23.527Z",
+            "updatedAt": "2026-11-21T14:39:23.527Z"
         }
     ],
     "requests": [

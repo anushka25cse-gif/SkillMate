@@ -1,13 +1,15 @@
 const express = require("express");
 const router = express.Router();
 
+const Feedback = require("../models/Feedback");
+
 const {
     readFeedback,
     writeFeedback
 } = require("../utils/FeedbackStorage");
 
 // Submit feedback
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
     try {
         const {
             user,
@@ -28,11 +30,15 @@ router.post("/", (req, res) => {
             submittedAt: new Date().toISOString()
         };
 
+        // 1. Save feedback in JSON
         const allFeedback = readFeedback();
 
         allFeedback.push(newFeedback);
 
         writeFeedback(allFeedback);
+
+        // 2. Save feedback in MongoDB
+        const mongoFeedback = await Feedback.create(newFeedback);
 
         res.status(201).json({
             success: true,
