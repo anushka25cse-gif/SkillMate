@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+const SavedPeople = require("../models/SavedPeople");
+
 const {
     readSavedPeople,
     writeSavedPeople
@@ -19,12 +21,26 @@ const checkLogin = (req, res, next) => {
 };
 
 // GET SAVED PEOPLE
-router.get("/", checkLogin, (req, res) => {
+router.get("/", checkLogin, async (req, res) => {
     try {
-        const allSavedPeople = readSavedPeople();
+        const userId = req.session.userId.toString();
+
+        let document = await SavedPeople.findOne();
+
+        if (!document) {
+            const jsonData = readSavedPeople();
+
+            document = await SavedPeople.create({
+                savedPeople: jsonData
+            });
+        }
+
+        const allSavedPeople = document.savedPeople.map(item =>
+            item.toObject()
+        );
 
         const userSavedPeople = allSavedPeople.find(
-            item => item.userId === req.session.userId.toString()
+            item => item.userId === userId
         );
 
         res.json({
@@ -43,12 +59,22 @@ router.get("/", checkLogin, (req, res) => {
 });
 
 // ADD A SAVED PERSON
-router.post("/:personId", checkLogin, (req, res) => {
+router.post("/:personId", checkLogin, async (req, res) => {
     try {
         const userId = req.session.userId.toString();
         const personId = req.params.personId;
 
-        const allSavedPeople = readSavedPeople();
+        let document = await SavedPeople.findOne();
+
+        if (!document) {
+            document = await SavedPeople.create({
+                savedPeople: readSavedPeople()
+            });
+        }
+
+        const allSavedPeople = document.savedPeople.map(item =>
+            item.toObject()
+        );
 
         let userSavedPeople = allSavedPeople.find(
             item => item.userId === userId
@@ -66,6 +92,9 @@ router.post("/:personId", checkLogin, (req, res) => {
         if (!userSavedPeople.people.includes(personId)) {
             userSavedPeople.people.push(personId);
         }
+
+        document.savedPeople = allSavedPeople;
+        await document.save();
 
         writeSavedPeople(allSavedPeople);
 
@@ -86,12 +115,22 @@ router.post("/:personId", checkLogin, (req, res) => {
 });
 
 // REMOVE A SAVED PERSON
-router.delete("/:personId", checkLogin, (req, res) => {
+router.delete("/:personId", checkLogin, async (req, res) => {
     try {
         const userId = req.session.userId.toString();
         const personId = req.params.personId;
 
-        const allSavedPeople = readSavedPeople();
+        let document = await SavedPeople.findOne();
+
+        if (!document) {
+            document = await SavedPeople.create({
+                savedPeople: readSavedPeople()
+            });
+        }
+
+        const allSavedPeople = document.savedPeople.map(item =>
+            item.toObject()
+        );
 
         const userSavedPeople = allSavedPeople.find(
             item => item.userId === userId
@@ -102,6 +141,9 @@ router.delete("/:personId", checkLogin, (req, res) => {
                 id => id !== personId
             );
         }
+
+        document.savedPeople = allSavedPeople;
+        await document.save();
 
         writeSavedPeople(allSavedPeople);
 

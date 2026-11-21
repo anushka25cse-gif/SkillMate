@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
+const User = require("../models/User");
 
 const SKILL_EXCHANGE_FILE = require("path").join(
     __dirname,

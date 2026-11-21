@@ -4,6 +4,7 @@ const path = require("path");
 const { randomUUID } = require("crypto");
 
 const User = require("../models/User");
+const SkillExchange = require("../models/SkillExchange");
 
 const router = express.Router();
 
@@ -27,10 +28,10 @@ const checkLogin = (req, res, next) => {
 router.use(checkLogin);
 
 // -----------------------------------------
-// JSON FILE HELPERS
+// JSON HELPERS
 // -----------------------------------------
 
-function readData() {
+function readJsonData() {
     try {
         const data = JSON.parse(
             fs.readFileSync(DATA_FILE, "utf8")
@@ -62,11 +63,54 @@ function readData() {
     }
 }
 
-function saveData(data) {
+function writeJsonData(data) {
+    const tempFile = DATA_FILE + ".tmp";
+
     fs.writeFileSync(
-        DATA_FILE,
+        tempFile,
         JSON.stringify(data, null, 4)
     );
+
+    fs.renameSync(tempFile, DATA_FILE);
+}
+
+// -----------------------------------------
+// MONGODB HELPERS
+// -----------------------------------------
+
+async function getSkillExchangeData() {
+    let document = await SkillExchange.findOne();
+
+    // If MongoDB document does not exist,
+    // import existing JSON data first.
+
+    if (!document) {
+        const jsonData = readJsonData();
+
+        document = await SkillExchange.create({
+            profiles: jsonData.profiles,
+            requests: jsonData.requests
+        });
+    }
+
+    return {
+        document,
+        profiles: document.profiles.map(item => item.toObject()),
+        requests: document.requests.map(item => item.toObject())
+    };
+}
+
+async function saveSkillExchangeData(data) {
+    data.document.profiles = data.profiles;
+    data.document.requests = data.requests;
+
+    await data.document.save();
+
+    // Also save the same data in JSON.
+    writeJsonData({
+        profiles: data.profiles,
+        requests: data.requests
+    });
 }
 
 // -----------------------------------------
@@ -75,7 +119,7 @@ function saveData(data) {
 
 router.get("/", async (req, res) => {
     try {
-        const data = readData();
+        const data = await getSkillExchangeData();
 
         const studentIds = data.profiles.map(
             profile => profile.studentId
@@ -102,10 +146,7 @@ router.get("/", async (req, res) => {
 
                 return {
                     ...profile,
-
- // Teaching skills are stored in JSON
-teachSkills: profile.teachSkills || [],
-
+                    teachSkills: profile.teachSkills || [],
                     fullName: user.fullName,
                     email: user.email,
                     course: user.course,
@@ -156,7 +197,7 @@ router.post("/", async (req, res) => {
             });
         }
 
-        const data = readData();
+        const data = await getSkillExchangeData();
 
         const existingIndex = data.profiles.findIndex(
             profile => profile.studentId === userId
@@ -166,17 +207,12 @@ router.post("/", async (req, res) => {
 
         const profile = {
             studentId: userId,
-
-            // Teaching skills come from MongoDB
             teachSkills: user.teachSkills || [],
-
-            // Learning skills are stored in JSON
             learnSkills: [...new Set(
                 learnSkills
                     .map(skill => String(skill).trim())
                     .filter(Boolean)
             )],
-
             status: "Active",
             updatedAt: now
         };
@@ -193,7 +229,7 @@ router.post("/", async (req, res) => {
             });
         }
 
-        saveData(data);
+        await saveSkillExchangeData(data);
 
         res.json({
             success: true,
@@ -219,7 +255,7 @@ router.get("/mine", async (req, res) => {
     try {
         const userId = String(req.session.userId);
 
-        const data = readData();
+        const data = await getSkillExchangeData();
 
         const profile = data.profiles.find(
             item => item.studentId === userId
@@ -236,18 +272,17 @@ router.get("/mine", async (req, res) => {
 
         res.json({
             success: true,
-
-profile: profile
-    ? {
-        ...profile,
-        teachSkills: profile.teachSkills || []
-    }
-    : {
-        studentId: userId,
-        teachSkills: [],
-        learnSkills: [],
-        status: "Active"
-    }
+            profile: profile
+                ? {
+                    ...profile,
+                    teachSkills: profile.teachSkills || []
+                }
+                : {
+                    studentId: userId,
+                    teachSkills: [],
+                    learnSkills: [],
+                    status: "Active"
+                }
         });
 
     } catch (error) {
@@ -264,15 +299,15 @@ profile: profile
 // 4. DELETE CURRENT STUDENT'S SKILL PROFILE
 // -----------------------------------------
 
-router.delete("/mine", (req, res) => {
+router.delete("/mine", async (req, res) => {
     try {
-        const data = readData();
+        const data = await getSkillExchangeData();
 
         data.profiles = data.profiles.filter(
             item => item.studentId !== String(req.session.userId)
         );
 
-        saveData(data);
+        await saveSkillExchangeData(data);
 
         res.json({
             success: true,
@@ -280,6 +315,8 @@ router.delete("/mine", (req, res) => {
         });
 
     } catch (error) {
+        console.error("Delete profile error:", error);
+
         res.status(500).json({
             success: false,
             message: "Unable to delete skill profile."
@@ -320,7 +357,7 @@ router.post("/requests", async (req, res) => {
             });
         }
 
-        const data = readData();
+        const data = await getSkillExchangeData();
 
         const existingRequest = data.requests.find(request =>
             (
@@ -355,18 +392,20 @@ router.post("/requests", async (req, res) => {
             });
         }
 
+        const now = new Date().toISOString();
+
         const request = {
             id: randomUUID(),
             senderId,
             receiverId,
             status: "Pending",
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
+            createdAt: now,
+            updatedAt: now
         };
 
         data.requests.push(request);
 
-        saveData(data);
+        await saveSkillExchangeData(data);
 
         res.status(201).json({
             success: true,
@@ -388,9 +427,9 @@ router.post("/requests", async (req, res) => {
 // 6. GET SENT AND RECEIVED REQUESTS
 // -----------------------------------------
 
-router.get("/requests/mine", (req, res) => {
+router.get("/requests/mine", async (req, res) => {
     try {
-        const data = readData();
+        const data = await getSkillExchangeData();
 
         const userId = String(req.session.userId);
 
@@ -409,6 +448,8 @@ router.get("/requests/mine", (req, res) => {
         });
 
     } catch (error) {
+        console.error("Fetch requests error:", error);
+
         res.status(500).json({
             success: false,
             message: "Unable to fetch exchange requests."
@@ -420,7 +461,7 @@ router.get("/requests/mine", (req, res) => {
 // 7. ACCEPT OR REJECT REQUEST
 // -----------------------------------------
 
-router.patch("/requests/:id", (req, res) => {
+router.patch("/requests/:id", async (req, res) => {
     try {
         const { status } = req.body;
 
@@ -431,7 +472,7 @@ router.patch("/requests/:id", (req, res) => {
             });
         }
 
-        const data = readData();
+        const data = await getSkillExchangeData();
 
         const request = data.requests.find(
             item => item.id === req.params.id
@@ -461,7 +502,7 @@ router.patch("/requests/:id", (req, res) => {
         request.status = status;
         request.updatedAt = new Date().toISOString();
 
-        saveData(data);
+        await saveSkillExchangeData(data);
 
         res.json({
             success: true,

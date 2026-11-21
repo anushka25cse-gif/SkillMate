@@ -20,7 +20,7 @@
             ],
             "status": "Open",
             "teamSize": 5,
-            "updatedAt": "2026-11-10T13:54:35.099Z"
+            "updatedAt": "2026-11-21T14:23:22.953Z"
         },
         {
             "_id": "6af21f8f16bc49e6db2dae55",
@@ -42,7 +42,7 @@
             ],
             "status": "Open",
             "teamSize": 5,
-            "updatedAt": "2026-11-10T13:54:35.193Z"
+            "updatedAt": "2026-11-21T14:23:23.038Z"
         },
         {
             "_id": "6af21f8f16bc49e6db2dae56",
@@ -64,7 +64,7 @@
             ],
             "status": "Open",
             "teamSize": 5,
-            "updatedAt": "2026-11-10T13:54:35.231Z"
+            "updatedAt": "2026-11-21T14:23:23.141Z"
         },
         {
             "_id": "6af221c81357327bc591ed71",
@@ -177,6 +177,28 @@
             "createdAt": "2026-11-10T10:27:12.832Z",
             "updatedAt": "2026-11-10T10:38:14.434Z",
             "__v": 2
+        },
+        {
+            "_id": "6b017e1cdced974144492731",
+            "title": "Backend Evaluation Test",
+            "category": "Web Development",
+            "description": "Testing project creation through the Express API.",
+            "skills": [
+                "Node.js",
+                "Express",
+                "MongoDB"
+            ],
+            "teamSize": 3,
+            "members": [
+                "6b017b8adced974144492730"
+            ],
+            "interestedUsers": [],
+            "createdBy": "6b017b8adced974144492730",
+            "isSample": false,
+            "status": "Open",
+            "createdAt": "2026-11-21T11:18:52.732Z",
+            "updatedAt": "2026-11-21T11:18:52.732Z",
+            "__v": 0
         }
     ]
 }
